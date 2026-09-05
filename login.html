@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 / 注册 — Working Mate</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="theme.js"></script>
+    <style>
+        :root {
+            --bg: #f3efe6; --paper: #faf7f0; --ink: #16161a; --ink-soft: #3a3a40;
+            --muted: #7a766c; --line: #16161a; --line-soft: #c9c3b3; --accent: #e8a317; --accent-d: #b8840f;
+            --success: #2d6b3f; --danger: #b53d1a;
+        }
+
+        /* ── 暗色主题：墨黑底 + 米色字，琥珀保持不变（包豪斯的灵魂色） ── */
+        [data-theme="dark"] {
+            --bg: #16161a; --paper: #1e1e25; --ink: #f3efe6; --ink-soft: #d8d3c8;
+            --muted: #948f84; --line: #f3efe6; --line-soft: #3a3a44; --accent: #e8a317; --accent-d: #f2b43a;
+            --success: #57ab6e; --danger: #ff7a5c;
+        }
+
+        /* ── 主题切换按钮（包豪斯月相：纯几何） ── */
+        .theme-toggle {
+            position: fixed; top: 1rem; right: 1rem; z-index: 200;
+            width: 34px; height: 34px;
+            background: var(--bg); border: 1.5px solid var(--line);
+            cursor: pointer; display: grid; place-items: center; padding: 0;
+            transition: background-color .15s, border-color .15s;
+        }
+        .theme-toggle:hover { background: var(--accent); border-color: var(--accent); }
+        .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .tt-icon {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: transparent;
+            box-shadow: inset 5px -3px 0 0 var(--ink);
+            transition: box-shadow .2s, background-color .2s;
+        }
+        [data-theme="dark"] .tt-icon { background: var(--accent); box-shadow: none; }
+        .theme-toggle:hover .tt-icon { box-shadow: inset 5px -3px 0 0 #16161a; }
+        [data-theme="dark"] .theme-toggle:hover .tt-icon { box-shadow: none; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink);
+            min-height: 100vh; display: flex; align-items: center; justify-content: center;
+            padding: 2rem; line-height: 1.55;
+        }
+        a { color: inherit; }
+        ::selection { background: var(--accent); color: var(--ink); }
+
+        .card {
+            background: var(--paper); border: 1.5px solid var(--line);
+            padding: 2.4rem 2.2rem; width: 100%; max-width: 440px;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1.6rem;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--ink);
+        }
+        .logo img { width: 30px; height: 30px; display: block; }
+
+        .label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+            color: var(--ink); display: inline-flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+        .label::before { content: ""; width: 8px; height: 8px; background: var(--accent); display: inline-block; }
+
+        .card h1 { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--ink); letter-spacing: -0.01em; }
+        .card .sub { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 1.5rem; }
+
+        .tabs { display: flex; gap: 0; margin-bottom: 1.5rem; border: 1.5px solid var(--line); }
+        .tab {
+            flex: 1; text-align: center; padding: 0.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.82rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+            cursor: pointer; color: var(--ink); transition: 0.15s; border: none; background: transparent;
+        }
+        .tab.active { background: var(--ink); color: var(--bg); }
+
+        .field { margin-bottom: 1rem; }
+        .field label {
+            display: block; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--ink); margin-bottom: 0.4rem;
+        }
+        .field input, .field select {
+            width: 100%; background: var(--bg); border: 1.5px solid var(--line);
+            padding: 0.75rem 0.9rem; color: var(--ink);
+            font-family: 'Inter', sans-serif; font-size: 0.95rem;
+        }
+        .field input:focus, .field select:focus { outline: none; border-color: var(--accent); }
+        .phone-row { display: flex; gap: 0.5rem; }
+        .phone-row select { width: 130px; flex-shrink: 0; }
+
+        .btn {
+            width: 100%; background: var(--ink); color: var(--bg); border: 1.5px solid var(--ink);
+            padding: 0.8rem; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+            cursor: pointer; margin-bottom: 0.8rem;
+        }
+        .btn:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+        .btn.ghost { background: transparent; color: var(--ink); }
+        .btn.ghost:hover { background: var(--ink); color: var(--bg); }
+
+        .msg { font-size: 0.84rem; margin-bottom: 1rem; min-height: 1.2rem; }
+        .msg.ok { color: var(--success); }
+        .msg.err { color: var(--danger); }
+        .hidden { display: none !important; }
+
+        .account { text-align: center; }
+        .account .avatar {
+            width: 64px; height: 64px;
+            background: var(--accent); color: var(--ink);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700;
+            margin: 0 auto 1rem;
+        }
+        .account .info { color: var(--ink-soft); font-size: 0.88rem; margin-bottom: 1.5rem; line-height: 1.6; }
+        .account .info b { color: var(--ink); }
+
+        .back { text-align: center; margin-top: 1rem; }
+        .back a { color: var(--ink); font-size: 0.84rem; text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 1px; }
+        .back a:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
+    <div class="card">
+        <div class="logo"><img src="images/favicon.png" alt=""> Working Mate</div>
+
+        <div id="loginView">
+            <span class="label">Account</span>
+            <h1>登录 / 注册</h1>
+            <div class="sub">无需密码，输入邮箱或手机号获取验证码即可。新账号会自动注册。</div>
+            <div class="tabs">
+                <button class="tab active" id="tabEmail" onclick="switchChannel('email')">邮箱</button>
+                <button class="tab" id="tabPhone" onclick="switchChannel('sms')">手机号</button>
+            </div>
+
+            <div class="field" id="emailField">
+                <label>邮箱地址</label>
+                <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="field hidden" id="phoneField">
+                <label>手机号</label>
+                <div class="phone-row">
+                    <select id="countryCode"></select>
+                    <input type="tel" id="phoneInput" placeholder="138 0000 0000" autocomplete="tel">
+                </div>
+            </div>
+
+            <div class="field hidden" id="codeField">
+                <label>验证码</label>
+                <input type="text" id="codeInput" placeholder="6 位数字验证码" inputmode="numeric" maxlength="6">
+            </div>
+
+            <div class="msg" id="msg"></div>
+            <button class="btn" id="mainBtn" onclick="handleMain()">发送验证码</button>
+            <button class="btn ghost hidden" id="backBtn" onclick="resetFlow()">返回修改账号</button>
+        </div>
+
+        <div id="accountView" class="account hidden">
+            <div class="avatar" id="avatar">?</div>
+            <h1 id="accTitle">账户信息</h1>
+            <div class="info" id="accInfo"></div>
+            <button class="btn" onclick="doLogout()">退出登录</button>
+        </div>
+
+        <div class="back"><a href="index.html">&larr; 返回官网</a></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
+        const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+
+        let supabase = null;
+        let channel = 'email';
+        let step = 'send';
+
+        function ready() {
+            if (!supabase) supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            return supabase;
+        }
+        function configured() {
+            return !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
+        }
+        function setMsg(t, cls) {
+            const m = document.getElementById('msg');
+            m.textContent = t; m.className = 'msg ' + (cls || '');
+        }
+        function switchChannel(c) {
+            channel = c;
+            resetFlow(true);
+            document.getElementById('tabEmail').classList.toggle('active', c === 'email');
+            document.getElementById('tabPhone').classList.toggle('active', c === 'sms');
+            document.getElementById('emailField').classList.toggle('hidden', c !== 'email');
+            document.getElementById('phoneField').classList.toggle('hidden', c !== 'sms');
+        }
+        function resetFlow(keepChannel) {
+            step = 'send';
+            document.getElementById('codeField').classList.add('hidden');
+            document.getElementById('backBtn').classList.add('hidden');
+            document.getElementById('mainBtn').textContent = '发送验证码';
+            setMsg('');
+        }
+        function currentContact() {
+            if (channel === 'email') return document.getElementById('emailInput').value.trim();
+            const cc = document.getElementById('countryCode').value;
+            const p = document.getElementById('phoneInput').value.trim();
+            return p ? (cc + p) : '';
+        }
+        async function handleMain() {
+            if (!configured()) { setMsg('登录服务未配置，请联系管理员', 'err'); return; }
+            const contact = currentContact();
+            if (!contact) { setMsg('请输入' + (channel === 'email' ? '邮箱' : '手机号'), 'err'); return; }
+            if (step === 'send') {
+                const sb = ready();
+                const btn = document.getElementById('mainBtn');
+                btn.disabled = true; setMsg('正在发送验证码...');
+                const { data, error } = await sb.auth.signInWithOtp(
+                    channel === 'email' ? { email: contact } : { phone: contact },
+                    { shouldCreateUser: true }
+                );
+                btn.disabled = false;
+                if (error) { setMsg('发送失败：' + error.message, 'err'); return; }
+                setMsg('验证码已发送，请查收', 'ok');
+                step = 'verify';
+                document.getElementById('codeField').classList.remove('hidden');
+                document.getElementById('backBtn').classList.remove('hidden');
+                document.getElementById('mainBtn').textContent = '验证并登录';
+                document.getElementById('codeInput').focus();
+            } else {
+                const code = document.getElementById('codeInput').value.trim();
+                if (!code) { setMsg('请输入验证码', 'err'); return; }
+                const sb = ready();
+                const btn = document.getElementById('mainBtn');
+                btn.disabled = true; setMsg('正在验证...');
+                const { data, error } = await sb.auth.verifyOtp(
+                    channel === 'email'
+                        ? { email: currentContact(), token: code, type: 'email' }
+                        : { phone: currentContact(), token: code, type: 'sms' }
+                );
+                btn.disabled = false;
+                if (error) { setMsg('验证失败：' + error.message, 'err'); return; }
+                setMsg('登录成功', 'ok');
+                showAccount(data.user);
+            }
+        }
+        function showAccount(user) {
+            document.getElementById('loginView').classList.add('hidden');
+            document.getElementById('accountView').classList.remove('hidden');
+            const email = user.email || '';
+            const phone = user.phone || '';
+            document.getElementById('avatar').textContent = (email || phone || '?').charAt(0).toUpperCase();
+            document.getElementById('accTitle').textContent = '已登录';
+            document.getElementById('accInfo').innerHTML =
+                (email ? '邮箱：<b>' + email + '</b><br>' : '') +
+                (phone ? '手机：<b>' + phone + '</b><br>' : '') +
+                '用户 ID：<b>' + user.id + '</b>';
+        }
+        async function doLogout() {
+            if (!supabase) return;
+            await supabase.auth.signOut();
+            document.getElementById('accountView').classList.add('hidden');
+            document.getElementById('loginView').classList.remove('hidden');
+            resetFlow();
+            setMsg('已退出登录', 'ok');
+        }
+        const COUNTRIES = [
+            ['+86', '🇨🇳 中国大陆 +86'], ['+852', '🇭🇰 香港 +852'], ['+853', '🇲🇴 澳门 +853'],
+            ['+886', '🇹🇼 台湾 +886'], ['+1', '🇺🇸 美国/加拿大 +1'], ['+44', '🇬🇧 英国 +44'],
+            ['+81', '🇯🇵 日本 +81'], ['+82', '🇰🇷 韩国 +82'], ['+65', '🇸🇬 新加坡 +65'],
+            ['+60', '🇲🇾 马来西亚 +60'], ['+66', '🇹🇭 泰国 +66'], ['+61', '🇦🇺 澳大利亚 +61'],
+            ['+49', '🇩🇪 德国 +49'], ['+33', '🇫🇷 法国 +33'], ['+7', '🇷🇺 俄罗斯 +7'],
+        ];
+        (function initCountries() {
+            const sel = document.getElementById('countryCode');
+            COUNTRIES.forEach(([code, label]) => {
+                const o = document.createElement('option');
+                o.value = code; o.textContent = label;
+                sel.appendChild(o);
+            });
+        })();
+        (async function restore() {
+            if (!configured()) return;
+            const sb = ready();
+            const { data } = await sb.auth.getSession();
+            if (data && data.session && data.session.user) showAccount(data.session.user);
+        })();
+    </script>
+</body>
+</html>

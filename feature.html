@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features — Working Mate</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="theme.js"></script>
+    <style>
+        :root {
+            --bg:        #f3efe6;
+            --paper:     #faf7f0;
+            --ink:       #16161a;
+            --ink-soft:  #2c2c32;
+            --muted:     #6b675d;
+            --line:      #16161a;
+            --line-soft: #c9c3b3;
+            --accent:    #e8a317;
+            --accent-d:  #b8840f;
+            --danger:    #b53d1a;
+            --success:   #2d6b3f;
+        }
+        [data-theme="dark"] {
+            --bg:        #16161a;
+            --paper:     #1e1e25;
+            --ink:       #f3efe6;
+            --ink-soft:  #d8d3c8;
+            --muted:     #948f84;
+            --line:      #f3efe6;
+            --line-soft: #3a3a44;
+            --accent:    #e8a317;
+            --accent-d:  #f2b43a;
+            --danger:    #ff7a5c;
+            --success:   #57ab6e;
+        }
+
+        /* ── 主题切换按钮（包豪斯月相） ── */
+        .theme-toggle {
+            width: 34px; height: 34px; flex-shrink: 0;
+            background: transparent; border: 1.5px solid var(--line);
+            cursor: pointer; display: grid; place-items: center; padding: 0;
+            transition: background-color .15s, border-color .15s;
+        }
+        .theme-toggle:hover { background: var(--accent); border-color: var(--accent); }
+        .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .tt-icon {
+            width: 14px; height: 14px; border-radius: 50%; background: transparent;
+            box-shadow: inset 5px -3px 0 0 var(--ink); transition: box-shadow .2s, background-color .2s;
+        }
+        [data-theme="dark"] .tt-icon { background: var(--accent); box-shadow: none; }
+        .theme-toggle:hover .tt-icon { box-shadow: inset 5px -3px 0 0 #16161a; }
+        [data-theme="dark"] .theme-toggle:hover .tt-icon { box-shadow: none; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg); color: var(--ink); line-height: 1.6;
+            -webkit-font-smoothing: antialiased; overflow-x: hidden;
+        }
+        a { color: var(--ink); }
+        ::selection { background: var(--accent); color: var(--ink); }
+
+        /* ── 导航 ── */
+        nav {
+            position: sticky; top: 0; z-index: 100; background: var(--bg);
+            border-bottom: 1.5px solid var(--line);
+        }
+        .nav-inner {
+            max-width: 1000px; margin: 0 auto; padding: 0.9rem 1.6rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 0.65rem;
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem;
+            color: var(--ink); text-decoration: none; letter-spacing: -0.01em;
+        }
+        .logo img { width: 28px; height: 28px; display: block; }
+        .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+        .lang-toggle {
+            background: transparent; color: var(--ink); border: 1.5px solid var(--line);
+            padding: 0.35rem 0.8rem; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; cursor: pointer;
+        }
+        .lang-toggle:hover { background: var(--ink); color: var(--bg); }
+        .nav-cta {
+            background: var(--ink); color: var(--bg); padding: 0.45rem 1.1rem;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+            border: 1.5px solid var(--ink);
+        }
+        .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+
+        /* ── 通用 ── */
+        .label {
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600;
+            letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink);
+            display: inline-flex; align-items: center; gap: 0.6rem;
+        }
+        .label::before { content: ""; display: inline-block; width: 10px; height: 10px; background: var(--accent); }
+        .wrap { max-width: 1000px; margin: 0 auto; padding: 0 1.6rem; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.85rem 1.5rem; font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+            text-decoration: none; cursor: pointer; border: 1.5px solid var(--ink);
+        }
+        .btn-primary { background: var(--ink); color: var(--bg); }
+        .btn-primary:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+
+        /* ── 功能详情 ── */
+        .feat-hero {
+            padding: 4rem 0 2.4rem; border-bottom: 1.5px solid var(--line);
+        }
+        .feat-icon {
+            width: 56px; height: 56px; border: 1.5px solid var(--ink);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 1.4rem;
+        }
+        .feat-icon svg { width: 30px; height: 30px; }
+        .feat-tag {
+            display: inline-block; margin-bottom: 0.8rem;
+            font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.12em; text-transform: uppercase; padding: 0.2rem 0.6rem;
+            background: var(--accent); color: var(--ink);
+        }
+        .feat-hero h1 {
+            font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 700; line-height: 1.02; letter-spacing: -0.02em; color: var(--ink);
+            margin-bottom: 1.1rem; max-width: 18ch;
+        }
+        .feat-lede { color: var(--ink-soft); font-size: 1.08rem; max-width: 680px; line-height: 1.7; }
+
+        .feat-body { padding: 3.5rem 0 1rem; }
+        .feat-section { margin-bottom: 3.2rem; }
+        .feat-section > .label { margin-bottom: 1.3rem; }
+
+        .points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line); }
+        .point {
+            border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+            padding: 1.5rem 1.6rem; background: var(--bg);
+        }
+        .point h3 {
+            font-family: 'Space Grotesk', sans-serif; font-size: 1.02rem; font-weight: 600;
+            margin-bottom: 0.55rem; color: var(--ink); letter-spacing: -0.01em;
+        }
+        .point p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.65; }
+
+        /* 工作原理 */
+        .how { background: var(--paper); border: 1.5px solid var(--line); padding: 1.6rem 1.9rem; margin-top: 0.2rem; }
+        .how p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.8; max-width: 72ch; }
+
+        /* 使用场景 */
+        .uc-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line); }
+        .uc {
+            border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+            padding: 1.4rem 1.6rem; background: var(--bg);
+        }
+        .uc h3 { font-family: 'Space Grotesk', sans-serif; font-size: 0.98rem; font-weight: 600; margin-bottom: 0.45rem; color: var(--ink); }
+        .uc p { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.6; }
+
+        /* 模板网格 */
+        .tpl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line); }
+        .tpl {
+            border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+            padding: 1.4rem 1.6rem; background: var(--bg); display: flex; gap: 1rem; align-items: flex-start;
+        }
+        .tpl-emoji { font-size: 1.6rem; line-height: 1; flex-shrink: 0; }
+        .tpl h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--ink); }
+        .tpl p { color: var(--ink-soft); font-size: 0.88rem; line-height: 1.55; }
+
+        /* 工作流示例 */
+        .flow {
+            border: 1.5px solid var(--line); background: var(--paper); padding: 1.6rem 1.8rem;
+        }
+        .flow-step {
+            display: flex; gap: 1rem; padding: 0.8rem 0; border-bottom: 1px solid var(--line-soft);
+            align-items: flex-start;
+        }
+        .flow-step:last-child { border-bottom: none; }
+        .flow-num {
+            flex-shrink: 0; width: 26px; height: 26px; background: var(--ink); color: var(--bg);
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.8rem;
+            display: grid; place-items: center;
+        }
+        .flow-step p { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.6; }
+        .flow-step b { color: var(--ink); }
+
+        /* 护栏 */
+        .guard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line); }
+        .guard-item {
+            border-right: 1.5px solid var(--line); border-bottom: 1.5px solid var(--line);
+            padding: 1.3rem 1.6rem; background: var(--bg); display: flex; gap: 0.8rem; align-items: flex-start;
+        }
+        .guard-item .dot { width: 10px; height: 10px; background: var(--accent); margin-top: 0.45rem; flex-shrink: 0; }
+        .guard-item p { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.6; }
+        .guard-item b { color: var(--ink); }
+
+        .feat-foot {
+            border-top: 1.5px solid var(--line); padding: 3rem 0 4rem; text-align: center;
+        }
+        .feat-foot h2 {
+            font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+            font-weight: 700; color: var(--ink); margin-bottom: 1.4rem; letter-spacing: -0.01em;
+        }
+        .back-link {
+            display: inline-block; margin-top: 2.5rem; color: var(--ink); font-size: 0.85rem;
+            text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 2px;
+        }
+        .back-link:hover { background: var(--accent); }
+
+        footer { padding: 2.2rem 1.6rem; text-align: center; color: var(--muted); font-size: 0.84rem; border-top: 1.5px solid var(--line); }
+        footer a { color: var(--ink); text-decoration: none; margin: 0 0.3rem; }
+        footer a:hover { background: var(--accent); }
+
+        @media (max-width: 760px) {
+            .points, .tpl-grid, .guard, .uc-grid { grid-template-columns: 1fr; }
+            .nav-cta { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="index.html" class="logo">
+                <img src="images/favicon.png" alt="">
+                Working Mate
+            </a>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
+                <button class="lang-toggle" id="langToggle">中文</button>
+                <a href="index.html#download" class="nav-cta">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="feat-root" class="wrap"><!-- rendered by script --></main>
+
+    <footer>
+        <p>
+            <strong>Working Mate</strong> — Local Desktop Intelligence<br>
+            <a href="mailto:wanjunjie13341418310@outlook.com">wanjunjie13341418310@outlook.com</a><br><br>
+            <a href="pricing.html">Pricing</a>·
+            <a href="privacy.html">Privacy</a>·
+            <a href="terms.html">Terms</a>·
+            <a href="refunds.html">Refunds</a>·
+            <a href="acceptable-use.html">Acceptable Use</a>
+        </p>
+    </footer>
+
+    <script>
+    /* ============================================================
+       功能详情页：由 ?f=<id> 驱动，内容存于 FEATURES（中英文）
+       ============================================================ */
+    var ICONS = {
+        'local-first': '<rect x="2.6" y="4.2" width="18.8" height="12.4" rx="0"/><path d="M9.4 20h5.2M12 16.6V20"/><path d="M8.6 10.6l2.3 2.3 4.5-4.6"/>',
+        'agent-mode': '<rect x="3.8" y="7.6" width="16.4" height="11.6" rx="0"/><path d="M12 3.4v4.2"/><circle cx="12" cy="2.6" r="1.25"/><circle cx="9.1" cy="12.9" r="1.35"/><circle cx="14.9" cy="12.9" r="1.35"/><path d="M9.6 16.1h4.8"/><path d="M1.9 11.4v3.2M22.1 11.4v3.2"/>',
+        'ai-video': '<rect x="2.4" y="5.2" width="19.2" height="13.6" rx="0"/><path d="M10.2 9.6l4.6 2.4-4.6 2.4z"/><path d="M5.6 5.2v13.6M18.4 5.2v13.6"/>',
+        'ai-music': '<path d="M9.4 17.8V5.2l9.2-2v12.4"/><circle cx="6.8" cy="18.1" r="2.6"/><circle cx="16" cy="15.6" r="2.6"/><path d="M2.8 9.8v4.4"/>',
+        'vision': '<path d="M2 12s3.7-6.4 10-6.4S22 12 22 12s-3.7 6.4-10 6.4S2 12 2 12z"/><circle cx="12" cy="12" r="3.3"/>',
+        'models': '<circle cx="5.2" cy="12" r="2.4"/><circle cx="18.6" cy="6.2" r="2.4"/><circle cx="18.6" cy="17.8" r="2.4"/><path d="M7.3 11l9-3.4M7.3 13l9 3.4M18.6 8.6v6.8"/>',
+        'prompts': '<path d="M6.2 2.9h7.4l4.4 4.4v13.8H6.2z"/><path d="M13.6 2.9v4.4h4.4"/><rect x="9.6" y="12.9" width="5.6" height="4.6" rx="0"/><path d="M10.9 12.9v-1.3a1.5 1.5 0 012.9 0v1.3"/>',
+        'safe': '<path d="M12 2.7l7.6 3.1v5.5c0 4.7-3.2 8.6-7.6 10.2-4.4-1.6-7.6-5.5-7.6-10.2V5.8z"/><path d="M8.9 12.1l2.4 2.4 4.3-4.6"/>',
+        'project-space': '<circle cx="12" cy="5" r="2.2"/><circle cx="5.5" cy="18" r="2.2"/><circle cx="18.5" cy="18" r="2.2"/><path d="M12 7.2v4M12 11.2l-5 5M12 11.2l5 5"/>'
+    };
+
+    var FEATURES = {
+        'local-first': {
+            tag: null,
+            title: { en: 'Local-First', zh: '本地优先' },
+            lede: {
+                en: 'Everything runs on your own hardware through Ollama. No internet required — your conversations, files and chat history never leave the machine.',
+                zh: '通过 Ollama 在你自己的电脑上离线运行，无需联网。你的对话、文件和聊天记录永远不离开你的机器。'
+            },
+            how: {
+                en: 'On first launch Working Mate offers a one-click Ollama installer. It scans your machine — CPU, RAM, free disk and GPU — and recommends models that fit. Pick one and it downloads in the background. From then on every chat is computed locally: the app works fully offline, including file operations, search, OCR and automation.',
+                zh: '首次启动会提供一键安装 Ollama。它会扫描你的机器——CPU、内存、空闲磁盘和显卡——并推荐最合适的模型。选一个，后台自动下载。之后所有对话都在本地计算：文件操作、搜索、OCR、自动化全部离线可用。'
+            },
+            points: [
+                { en: 'Local models via Ollama', zh: '基于 Ollama 的本地模型', body: { en: 'Qwen, DeepSeek, Llama, Gemma and Phi — one click to pull and switch.', zh: 'Qwen、DeepSeek、Llama、Gemma、Phi，一键拉取并切换。' } },
+                { en: 'Zero cloud dependency', zh: '零云端依赖', body: { en: 'Chat, summarize, write and automate — all offline. No API key, no monthly fee for local use.', zh: '聊天、总结、写作、自动化全部离线。本地使用无需 API Key，也没有月费。' } },
+                { en: 'Auto hardware fit', zh: '自动适配硬件', body: { en: 'Detects disk, RAM, GPU and network speed, then suggests the best size — from 0.5B on a thin laptop to 14B+ on a gaming rig.', zh: '自动检测磁盘、内存、显卡、网速，为你推荐最合适的尺寸——从办公本可跑的 0.5B 到游戏本可跑的 14B+。' } },
+                { en: 'True privacy', zh: '真正隐私', body: { en: 'Your prompts, documents and history stay on your disk. Nothing is uploaded unless you pick a cloud model.', zh: '你的提问、文档、历史都留在本地磁盘。除非你主动选择云端模型，否则绝不上传。' } },
+                { en: 'Works offline', zh: '彻底离线可用', body: { en: 'Once models are installed, cut the network and it still works — ideal for travel, labs and sensitive documents.', zh: '模型装好后，断网照样能用——适合出差、实验室和涉密文档。' } },
+                { en: 'One app, no setup', zh: '一个应用，无需配置', body: { en: 'No Python to install, no environment to manage. Everything is bundled.', zh: '不用装 Python，不用配环境，全部打包好了。' } }
+            ],
+            usecases: [
+                { title: { en: 'Confidential drafting', zh: '涉密起草' }, body: { en: 'Write contracts or NDAs on a client machine with no internet connection.', zh: '在没网路的客户机器上起草合同或保密协议。' } },
+                { title: { en: 'Private document review', zh: '私密文档审阅' }, body: { en: 'Summarize a 200-page PDF that must not leave the company network.', zh: '总结一份绝不能离开公司内网的 200 页 PDF。' } },
+                { title: { en: 'Coding on a flight', zh: '飞机上的编程助手' }, body: { en: 'Pair-program and refactor code while airborne with no Wi-Fi.', zh: '在没 Wi-Fi 的飞机上结对编程、重构代码。' } }
+            ]
+        },
+        'agent-mode': {
+            tag: null,
+            title: { en: 'Agent Mode', zh: '智能体模式' },
+            lede: {
+                en: '87 built-in tools let the assistant actually do things on your computer — open apps, move files, read documents, run searches and automations — with guardrails on every step.',
+                zh: '87 个内置工具让助手真正在你的电脑上干活——开应用、搬文件、读文档、跑搜索和自动化——每一步都有安全护栏。'
+            },
+            how: {
+                en: 'Agent Mode turns the chat into an operator. When you ask for a result, the assistant plans the steps, picks a tool, executes it, reads the output and loops until the task is done. Destructive tools (delete, overwrite, run command) pause for your confirmation; deletions go to the recycle bin; and a full log records every action so you can audit it later.',
+                zh: '智能体模式把聊天变成操作员。你交代一个结果，助手会规划步骤、挑选工具、执行、读取输出，然后循环直到任务完成。破坏性工具（删除、覆盖、运行命令）会停下等你确认；删除进回收站；全程日志记录每个动作，方便事后审计。'
+            },
+            points: [
+                { en: '87 tools', zh: '87 个工具', body: { en: 'File operations, Office and PDF conversion, OCR, web search, Git, memory, media processing and stock quotes.', zh: '文件操作、Office/PDF 转换、OCR、联网搜索、Git、记忆、媒体处理、股票行情。' } },
+                { en: 'Desktop GUI control', zh: '桌面 GUI 控制', body: { en: 'It can click, type and read any window, driving real desktop apps on your behalf.', zh: '能点击、输入、读取任意窗口，替你驱动真实的桌面应用。' } },
+                { en: 'Scheduled automation', zh: '定时自动化', body: { en: 'Set a task once — daily report, inbox sweep, backup — and let it run on a timer or trigger.', zh: '一次设定（日报、收件箱清理、备份），按计时器或触发条件自动跑。' } },
+                { en: 'Safety guardrails', zh: '安全护栏', body: { en: 'Destructive actions need confirmation; deletes go to trash; high-risk commands are blocked.', zh: '破坏性操作需确认，删除进回收站，高危命令直接拦截。' } },
+                { en: 'Memory that persists', zh: '持久记忆', body: { en: 'The agent remembers your preferences and past context across sessions.', zh: '助手跨会话记住你的偏好和历史上下文。' } },
+                { en: 'Step-by-step reasoning', zh: '逐步推理', body: { en: 'It shows its plan and tool calls, so you can follow exactly what it is doing.', zh: '它会展示计划和工具调用过程，你可以清楚看到它在做什么。' } }
+            ],
+            usecases: [
+                { title: { en: 'Morning digest', zh: '每日晨报' }, body: { en: 'Every morning, collect yesterday’s sales CSVs, merge them and email a summary.', zh: '每天早上收集昨天的销售 CSV，合并后发一封摘要邮件。' } },
+                { title: { en: 'Invoice filing', zh: '发票归档' }, body: { en: 'Find every invoice PDF in Downloads and rename and move it into the right client folder.', zh: '在下载夹里找出所有发票 PDF，重命名并归到对应客户文件夹。' } },
+                { title: { en: 'Weekly research', zh: '每周调研' }, body: { en: 'Open the browser, pull trends, and paste a weekly digest into your notes.', zh: '打开浏览器抓取趋势，把每周摘要贴进笔记。' } }
+            ]
+        },
+        'ai-video': {
+            tag: { en: 'PRO', zh: 'PRO' },
+            title: { en: 'AI Video Generation', zh: 'AI 视频生成' },
+            lede: {
+                en: 'Text-to-video and image-to-video powered by Kling. Generate any character, any scene — even make your own photos move. (Professional plan)',
+                zh: '基于可灵的文生视频 / 图生视频。任意角色、任意场景——还能让你自己的照片动起来。（专业版）'
+            },
+            how: {
+                en: 'Describe a scene in plain language — subject, action, style, camera — and the model returns a short clip. Or drop in a still photo and animate it. Characters can be kept consistent across shots for longer stories. This is a cloud feature: your prompt and any image you upload are sent to the video provider and the result is streamed back.',
+                zh: '用大白话描述一个场景——主体、动作、风格、镜头——模型就返回一段短片。或者丢一张静态照片进去让它动起来。角色可在多镜头间保持一致，串成更长故事。这是云端功能：你的提示词和上传图片会发给视频服务商，结果回传给你。'
+            },
+            points: [
+                { en: 'Text to video', zh: '文生视频', body: { en: 'Describe a scene, get a short clip back.', zh: '描述一个场景，直接生成短片。' } },
+                { en: 'Image to video', zh: '图生视频', body: { en: 'Bring a still photo to life with motion.', zh: '让静态照片动起来。' } },
+                { en: 'Any character', zh: '任意角色', body: { en: 'Consistent faces and styles across shots for coherent stories.', zh: '跨镜头保持一致的角色与画风，故事更连贯。' } },
+                { en: 'Pro tier', zh: '专业版功能', body: { en: 'Unlocked on the Professional plan — longer clips and higher resolution.', zh: '专业版解锁——更长的时长和更高的分辨率。' } },
+                { en: 'Prompt to story', zh: '提示词成片', body: { en: 'Chain multiple clips into a sequence for short dramas or ads.', zh: '把多段镜头串成序列，用于短剧或广告。' } }
+            ],
+            usecases: [
+                { title: { en: 'Product showcase', zh: '产品展示' }, body: { en: 'Turn a product photo into a 5-second rotating clip for social media.', zh: '把产品照片转成 5 秒旋转短片，发社交媒体。' } },
+                { title: { en: 'Animated keepsake', zh: '会动的纪念' }, body: { en: 'Animate a child’s drawing as a birthday surprise.', zh: '把孩子画的画动起来，做成生日惊喜。' } },
+                { title: { en: 'Storyboard reel', zh: '分镜样片' }, body: { en: 'Produce a storyboard reel for a short-drama pitch.', zh: '为短剧提案做一版分镜样片。' } }
+            ]
+        },
+        'ai-music': {
+            tag: { en: 'PRO', zh: 'PRO' },
+            title: { en: 'AI Music Generation', zh: 'AI 音乐生成' },
+            lede: {
+                en: 'Full songs with vocals, powered by Suno. Give it a theme or your own lyrics — get two finished tracks back. (Professional plan)',
+                zh: '基于 Suno 生成带人声的完整歌曲。给个主题或你自己的歌词，一次产出两首成品。（专业版）'
+            },
+            how: {
+                en: 'Tell it the mood, genre and a few reference words, or paste your own lyrics, and it composes melody, arrangement, vocals and a mix. You receive two versions so you can pick the one you like. This is a cloud feature: your prompt and lyrics are sent to the music provider.',
+                zh: '告诉它情绪、曲风和一些参考词，或贴上你自己的歌词，它会谱写旋律、编曲、人声和混音。你拿到两个版本，挑最满意的那版。这是云端功能：你的提示词和歌词会发给音乐服务商。'
+            },
+            points: [
+                { en: 'Full songs', zh: '完整歌曲', body: { en: 'Vocals, arrangement and mix produced in one go.', zh: '人声、编曲、混音一次到位。' } },
+                { en: 'Your lyrics or theme', zh: '你的歌词或主题', body: { en: 'Hum a mood, or paste your own words.', zh: '给个情绪，或贴上你自己的词。' } },
+                { en: 'Two tracks', zh: '两首成品', body: { en: 'Pick the version you like best.', zh: '挑你最满意的那一版。' } },
+                { en: 'Pro tier', zh: '专业版功能', body: { en: 'Unlocked on the Professional plan.', zh: '专业版解锁。' } },
+                { en: 'Many styles', zh: '多种曲风', body: { en: 'Pop, lo-fi, cinematic and rock.', zh: '流行、Lo-fi、电影感、摇滚。' } }
+            ],
+            usecases: [
+                { title: { en: 'Video intro', zh: '视频配乐' }, body: { en: 'Background music for your YouTube intro.', zh: '给你的 YouTube 片头做段背景乐。' } },
+                { title: { en: 'Personal song', zh: '专属歌曲' }, body: { en: 'A birthday song with the recipient’s name in the lyrics.', zh: '把寿星名字写进歌词的生日歌。' } },
+                { title: { en: 'Focus beat', zh: '专注节拍' }, body: { en: 'A lo-fi beat to focus to while working.', zh: '工作时听的 Lo-fi 节拍。' } }
+            ]
+        },
+        'vision': {
+            tag: null,
+            title: { en: 'Vision + Multimodal', zh: '视觉 + 多模态' },
+            lede: {
+                en: 'Upload screenshots or photos and ask questions. OCR, image understanding and document analysis built-in — no extra setup.',
+                zh: '上传截图或照片直接提问。内置 OCR、图像理解与文档分析，无需额外配置。'
+            },
+            how: {
+                en: 'Drop an image into the chat and ask anything about it. The model reads text via OCR, explains charts and diagrams, describes scenes, and can open PDF/Word/PPT/Excel directly to answer questions about their contents. Works with both local and cloud models.',
+                zh: '把图片丢进对话，直接问任何关于它的问题。模型通过 OCR 读出文字、解读图表、描述场景，还能直接打开 PDF/Word/PPT/Excel 来回答其中的内容。本地和云端模型都支持。'
+            },
+            points: [
+                { en: 'Ask about images', zh: '看图提问', body: { en: 'Explain a chart, debug a screenshot, describe a photo.', zh: '解读图表、排查截图、描述照片。' } },
+                { en: 'Built-in OCR', zh: '内置 OCR', body: { en: 'Read text straight out of any image or scanned page.', zh: '直接从图片或扫描页里读出文字。' } },
+                { en: 'Native documents', zh: '原生读文档', body: { en: 'PDF, Word, PPT, Excel understood directly.', zh: '原生读取 PDF、Word、PPT、Excel。' } },
+                { en: 'No extra setup', zh: '无需额外配置', body: { en: 'Works the moment you drop a file in.', zh: '拖入文件即可用。' } },
+                { en: 'Multimodal reasoning', zh: '多模态推理', body: { en: 'Combine the image with your other files in one conversation.', zh: '在一轮对话里把图片和你的其他文件结合起来推理。' } }
+            ],
+            usecases: [
+                { title: { en: 'Debug a screenshot', zh: '排查报错截图' }, body: { en: 'Paste the error screen and ask why it is happening.', zh: '把报错截图贴进来，问它为什么出错。' } },
+                { title: { en: 'Scan to text', zh: '扫描转文字' }, body: { en: 'Extract the table from a scanned receipt.', zh: '从扫描的发票里提取表格。' } },
+                { title: { en: 'Deck summary', zh: 'PPT 摘要' }, body: { en: 'Summarize a 40-slide deck and list the key numbers.', zh: '总结 40 页的演示稿并列出关键数字。' } }
+            ]
+        },
+        'models': {
+            tag: null,
+            title: { en: '41 Models, Smart Routing', zh: '41 个模型，智能路由' },
+            lede: {
+                en: 'Automatically picks the right model for the task — reasoning, coding, vision — no manual switching. Flip between local and cloud with one click.',
+                zh: '自动为任务挑选最合适的模型——推理、编码、视觉各有专攻，无需手动切换。本地与云端一键互切。'
+            },
+            how: {
+                en: 'Working Mate ships with 28 models built in that need no API key, plus smart routing that matches each request to the best engine. Bring your own key to add OpenAI, Claude or Gemini. Flip between a local engine and the cloud with one click, so you can go offline or get maximum power on demand.',
+                zh: 'Working Mate 内置 28 个模型，无需 API Key 即可用，还有智能路由把每个请求匹配到最佳引擎。自带 Key 可再加 OpenAI、Claude、Gemini 等。本地引擎和云端一键互切，既能离线也能随时调用最强算力。'
+            },
+            points: [
+                { en: 'Auto routing', zh: '自动路由', body: { en: 'The right model is chosen per task.', zh: '每个任务自动选最合适的模型。' } },
+                { en: '28 built-in, no key', zh: '内置 28 个，免 Key', body: { en: 'Work out of the box, no API key needed.', zh: '开箱即用，无需自备 Key。' } },
+                { en: 'Bring your own key', zh: '自带 Key 扩展', body: { en: 'Add OpenAI, Claude or Gemini.', zh: '可再加 OpenAI、Claude 或 Gemini。' } },
+                { en: 'Local + cloud', zh: '本地 + 云端', body: { en: 'Flip between engines with one click.', zh: '一键在双引擎间切换。' } },
+                { en: '41 models total', zh: '共 41 个模型', body: { en: 'A wide roster from lightweight to frontier.', zh: '从轻量到前沿，阵容齐全。' } }
+            ],
+            usecases: [
+                { title: { en: 'Right tool, right job', zh: '好钢用在刀刃上' }, body: { en: 'A quick local model for daily Q&A, a frontier model for hard reasoning.', zh: '日常问答用轻量本地模型，硬推理用前沿模型。' } },
+                { title: { en: 'Compliance key', zh: '合规 Key' }, body: { en: 'Use your company’s Claude key for compliance, local model for the rest.', zh: '合规场景用公司的 Claude Key，其余用本地模型。' } },
+                { title: { en: 'Auto vision', zh: '自动切视觉' }, body: { en: 'Switch to a vision model automatically when you attach an image.', zh: '贴图时自动切到视觉模型。' } }
+            ]
+        },
+        'prompts': {
+            tag: null,
+            title: { en: 'Your Prompts, Your Business', zh: '你的提示词，你做主' },
+            lede: {
+                en: "We don't bolt extra refusals or filters on top of the models. You get the raw capability you're paying for.",
+                zh: '我们不在模型上额外叠加拒绝词表或过滤器。你付了钱，就得到模型的完整能力。'
+            },
+            how: {
+                en: 'Many apps wrap the model in extra guardrails that quietly rewrite or soften your prompts. Working Mate passes your instructions through faithfully and lets you steer tone, format and depth. This does not override the law: the Acceptable Use Policy still applies, and genuinely illegal requests are refused by the underlying model itself.',
+                zh: '很多应用会在模型外再裹一层护栏，悄悄改写或弱化你的提示词。Working Mate 忠实传递你的指令，让你掌控语气、格式和深度。这不凌驾于法律之上：《使用规范》仍然适用，真正非法的请求会被底层模型本身拒绝。'
+            },
+            points: [
+                { en: 'No extra filters', zh: '无额外过滤', body: { en: 'Models respond at full strength.', zh: '模型以完整能力响应。' } },
+                { en: 'You stay in control', zh: '你掌控全局', body: { en: 'Your instructions are followed, not rewritten.', zh: '你的指令被照做，而不是被改写。' } },
+                { en: 'Transparent', zh: '透明', body: { en: 'No hidden guardrails silently changing output.', zh: '没有偷偷改写输出的隐藏护栏。' } },
+                { en: 'Within the law', zh: '守法边界', body: { en: 'Acceptable Use Policy still applies.', zh: '仍需遵守《使用规范》。' } },
+                { en: 'Tunable per workspace', zh: '按工作区可调', body: { en: 'Set system prompts, roles and output format per workspace.', zh: '每个工作区可设系统提示、角色和输出格式。' } }
+            ],
+            usecases: [
+                { title: { en: 'Exact brand voice', zh: '精准品牌语气' }, body: { en: 'Write in your exact brand voice without the assistant cleaning it up.', zh: '用你精确的品牌语气写作，助手不替你"润色"。' } },
+                { title: { en: 'Blunt critique', zh: '犀利批评' }, body: { en: 'Produce a blunt, no-fluff technical critique.', zh: '产出一针见血、不掺水份的技术批评。' } },
+                { title: { en: 'Strict JSON', zh: '严格 JSON' }, body: { en: 'Format output as strict JSON for your pipeline.', zh: '把输出格式化成严格 JSON，喂给你的流水线。' } }
+            ]
+        },
+        'safe': {
+            tag: null,
+            title: { en: 'Safe by Default', zh: '默认安全' },
+            lede: {
+                en: 'Every destructive action requires confirmation. Deletions go to trash. High-risk commands are blocked. Full audit trail.',
+                zh: '所有破坏性操作均需确认；删除进回收站；高危命令直接拦截；操作全程留痕。'
+            },
+            how: {
+                en: 'Safety is on by default. Before the agent deletes, overwrites or runs a system command, it stops and asks. When it does delete, the file goes to the recycle bin, not erased. A blocklist stops the most dangerous operations outright, and every action is written to a log you can review. In Project Space, workers run under an even stricter 12-tool blocklist.',
+                zh: '安全是默认开启的。在助手删除、覆盖或运行系统命令之前，它会停下问你。即便删除，文件也是进回收站，而非彻底抹除。黑名单直接拦下最危险的操作，每个动作都写入日志供你查看。在项目空间里，worker 还受到更严的 12 项工具黑名单约束。'
+            },
+            points: [
+                { en: 'Confirm to act', zh: '确认才执行', body: { en: 'Destructive steps pause for your OK.', zh: '破坏性步骤停下来等你确认。' } },
+                { en: 'Trash, not gone', zh: '进回收站', body: { en: 'Deletes are recoverable.', zh: '删除可恢复。' } },
+                { en: 'Block high-risk', zh: '拦截高危', body: { en: 'Dangerous commands are stopped outright.', zh: '危险命令直接拦下。' } },
+                { en: 'Audit trail', zh: '全程留痕', body: { en: 'Every action is logged.', zh: '每个动作都记录在案。' } },
+                { en: 'Layered safety', zh: '多层安全', body: { en: 'Project Space adds a 12-tool worker blocklist and call caps.', zh: '项目空间额外加了 12 项 worker 黑名单与调用上限。' } }
+            ],
+            usecases: [
+                { title: { en: 'Verify before touch', zh: '动手前先确认' }, body: { en: 'Bulk-rename files but review the plan before anything is changed.', zh: '批量重命名前先审查计划，确认无误再动。' } },
+                { title: { en: 'Recoverable cleanup', zh: '可恢复的清理' }, body: { en: 'Let an agent clean a folder, knowing mistakes land in Recycle Bin.', zh: '让助手清理文件夹，知道出错也能在回收站找回。' } },
+                { title: { en: 'Post-run review', zh: '跑后复查' }, body: { en: 'Review the action log after an automation run.', zh: '自动化跑完，复查动作日志。' } }
+            ]
+        },
+        'project-space': {
+            tag: { en: 'FLAGSHIP', zh: '旗舰功能' },
+            title: { en: 'Project Space · Multi-Agent Collaboration', zh: '项目空间 · 多智能体协作' },
+            lede: {
+                en: 'Hand one big goal to a team of AI experts. The admin agent breaks it into subtasks, dispatches them to specialists, reviews and scores each delivery, then compiles everything into result files you can open with one click.',
+                zh: '把一个大目标丢给一群 AI 专家。管理智能体自动拆解任务、派给对应专家、执行后打分验收，最终汇总成可一键打开的成果文件。'
+            },
+            how: {
+                en: 'You describe one goal in natural language. The admin agent breaks it into a planned task list, assigns each subtask to a specialist worker (each with real tools), reviews the result against your intent and scores it 0–10. Anything below the threshold is sent back to redo. When every piece passes, the results are compiled into files — .docx, .pptx, .xlsx, .png — that you can open straight from the chat. Five ready-made team templates cover the most common jobs.',
+                zh: '你用大白话描述一个目标。管理智能体把它拆成规划好的任务清单，把每个子任务派给对应专家型 worker（每个都带真实工具），按你的意图验收并打 0–10 分。低于阈值的打回重做。全部通过后，结果被汇总成文件——.docx、.pptx、.xlsx、.png——你在聊天里就能一键打开。五套开箱模板覆盖最常见的活儿。'
+            },
+            points: [
+                { en: 'Admin decomposes goals', zh: '管理智能体拆解目标', body: { en: 'One sentence in → a planned task list out.', zh: '一句话进去，一份规划好的任务清单出来。' } },
+                { en: 'Specialist workers', zh: '专家型 worker', body: { en: 'Each subtask runs by the right expert, with real tools.', zh: '每个子任务由对应专家调用真实工具执行。' } },
+                { en: 'Score & retry', zh: '打分 + 打回重做', body: { en: 'Admin grades 0–10; below threshold = redo.', zh: '管理智能体按 0–10 打分，低于阈值自动打回重做。' } },
+                { en: 'Clickable results', zh: '成果可点击打开', body: { en: 'Generated .docx / .pptx / .xlsx / .png open in one click.', zh: '生成的 .docx/.pptx/.xlsx/.png 一键打开。' } }
+            ],
+            templates: [
+                { emoji: '🎬', name: { en: 'Short-Drama Studio', zh: '短剧创作工作室' }, desc: { en: 'Script → storyboard → video → edit', zh: '剧本 → 分镜 → 生视频 → 剪辑' } },
+                { emoji: '🔬', name: { en: 'Research Paper Team', zh: '科研论文团队' }, desc: { en: 'Literature → modeling → paper → defense PPT', zh: '文献 → 建模 → 论文 → 答辩 PPT' } },
+                { emoji: '💻', name: { en: 'Full-Stack Dev Team', zh: '全栈开发团队' }, desc: { en: 'Requirements → architecture → code → test', zh: '需求 → 架构 → 编码 → 测试' } },
+                { emoji: '🚀', name: { en: 'One-Person Business', zh: '一人企业' }, desc: { en: 'Product → marketing → support → finance', zh: '产品 → 营销 → 客服 → 财务' } },
+                { emoji: '📊', name: { en: 'Data Science Lab', zh: '数据科学实验室' }, desc: { en: 'Collect → clean → model → visualize', zh: '采集 → 清洗 → 建模 → 可视化' } }
+            ],
+            example: {
+                en: 'Real run — "Research turbofan bypass ratio & fuel efficiency": the admin split it into 6 subtasks (literature review, simulation, charts, paper, defense PPT, packaging), assigned them to 科研专家 / 数据分析专家 / 文案写作专家 / 办公助手, each executed with real tools, and the admin scored every delivery 7/10 before merging into a downloadable zip.',
+                zh: '真实案例——「研究航发涵道比与燃油经济性」：管理智能体拆成 6 个子任务（文献调研、建模仿真、图表生成、论文撰写、答辩 PPT、整合打包），派给科研专家/数据分析专家/文案写作专家/办公助手，各自调用真实工具执行，管理智能体逐条以 7/10 验收后合并成可下载的 ZIP。'
+            },
+            guardrails: [
+                { b: { en: '12-tool blocklist', zh: '12 项工具黑名单' }, body: { en: 'delete_file, run_command, GUI automation and memory overwrite are forbidden for workers.', zh: 'delete_file、run_command、GUI 自动化、记忆覆盖一律禁止 worker 调用。' } },
+                { b: { en: 'Max 10 tool calls', zh: '单任务最多 10 次工具调用' }, body: { en: 'Hard cap per subtask prevents runaway loops.', zh: '单子任务硬上限，防止模型无限调工具。' } },
+                { b: { en: 'Cross-space cap 5', zh: '跨空间调用上限 5' }, body: { en: 'Limits cross-space calls per task to avoid abuse.', zh: '每任务跨空间调用封顶，防滥用。' } },
+                { b: { en: 'Full logging', zh: '全程日志' }, body: { en: 'Every dispatch, execution and score is recorded.', zh: '每次派单、执行、打分都留痕。' } }
+            ]
+        }
+    };
+
+    var ORDER = ['project-space', 'local-first', 'agent-mode', 'ai-video', 'ai-music', 'vision', 'models', 'prompts', 'safe'];
+
+    var LANG_KEY = 'agent_site_lang';
+    function getLang() {
+        var l = null;
+        try { l = localStorage.getItem(LANG_KEY); } catch (e) {}
+        return (l === 'zh') ? 'zh' : 'en';
+    }
+    function t(obj) { return obj ? (obj[getLang()] || obj.en) : ''; }
+
+    function svg(id) {
+        return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[id] || '') + '</svg>';
+    }
+
+    function render() {
+        var params = new URLSearchParams(location.search);
+        var id = params.get('f');
+        if (!id || !FEATURES[id]) id = 'project-space';
+        var f = FEATURES[id];
+        var L = getLang();
+
+        var html = '';
+        html += '<section class="feat-hero">';
+        html += '  <span class="label">Feature · ' + (ORDER.indexOf(id) + 1 < 10 ? '0' : '') + (ORDER.indexOf(id) + 1) + ' / ' + ORDER.length + '</span>';
+        html += '  <div class="feat-icon">' + svg(id) + '</div>';
+        if (f.tag) html += '  <span class="feat-tag">' + t(f.tag) + '</span>';
+        html += '  <h1>' + t(f.title) + '</h1>';
+        html += '  <p class="feat-lede">' + t(f.lede) + '</p>';
+        html += '</section>';
+
+        html += '<section class="feat-body">';
+
+        // Highlights
+        html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '核心能力' : 'Highlights') + '</span><div class="points">';
+        f.points.forEach(function (p) {
+            html += '<div class="point"><h3>' + t(p.title || p) + '</h3><p>' + t(p.body || p) + '</p></div>';
+        });
+        html += '</div></div>';
+
+        // How it works
+        if (f.how) {
+            html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '工作原理' : 'How It Works') + '</span><div class="how"><p>' + t(f.how) + '</p></div></div>';
+        }
+
+        // Use cases
+        if (f.usecases) {
+            html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '使用场景' : 'Use Cases') + '</span><div class="uc-grid">';
+            f.usecases.forEach(function (uc) {
+                html += '<div class="uc"><h3>' + t(uc.title) + '</h3><p>' + t(uc.body) + '</p></div>';
+            });
+            html += '</div></div>';
+        }
+
+        // Templates (project-space)
+        if (f.templates) {
+            html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '开箱模板' : 'Ready-made Templates') + '</span><div class="tpl-grid">';
+            f.templates.forEach(function (tp) {
+                html += '<div class="tpl"><div class="tpl-emoji">' + tp.emoji + '</div><div><h3>' + t(tp.name) + '</h3><p>' + t(tp.desc) + '</p></div></div>';
+            });
+            html += '</div></div>';
+        }
+
+        // Example (project-space)
+        if (f.example) {
+            html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '真实工作流' : 'How a Run Looks') + '</span><div class="flow">';
+            var steps = [
+                { b: L === 'zh' ? '你下目标' : 'You set a goal', p: t(f.example) },
+                { b: L === 'zh' ? '管理智能体拆解' : 'Admin decomposes', p: L === 'zh' ? '把目标拆成可执行的子任务清单，并规划依赖顺序。' : 'Splits the goal into executable subtasks with dependency order.' },
+                { b: L === 'zh' ? '专家执行' : 'Specialists execute', p: L === 'zh' ? '每个子任务由对应专家调用真实工具（文件/Office/联网/多模态）完成。' : 'Each subtask runs by the right expert using real tools (files / Office / web / multimodal).' },
+                { b: L === 'zh' ? '打分验收' : 'Score & accept', p: L === 'zh' ? '管理智能体按 0–10 打分，低于阈值自动打回重做。' : 'Admin grades 0–10; below threshold it is sent back to redo.' },
+                { b: L === 'zh' ? '汇总交付' : 'Compile & deliver', p: L === 'zh' ? '成果合并成文件，群聊里可直接点击打开。' : 'Results merge into files you can open straight from the chat.' }
+            ];
+            steps.forEach(function (s, i) {
+                html += '<div class="flow-step"><div class="flow-num">' + (i + 1) + '</div><p><b>' + s.b + '.</b> ' + s.p + '</p></div>';
+            });
+            html += '</div></div>';
+        }
+
+        // Guardrails (project-space)
+        if (f.guardrails) {
+            html += '<div class="feat-section"><span class="label">' + (L === 'zh' ? '安全护栏' : 'Safety Guardrails') + '</span><div class="guard">';
+            f.guardrails.forEach(function (g) {
+                html += '<div class="guard-item"><span class="dot"></span><p><b>' + t(g.b) + '</b> — ' + t(g.body) + '</p></div>';
+            });
+            html += '</div></div>';
+        }
+
+        html += '</section>';
+
+        // Footer CTA
+        html += '<section class="feat-foot"><h2>' + (L === 'zh' ? '想试试看？' : 'Want to try it?') + '</h2>';
+        html += '<a href="index.html#download" class="btn btn-primary">' + (L === 'zh' ? '免费下载' : 'Free Download') + '</a>';
+        html += '<br><a href="index.html#features" class="back-link">' + (L === 'zh' ? '← 返回全部功能' : '← Back to all features') + '</a></section>';
+
+        document.getElementById('feat-root').innerHTML = html;
+        document.title = t(f.title) + ' — Working Mate';
+    }
+
+    // 语言切换（与官网共用 localStorage）
+    document.getElementById('langToggle').addEventListener('click', function () {
+        var next = getLang() === 'zh' ? 'en' : 'zh';
+        try { localStorage.setItem(LANG_KEY, next); } catch (e) {}
+        document.getElementById('langToggle').textContent = (next === 'zh') ? 'EN' : '中文';
+        render();
+    });
+    (function initLang() {
+        var l = getLang();
+        document.getElementById('langToggle').textContent = (l === 'zh') ? 'EN' : '中文';
+    })();
+
+    render();
+    </script>
+</body>
+</html>

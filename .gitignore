@@ -1,0 +1,22 @@
+# 240MB 安装包不进 git —— GitHub 单文件硬上限 100MB
+# 安装包走 GitHub Releases（单文件上限 2GB），见 version.json 的 url
+downloads/*.exe
+
+# 备份 / 临时文件
+*.bak
+*.bak2
+*.tmp
+
+# 本地修复脚本（开发工具，不部署到 Pages）
+fix_copy.py
+fix_icons.py
+
+# Python 缓存
+__pycache__/
+*.pyc
+*.pyo
+
+# 编辑器 / 系统
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Working Mate — Local Desktop Intelligence</title>
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="theme.js"></script>
+    <style>
+        /* ── BAUHAUS DESIGN SYSTEM ──
+           原则：纸色底 + 墨色字 + 一抹琥珀。
+           几何直边、水平/垂直强分割、编号小标签、大字标、无装饰。 */
+        :root {
+            --bg:        #f3efe6;   /* 奶油纸色 */
+            --paper:     #faf7f0;   /* 卡片略亮 */
+            --ink:       #16161a;   /* 墨黑 */
+            --ink-soft:  #3a3a40;
+            --muted:     #7a766c;   /* 暖灰 */
+            --line:      #16161a;   /* 分割线：黑 */
+            --line-soft: #c9c3b3;   /* 浅分割 */
+            --accent:    #e8a317;   /* 琥珀：灯泡同色 */
+            --accent-d:  #b8840f;
+            --danger:    #b53d1a;
+            --success:   #2d6b3f;
+        }
+
+        /* ── 暗色主题：墨黑底 + 米色字，琥珀保持不变（包豪斯的灵魂色） ── */
+        [data-theme="dark"] {
+            --bg:        #16161a;
+            --paper:     #1e1e25;
+            --ink:       #f3efe6;
+            --ink-soft:  #d8d3c8;
+            --muted:     #948f84;
+            --line:      #f3efe6;
+            --line-soft: #3a3a44;
+            --accent:    #e8a317;
+            --accent-d:  #f2b43a;
+            --danger:    #ff7a5c;
+            --success:   #57ab6e;
+        }
+
+        /* ── 主题切换按钮（包豪斯月相：纯几何，无图标字体） ── */
+        .theme-toggle {
+            width: 34px; height: 34px;
+            flex-shrink: 0;
+            background: transparent;
+            border: 1.5px solid var(--line);
+            cursor: pointer;
+            display: grid; place-items: center;
+            padding: 0;
+            transition: background-color .15s, border-color .15s;
+        }
+        .theme-toggle:hover { background: var(--accent); border-color: var(--accent); }
+        .theme-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+        .tt-icon {
+            width: 14px; height: 14px;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: inset 5px -3px 0 0 var(--ink);
+            transition: box-shadow .2s, background-color .2s;
+        }
+        [data-theme="dark"] .tt-icon {
+            background: var(--accent);
+            box-shadow: none;
+        }
+        .theme-toggle:hover .tt-icon { box-shadow: inset 5px -3px 0 0 #16161a; }
+        [data-theme="dark"] .theme-toggle:hover .tt-icon { box-shadow: none; }
+
+        /* 深色下 SVG mockup 的描边跟随主题 */
+        [data-theme="dark"] .mock-stroke { stop-color: #f3efe6; }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        a { color: inherit; }
+        ::selection { background: var(--accent); color: var(--ink); }
+
+        /* ── 通用：编号小标签 ── */
+        .label {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .label::before {
+            content: "";
+            display: inline-block;
+            width: 10px; height: 10px;
+            background: var(--accent);
+        }
+
+        /* ── 导航 ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            background: var(--bg);
+            border-bottom: 1.5px solid var(--line);
+        }
+        .nav-inner {
+            max-width: 1200px; margin: 0 auto;
+            padding: 0.9rem 1.6rem;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 1.5rem;
+        }
+        .logo {
+            display: flex; align-items: center; gap: 0.65rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 1.05rem;
+            color: var(--ink); text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+        .logo img { width: 28px; height: 28px; display: block; }
+        .nav-links { display: flex; gap: 1.8rem; list-style: none; align-items: center; }
+        .nav-links a {
+            color: var(--ink); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500;
+            padding: 0.25rem 0; border-bottom: 1.5px solid transparent;
+            transition: border-color 0.15s;
+        }
+        .nav-links a:hover { border-bottom-color: var(--ink); }
+        .nav-right { display: flex; align-items: center; gap: 0.8rem; }
+        .lang-toggle {
+            background: transparent; color: var(--ink);
+            border: 1.5px solid var(--line);
+            padding: 0.35rem 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em;
+            cursor: pointer;
+        }
+        .lang-toggle:hover { background: var(--ink); color: var(--bg); }
+        .nav-cta {
+            background: var(--ink); color: var(--bg);
+            padding: 0.45rem 1.1rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+            text-decoration: none;
+            border: 1.5px solid var(--ink);
+        }
+        .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+        .nav-links-login {
+            color: var(--ink); text-decoration: none;
+            font-size: 0.85rem; font-weight: 500;
+        }
+        .nav-links-login:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+        /* ── Hero ── */
+        .hero {
+            min-height: 100vh; display: flex; align-items: center;
+            padding: 7rem 1.6rem 3rem;
+            position: relative;
+            border-bottom: 1.5px solid var(--line);
+        }
+        .hero-grid {
+            position: absolute; inset: 0; pointer-events: none;
+            display: grid; grid-template-columns: repeat(6, 1fr);
+            opacity: 0.08;
+        }
+        .hero-grid > div { border-right: 1px solid var(--ink); }
+        .hero-grid > div:last-child { border-right: none; }
+        .hero-inner {
+            max-width: 1200px; margin: 0 auto; width: 100%;
+            display: grid; grid-template-columns: 1.3fr 1fr; gap: 3rem; align-items: end;
+            position: relative; z-index: 1;
+        }
+        .hero-content { }
+        .hero-badge { margin-bottom: 1.2rem; }
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.6rem, 6.2vw, 5.2rem);
+            font-weight: 700; line-height: 0.98;
+            letter-spacing: -0.02em;
+            color: var(--ink);
+            margin-bottom: 1.4rem;
+        }
+        .hero h1 .accent-word { color: var(--ink); position: relative; }
+        .hero h1 .accent-word::after {
+            content: ""; position: absolute; left: 0; right: 0; bottom: 0.04em;
+            height: 0.18em; background: var(--accent); z-index: -1;
+        }
+        .hero p {
+            font-size: 1.08rem; color: var(--ink-soft);
+            max-width: 540px;
+            margin-bottom: 1.8rem;
+        }
+        .hero-buttons { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.85rem 1.5rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.85rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+            text-decoration: none; cursor: pointer;
+            border: 1.5px solid var(--ink);
+        }
+        .btn-primary { background: var(--ink); color: var(--bg); }
+        .btn-primary:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+        .btn-secondary { background: transparent; color: var(--ink); }
+        .btn-secondary:hover { background: var(--ink); color: var(--bg); }
+
+        /* Hero 右侧的几何展示 */
+        .hero-figure {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+            border: 1.5px solid var(--line);
+            aspect-ratio: 1;
+        }
+        .hero-figure > div {
+            border-right: 1.5px solid var(--line);
+            border-bottom: 1.5px solid var(--line);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .hero-figure > div:nth-child(3n) { border-right: none; }
+        .hero-figure > div:nth-last-child(-n+3) { border-bottom: none; }
+        /* 九宫格内的几何元素：纯圆/方/三角 */
+        .hf-circle { width: 60%; height: 60%; border-radius: 50%; background: var(--ink); }
+        .hf-square { width: 60%; height: 60%; background: var(--accent); }
+        .hf-line   { width: 80%; height: 0; border-top: 8px solid var(--ink); }
+        .hf-half   { width: 100%; height: 100%; background: var(--ink); border-radius: 0 0 0 100%; }
+        .hf-dot    { width: 30%; height: 30%; border-radius: 50%; background: var(--accent); }
+        .hf-grid   {
+            width: 80%; height: 80%;
+            background-image:
+                linear-gradient(var(--ink) 1.5px, transparent 1.5px),
+                linear-gradient(90deg, var(--ink) 1.5px, transparent 1.5px);
+            background-size: 25% 25%;
+        }
+        .hf-tri    {
+            width: 0; height: 0;
+            border-left: 30% solid transparent; border-right: 30% solid transparent;
+            border-bottom: 52% solid var(--ink);
+        }
+        .hf-ring   { width: 60%; height: 60%; border-radius: 50%; border: 8px solid var(--ink); }
+        .hf-bar    { width: 12%; height: 60%; background: var(--ink); }
+
+        /* ── 统计条 ── */
+        .stats {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            border-bottom: 1.5px solid var(--line);
+        }
+        .stat {
+            padding: 1.8rem 1.6rem;
+            border-right: 1.5px solid var(--line);
+        }
+        .stat:last-child { border-right: none; }
+        .stat .number {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.2rem, 4vw, 3rem);
+            font-weight: 700; line-height: 1;
+            color: var(--ink);
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.02em;
+        }
+        .stat .label {
+            font-size: 0.72rem; color: var(--muted);
+            letter-spacing: 0.14em; text-transform: uppercase;
+        }
+        .stat .label::before { display: none; }
+
+        /* ── Section 通用 ── */
+        section { padding: 4.5rem 1.6rem; }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-title { margin-bottom: 2.8rem; max-width: 720px; }
+        .section-title .label { margin-bottom: 0.9rem; }
+        .section-title h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.9rem, 3.6vw, 2.8rem);
+            font-weight: 700; line-height: 1.05;
+            color: var(--ink);
+            margin-bottom: 0.7rem;
+            letter-spacing: -0.01em;
+        }
+        .section-title p {
+            color: var(--ink-soft);
+            font-size: 1rem; max-width: 520px;
+        }
+
+        /* ── 功能卡片 ── */
+        .features { border-bottom: 1.5px solid var(--line); }
+        .feature-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line);
+        }
+        .feature-card {
+            border-right: 1.5px solid var(--line);
+            border-bottom: 1.5px solid var(--line);
+            padding: 1.6rem;
+            background: var(--bg);
+            transition: background 0.15s, color 0.15s;
+            cursor: pointer; position: relative;
+            min-height: 220px;
+            display: flex; flex-direction: column;
+            text-decoration: none; color: var(--ink);
+        }
+        .feature-card:hover { background: var(--ink); color: var(--bg); }
+        .feature-card:hover h3,
+        .feature-card:hover p,
+        .feature-card:hover .detail-hint { color: var(--bg); }
+        .feature-card:hover .feature-icon { border-color: var(--bg); }
+        .feature-card:hover .feature-icon svg { stroke: var(--bg); }
+        .feature-icon {
+            width: 44px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1rem;
+            border: 1.5px solid var(--ink);
+        }
+        .feature-icon svg { width: 24px; height: 24px; display: block; }
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 600;
+            margin-bottom: 0.4rem; color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+        .feature-card p {
+            color: var(--ink); font-size: 0.86rem; line-height: 1.5;
+        }
+        .feature-card .tier-tag {
+            display: inline-block; margin-top: 0.6rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700;
+            letter-spacing: 0.1em;
+            padding: 0.15rem 0.5rem;
+            background: var(--accent); color: var(--ink);
+            align-self: flex-start;
+        }
+        .feature-card .feature-detail {
+            max-height: 0; overflow: hidden; opacity: 0;
+            color: var(--ink-soft); font-size: 0.82rem; line-height: 1.55;
+            transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.25s ease;
+        }
+        .feature-card.open .feature-detail { max-height: 400px; opacity: 1; margin-top: 0.7rem; }
+        .feature-card .detail-hint {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            margin-top: auto; padding-top: 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 600; color: var(--muted);
+            letter-spacing: 0.08em; text-transform: uppercase;
+        }
+        .feature-card .detail-hint .chev { display: inline-block; transition: transform 0.25s; }
+        .feature-card.open .detail-hint .chev { transform: rotate(180deg); }
+        .feature-card.open .detail-hint { color: var(--ink); }
+
+        /* ── 旗舰功能：项目空间 spotlight ── */
+        .feature-spotlight {
+            display: grid; grid-template-columns: auto 1fr auto; gap: 1.6rem;
+            align-items: center;
+            border: 1.5px solid var(--line);
+            border-bottom: none;
+            background: var(--paper);
+            padding: 2rem 1.8rem;
+            text-decoration: none; color: var(--ink);
+            position: relative;
+            transition: background 0.15s, color 0.15s;
+        }
+        .feature-spotlight:hover { background: var(--ink); color: var(--bg); }
+        .feature-spotlight:hover .sp-desc,
+        .feature-spotlight:hover .sp-title,
+        .feature-spotlight:hover .sp-go { color: var(--bg); }
+        .feature-spotlight:hover .sp-badge { background: var(--accent); color: var(--ink); }
+        .sp-badge {
+            font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+            font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase;
+            background: var(--accent); color: var(--ink);
+            padding: 0.5rem 0.8rem; white-space: nowrap;
+        }
+        .sp-main { min-width: 0; }
+        .sp-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.35rem; font-weight: 700; letter-spacing: -0.01em;
+            color: var(--ink); margin-bottom: 0.35rem;
+        }
+        .sp-desc { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.6; max-width: 720px; }
+        .sp-go {
+            font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+            font-size: 0.85rem; letter-spacing: 0.04em; white-space: nowrap;
+            color: var(--ink);
+        }
+
+        /* ── 定价 ── */
+        .pricing {
+            background: var(--bg);
+            border-bottom: 1.5px solid var(--line);
+        }
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line);
+        }
+        .pricing-card {
+            border-right: 1.5px solid var(--line);
+            border-bottom: 1.5px solid var(--line);
+            padding: 2rem 1.6rem;
+            position: relative; background: var(--bg);
+            display: flex; flex-direction: column;
+        }
+        .pricing-card.popular { background: var(--ink); color: var(--bg); }
+        .pricing-card.popular h3,
+        .pricing-card.popular .price { color: var(--bg); }
+        .pricing-card.popular .tier-desc,
+        .pricing-card.popular .price-note,
+        .pricing-card.popular li { color: var(--bg); }
+        .pricing-card.popular li::before { color: var(--accent); }
+        .pricing-card.popular .btn { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+        .pricing-card.popular .btn:hover { background: var(--bg); color: var(--ink); border-color: var(--bg); }
+        .popular-badge {
+            position: absolute; top: -1.5px; right: -1.5px;
+            background: var(--accent); color: var(--ink);
+            padding: 0.3rem 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .pricing-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+            margin-bottom: 0.3rem; color: var(--ink);
+        }
+        .pricing-card .tier-desc {
+            font-size: 0.84rem; color: var(--muted);
+            margin-bottom: 1.4rem; min-height: 2.6em;
+        }
+        .pricing-card .price {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.6rem; font-weight: 700; line-height: 1;
+            margin-bottom: 0.3rem;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+        }
+        .pricing-card .price .currency { font-size: 1.2rem; vertical-align: top; margin-right: 0.1rem; }
+        .pricing-card .price .per { font-size: 0.85rem; color: var(--muted); font-weight: 400; margin-left: 0.2rem; }
+        .pricing-card .price-note { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.3rem; }
+        .pricing-card ul { list-style: none; margin-bottom: 1.3rem; flex-grow: 1; }
+        .pricing-card li {
+            padding: 0.42rem 0;
+            font-size: 0.86rem; color: var(--ink-soft);
+            display: flex; gap: 0.55rem; align-items: flex-start;
+            border-bottom: 1px solid var(--line-soft);
+        }
+        .pricing-card li:last-child { border-bottom: none; }
+        .pricing-card li::before {
+            content: "+"; color: var(--ink); font-weight: 700; flex-shrink: 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .pricing-card.popular li { border-bottom-color: var(--line-soft); }
+        .pricing-card .btn { width: 100%; justify-content: center; }
+
+        /* ── 厂商 ── */
+        .providers { border-bottom: 1.5px solid var(--line); }
+        .provider-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr);
+            border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line);
+        }
+        .provider-item {
+            border-right: 1.5px solid var(--line);
+            border-bottom: 1.5px solid var(--line);
+            padding: 1.4rem 1.2rem;
+            background: var(--bg);
+        }
+        .provider-item .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 0.95rem;
+            margin-bottom: 0.4rem; color: var(--ink);
+        }
+        .provider-item .models {
+            font-size: 0.78rem; color: var(--muted); line-height: 1.55;
+        }
+        .provider-note {
+            margin-top: 1.5rem; padding: 1rem 1.2rem;
+            border-left: 4px solid var(--accent);
+            background: var(--paper);
+            font-size: 0.86rem; color: var(--ink-soft); line-height: 1.7;
+        }
+        .provider-note strong { color: var(--ink); font-weight: 700; }
+
+        /* ── UI 展示 ── */
+        .showcase { background: var(--paper); border-bottom: 1.5px solid var(--line); }
+        .shots-grid {
+            display: grid; grid-template-columns: repeat(2, 1fr);
+            gap: 18px; max-width: 1060px; margin: 0 auto;
+        }
+        .shot {
+            margin: 0; border: 1.5px solid var(--line); background: var(--bg);
+            overflow: hidden; transition: transform .18s ease, box-shadow .18s ease;
+        }
+        .shot:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,.14); }
+        .shot img { width: 100%; height: auto; display: block; }
+        .shot figcaption {
+            padding: 9px 12px; font-size: 12.5px; color: var(--ink);
+            border-top: 1.5px solid var(--line);
+        }
+        @media (max-width: 760px) { .shots-grid { grid-template-columns: 1fr; } }
+        .ui-mockup {
+            max-width: 880px; margin: 0 auto;
+            border: 1.5px solid var(--line);
+            background: var(--bg);
+        }
+        .ui-header {
+            display: flex; align-items: center; gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            border-bottom: 1.5px solid var(--line);
+            background: var(--ink); color: var(--bg);
+        }
+        .ui-dots { display: flex; gap: 6px; }
+        .ui-dot { width: 9px; height: 9px; border-radius: 0; background: var(--bg); }
+        .ui-dot:nth-child(1) { background: var(--accent); }
+        .ui-dot:nth-child(2) { background: var(--line-soft); }
+        .ui-dot:nth-child(3) { background: var(--bg); }
+        .ui-title { flex: 1; text-align: center; font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; }
+        .ui-body {
+            padding: 1.2rem;
+            display: flex; flex-direction: column; gap: 0.8rem;
+            font-size: 0.88rem; color: var(--ink);
+        }
+        .chat-msg { padding: 0.7rem 1rem; border-left: 3px solid var(--ink); background: var(--bg); }
+        .chat-msg.user { border-left-color: var(--ink); }
+        .chat-msg.ai { border-left-color: var(--accent); }
+        .chat-msg.system { border-left-color: var(--muted); color: var(--ink-soft); }
+        .chat-msg .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+            margin-bottom: 0.25rem; color: var(--ink);
+        }
+        .chat-msg .text { line-height: 1.5; }
+
+        /* ── 下载 ── */
+        .download { border-bottom: 1.5px solid var(--line); }
+        .dl-card {
+            border: 1.5px solid var(--line);
+            padding: 2.4rem 2rem; max-width: 640px;
+            background: var(--bg);
+        }
+        .dl-card .dl-h {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem; font-weight: 700;
+            margin-bottom: 0.6rem; color: var(--ink);
+            letter-spacing: -0.01em;
+        }
+        .dl-card .dl-p { color: var(--ink-soft); font-size: 0.92rem; margin-bottom: 1.5rem; line-height: 1.6; }
+        .dl-card .dl-btns { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+        .dl-card .dl-note { margin-top: 1.2rem; font-size: 0.78rem; color: var(--muted); }
+
+        .test-card {
+            max-width: 640px; margin-top: 1.2rem;
+            border: 1.5px solid var(--ink);
+            background: var(--ink); color: var(--bg);
+            padding: 1.6rem 1.8rem;
+        }
+        .test-card .test-head {
+            display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.8rem;
+        }
+        .test-card .test-badge {
+            background: var(--accent); color: var(--ink);
+            padding: 0.18rem 0.55rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        .test-card .test-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem; font-weight: 600;
+        }
+        .test-card .test-body { font-size: 0.86rem; line-height: 1.7; color: var(--bg); }
+        .test-card .test-body ol { margin: 0 0 0.8rem 1.2rem; }
+        .test-card .test-body li { margin-bottom: 0.2rem; }
+        .test-card .test-codes {
+            background: var(--bg); color: var(--ink);
+            border: 1.5px dashed var(--accent);
+            padding: 0.7rem 1rem; font-family: 'Consolas', 'Menlo', monospace;
+            font-size: 0.85rem; margin-bottom: 0.6rem;
+        }
+        .test-card .test-codes b { color: var(--accent-d); }
+        .test-card .test-note { font-size: 0.74rem; color: var(--bg); opacity: 0.7; }
+
+        /* ── Footer ── */
+        footer {
+            padding: 2.2rem 1.6rem; text-align: center;
+            color: var(--muted); font-size: 0.84rem;
+        }
+        footer strong { color: var(--ink); }
+        footer a { color: var(--ink); text-decoration: none; margin: 0 0.3rem; }
+        footer a:hover { background: var(--accent); }
+
+        /* ── 响应式 ── */
+        @media (max-width: 960px) {
+            .hero-inner { grid-template-columns: 1fr; }
+            .hero-figure { display: none; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: 1fr; }
+            .provider-grid { grid-template-columns: repeat(2, 1fr); }
+            .stats { grid-template-columns: repeat(2, 1fr); }
+            .stat:nth-child(2) { border-right: none; }
+            .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1.5px solid var(--line); }
+        }
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .provider-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ── Scroll reveal（保留） ── */
+        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="logo">
+                <img src="images/favicon.png" alt="">
+                Working Mate
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features" data-i18n="nav_features">Features</a></li>
+                <li><a href="#pricing" data-i18n="nav_pricing">Pricing</a></li>
+                <li><a href="#providers" data-i18n="nav_models">Models</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
+                <button class="lang-toggle" id="langToggle">中文</button>
+                <a href="login.html" class="nav-links-login" data-i18n="nav_login">登录</a>
+                <a href="#download" class="nav-cta" data-i18n="nav_download">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-grid"><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="label" data-i18n="hero_badge">Desktop AI · Local + Cloud</span>
+                </div>
+                <h1 data-i18n-html="hero_title">Your <span class="accent-word">Working Mate.</span><br>Runs Local. Scales Global.</h1>
+                <p data-i18n="hero_sub">
+                    A desktop AI assistant that runs on your hardware with local models, or taps
+                    cloud intelligence with one click. 87 built-in tools, AI video &amp; music
+                    generation, and your data stays on your machine.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary" data-i18n="hero_btn1">Free Download</a>
+                    <a href="#features" class="btn btn-secondary" data-i18n="hero_btn2">Learn More</a>
+                </div>
+            </div>
+            <div class="hero-figure">
+                <div><div class="hf-circle"></div></div>
+                <div><div class="hf-square"></div></div>
+                <div><div class="hf-line"></div></div>
+                <div><div class="hf-grid"></div></div>
+                <div><div class="hf-tri"></div></div>
+                <div><div class="hf-ring"></div></div>
+                <div><div class="hf-bar"></div></div>
+                <div><div class="hf-dot"></div></div>
+                <div><div class="hf-half"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <div class="number">87</div>
+            <div class="label" data-i18n="stat_tools">Built-in Tools</div>
+        </div>
+        <div class="stat">
+            <div class="number">41</div>
+            <div class="label" data-i18n="stat_models">AI Models</div>
+        </div>
+        <div class="stat">
+            <div class="number" data-i18n="stat_media_v">Video + Music</div>
+            <div class="label" data-i18n="stat_media_l">AI Generation</div>
+        </div>
+        <div class="stat">
+            <div class="number">$0</div>
+            <div class="label" data-i18n="stat_free">Free Tier</div>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="section-inner">
+            <div class="section-title reveal">
+                <span class="label">01 — Capabilities</span>
+                <h2 data-i18n="feat_title">Everything You Need</h2>
+                <p data-i18n="feat_sub">Local-first AI with the power to scale globally when you need it.</p>
+            </div>
+            <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden">
+                <defs>
+                    <linearGradient id="aiGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" class="mock-stroke" stop-color="#16161a"/>
+                        <stop offset="100%" class="mock-stroke" stop-color="#16161a"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            <a class="feature-spotlight reveal" href="feature.html?f=project-space">
+                <span class="sp-badge" data-i18n="sp_badge">FLAGSHIP</span>
+                <div class="sp-main">
+                    <div class="sp-title" data-i18n="sp_title">项目空间 · 多智能体协作</div>
+                    <p class="sp-desc" data-i18n="sp_desc">把一个大目标丢给一群 AI 专家：管理智能体自动拆解任务、派给对应专家、执行后打分验收（满分 10，低于阈值打回重做），最终汇总成可一键打开的成果文件。</p>
+                </div>
+                <span class="sp-go" data-i18n="sp_go">了解更多 →</span>
+            </a>
+            <div class="feature-grid">
+                <a class="feature-card reveal" href="feature.html?f=local-first">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.6" y="4.2" width="18.8" height="12.4" rx="0"/><path d="M9.4 20h5.2M12 16.6V20"/><path d="M8.6 10.6l2.3 2.3 4.5-4.6"/></svg></div>
+                    <h3 data-i18n="feat1_h">Local-First</h3>
+                    <p data-i18n="feat1_p">Runs entirely offline with local models via Ollama. No internet needed. Your conversations never leave your machine.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=agent-mode">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.8" y="7.6" width="16.4" height="11.6" rx="0"/><path d="M12 3.4v4.2"/><circle cx="12" cy="2.6" r="1.25"/><circle cx="9.1" cy="12.9" r="1.35"/><circle cx="14.9" cy="12.9" r="1.35"/><path d="M9.6 16.1h4.8"/><path d="M1.9 11.4v3.2M22.1 11.4v3.2"/></svg></div>
+                    <h3 data-i18n="feat2_h">Agent Mode</h3>
+                    <p data-i18n="feat2_p">87 built-in tools: file operations, document conversion, folder search, scheduled automation, and desktop GUI control — all with safety guardrails.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=ai-video">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2.4" y="5.2" width="19.2" height="13.6" rx="0"/><path d="M10.2 9.6l4.6 2.4-4.6 2.4z"/><path d="M5.6 5.2v13.6M18.4 5.2v13.6"/></svg></div>
+                    <h3 data-i18n="feat3_h">AI Video Generation</h3>
+                    <p data-i18n="feat3_p">Text-to-video and image-to-video powered by Kling. Generate any character, any scene — even make your own photos move.</p>
+                    <span class="tier-tag" data-i18n="tag_pro">PRO</span>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=ai-music">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.4 17.8V5.2l9.2-2v12.4"/><circle cx="6.8" cy="18.1" r="2.6"/><circle cx="16" cy="15.6" r="2.6"/><path d="M2.8 9.8v4.4"/></svg></div>
+                    <h3 data-i18n="feat4_h">AI Music Generation</h3>
+                    <p data-i18n="feat4_p">Full songs with vocals, powered by Suno. Give it a theme or your own lyrics — get two finished tracks back.</p>
+                    <span class="tier-tag" data-i18n="tag_pro">PRO</span>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=vision">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.7-6.4 10-6.4S22 12 22 12s-3.7 6.4-10 6.4S2 12 2 12z"/><circle cx="12" cy="12" r="3.3"/></svg></div>
+                    <h3 data-i18n="feat5_h">Vision + Multimodal</h3>
+                    <p data-i18n="feat5_p">Upload screenshots or photos and ask questions. OCR, image understanding, and document analysis built-in.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=models">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.2" cy="12" r="2.4"/><circle cx="18.6" cy="6.2" r="2.4"/><circle cx="18.6" cy="17.8" r="2.4"/><path d="M7.3 11l9-3.4M7.3 13l9 3.4M18.6 8.6v6.8"/></svg></div>
+                    <h3 data-i18n="feat6_h">41 Models, Smart Routing</h3>
+                    <p data-i18n="feat6_p">Automatically picks the right model for the task — reasoning, coding, vision — no manual switching.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=prompts">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 2.9h7.4l4.4 4.4v13.8H6.2z"/><path d="M13.6 2.9v4.4h4.4"/><rect x="9.6" y="12.9" width="5.6" height="4.6" rx="0"/><path d="M10.9 12.9v-1.3a1.5 1.5 0 012.9 0v1.3"/></svg></div>
+                    <h3 data-i18n="feat7_h">Your Prompts, Your Business</h3>
+                    <p data-i18n="feat7_p">We don't bolt extra refusals or filters on top of the models. You get the raw capability you're paying for.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=safe">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7l7.6 3.1v5.5c0 4.7-3.2 8.6-7.6 10.2-4.4-1.6-7.6-5.5-7.6-10.2V5.8z"/><path d="M8.9 12.1l2.4 2.4 4.3-4.6"/></svg></div>
+                    <h3 data-i18n="feat8_h">Safe by Default</h3>
+                    <p data-i18n="feat8_p">Every destructive action requires confirmation. Deletions go to trash. High-risk commands are blocked. Full audit trail.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=skills">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.8 7.4L12 3.4l7.2 4v7.2L12 18.6l-7.2-4z"/><path d="M4.8 7.4L12 11.4l7.2-4M12 11.4v7.2"/></svg></div>
+                    <h3 data-i18n="feat9_h">Skill Hub &amp; Workflow Designer</h3>
+                    <p data-i18n="feat9_p">87 built-in tools. The AI distills reusable skills after complex tasks, or you build workflows on a drag-and-drop canvas.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=automations">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.8"/><path d="M12 7v5l3.4 2"/></svg></div>
+                    <h3 data-i18n="feat10_h">Scheduled Automations</h3>
+                    <p data-i18n="feat10_p">Run any AI task on a schedule — daily briefing, folder digest, scheduled report. Runs locally, even when you are away.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+                <a class="feature-card reveal" href="feature.html?f=project-space">
+                    <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.2" cy="8.4" r="2.6"/><circle cx="16.4" cy="8.9" r="2.2"/><circle cx="12" cy="16.4" r="2.8"/><path d="M9.8 10.2l1.4 3.6M14.4 10.4l-1.4 3.4M10.8 8.6l3.4.2"/></svg></div>
+                    <h3 data-i18n="feat11_h">10 Interface Languages</h3>
+                    <p data-i18n="feat11_p">English, Chinese, Japanese, Korean, French, Russian, Arabic, Spanish, Portuguese and German — switch once, done.</p>
+                    <span class="detail-hint"><span class="chev">→</span><span data-i18n="click_more">Learn more</span></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="showcase" id="showcase">
+        <div class="section-inner">
+            <div class="section-title reveal">
+                <span class="label">02 — Interface</span>
+                <h2 data-i18n="ui_title">Real Screens, Real Work</h2>
+                <p data-i18n="ui_sub">Actual screenshots of the app running in English. Click any image to view it full-size.</p>
+            </div>
+            <div class="shots-grid reveal">
+                <figure class="shot shot-wide">
+                    <a href="assets/shots/home.png" target="_blank" rel="noopener"><img src="assets/shots/home.png" alt="Home — type a task, AI routes it to the best expert" loading="lazy"></a>
+                    <figcaption data-i18n="shot_home">Home — type a task, AI routes it to the best expert</figcaption>
+                </figure>
+                <figure class="shot shot-wide">
+                    <a href="assets/shots/agent-split.png" target="_blank" rel="noopener"><img src="assets/shots/agent-split.png" alt="Agent Mode — side-by-side coding assistant" loading="lazy"></a>
+                    <figcaption data-i18n="shot_agent">Agent Mode — the AI works on your code while you watch, side by side</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/project-spaces.png" target="_blank" rel="noopener"><img src="assets/shots/project-spaces.png" alt="Project Spaces — AI team workspace" loading="lazy"></a>
+                    <figcaption data-i18n="shot_spaces">Project Spaces — you are the CEO, the Admin Agent runs the team</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/skill-hub.png" target="_blank" rel="noopener"><img src="assets/shots/skill-hub.png" alt="Skill Hub — reusable AI skills" loading="lazy"></a>
+                    <figcaption data-i18n="shot_skills">Skill Hub — skills the AI taught itself, ready to reuse</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/automation.png" target="_blank" rel="noopener"><img src="assets/shots/automation.png" alt="Scheduled Automations" loading="lazy"></a>
+                    <figcaption data-i18n="shot_automation">Automations — AI tasks that run on a schedule</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-research.png" target="_blank" rel="noopener"><img src="assets/shots/cards-research.png" alt="Research expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_research">Research — paper search, citations, summaries, knowledge wormhole</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-video.png" target="_blank" rel="noopener"><img src="assets/shots/cards-video.png" alt="Video creation expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_video">Video — script to storyboard to finished MP4</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-image.png" target="_blank" rel="noopener"><img src="assets/shots/cards-image.png" alt="Image design expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_image">Images — posters, charts, enhancement, ID photos</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-finance.png" target="_blank" rel="noopener"><img src="assets/shots/cards-finance.png" alt="Finance expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_finance">Finance — live stock quotes and actuarial calculators</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-software.png" target="_blank" rel="noopener"><img src="assets/shots/cards-software.png" alt="Software development expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_software">Software — architecture, full-stack, AI apps, code</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/cards-personal.png" target="_blank" rel="noopener"><img src="assets/shots/cards-personal.png" alt="Personal growth expert cards" loading="lazy"></a>
+                    <figcaption data-i18n="shot_personal">Personal — solopreneur, office assistant, free chat, Agent</figcaption>
+                </figure>
+                <figure class="shot">
+                    <a href="assets/shots/task-center.png" target="_blank" rel="noopener"><img src="assets/shots/task-center.png" alt="Task Center" loading="lazy"></a>
+                    <figcaption data-i18n="shot_tasks">Task Center — every session's progress in one place</figcaption>
+                </figure>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="section-inner">
+            <div class="section-title reveal">
+                <span class="label">03 — Pricing</span>
+                <h2 data-i18n="pr_title">Simple, Honest</h2>
+                <p data-i18n="pr_sub">Start free, upgrade when you need more power. Cheaper than any mainstream subscription.</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card reveal">
+                    <h3 data-i18n="pr_free_h">Free</h3>
+                    <div class="tier-desc" data-i18n="pr_free_d">Local deployment, zero cost</div>
+                    <div class="price"><span class="currency">$</span>0<span class="per" data-i18n="pr_free_n">forever</span></div>
+                    <ul>
+                        <li data-i18n="pr_free_1">Local models via Ollama</li>
+                        <li data-i18n="pr_free_2">87 built-in tools</li>
+                        <li data-i18n="pr_free_3">Agent mode + safety guardrails</li>
+                        <li data-i18n="pr_free_4">File ops, GUI control, automation</li>
+                        <li data-i18n="pr_free_5">Image tools &amp; OCR</li>
+                        <li data-i18n="pr_free_6">Memory &amp; scheduled tasks</li>
+                    </ul>
+                    <a href="#download" class="btn btn-secondary" data-i18n="pr_free_btn">Download Free</a>
+                </div>
+                <div class="pricing-card popular reveal">
+                    <div class="popular-badge">Most Popular</div>
+                    <h3 data-i18n="pr_pro_h">Professional</h3>
+                    <div class="tier-desc" data-i18n="pr_pro_d">Flagship models + AI video &amp; music</div>
+                    <div class="price"><span class="currency">$</span>15<span class="per">/mo</span></div>
+                    <div class="price-note" data-i18n="pr_pro_n">Cancel anytime</div>
+                    <ul>
+                        <li data-i18n="pr_pro_1">Everything in Standard</li>
+                        <li data-i18n="pr_pro_2">Qwen3.8 Max · GLM 5.3 · Kimi K3</li>
+                        <li data-i18n="pr_pro_3">MiniMax M3 · Doubao Seed 2.1 Pro · DeepSeek V4 Pro</li>
+                        <li data-i18n="pr_pro_4">AI video generation (Kling)</li>
+                        <li data-i18n="pr_pro_5">AI music generation (Suno)</li>
+                        <li data-i18n="pr_pro_6">Priority support</li>
+                    </ul>
+                    <a href="pricing.html" class="btn" data-i18n="pr_pro_btn">Go Pro</a>
+                </div>
+                <div class="pricing-card reveal">
+                    <h3 data-i18n="pr_std_h">Standard</h3>
+                    <div class="tier-desc" data-i18n="pr_std_d">Cloud models, great value</div>
+                    <div class="price"><span class="currency">$</span>5<span class="per">/mo</span></div>
+                    <div class="price-note" data-i18n="pr_std_n">Cancel anytime</div>
+                    <ul>
+                        <li data-i18n="pr_std_1">Everything in Free</li>
+                        <li data-i18n="pr_std_2">DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6</li>
+                        <li data-i18n="pr_std_3">DeepSeek V4 Flash</li>
+                        <li data-i18n="pr_std_4">Smart model routing</li>
+                        <li data-i18n="pr_std_5">Multimodal vision</li>
+                        <li data-i18n="pr_std_6">Switch models anytime</li>
+                    </ul>
+                    <a href="pricing.html" class="btn btn-secondary" data-i18n="pr_std_btn">Choose Standard</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="providers" id="providers">
+        <div class="section-inner">
+            <div class="section-title reveal">
+                <span class="label">04 — Models</span>
+                <h2 data-i18n="prov_title">World-Class Roster</h2>
+                <p data-i18n="prov_sub">Switch between the best AI models from anywhere. One app, no API keys to manage.</p>
+            </div>
+            <div class="provider-grid">
+                <div class="provider-item reveal">
+                    <div class="name">Built-in Cloud</div>
+                    <div class="models">28 models · no key<br>DeepSeek · Qwen · GLM</div>
+                </div>
+                <div class="provider-item reveal">
+                    <div class="name">OpenAI</div>
+                    <div class="models">GPT-5 series</div>
+                </div>
+                <div class="provider-item reveal">
+                    <div class="name">Anthropic</div>
+                    <div class="models">Claude 4 series</div>
+                </div>
+                <div class="provider-item reveal">
+                    <div class="name">Google</div>
+                    <div class="models">Gemini 3 series</div>
+                </div>
+                <div class="provider-item reveal">
+                    <div class="name">Local Ollama</div>
+                    <div class="models">Offline · zero cost</div>
+                </div>
+            </div>
+            <div class="provider-note reveal" data-i18n-html="prov_note_html">
+                <strong>28 built-in</strong> work out of the box, no API key needed · OpenAI / Claude / Gemini / DeepSeek / Qwen <strong>13 more with your own key</strong> · <strong>Pro</strong> unlocks every built-in model
+            </div>
+        </div>
+    </section>
+
+    <section class="download" id="download">
+        <div class="section-inner">
+            <div class="section-title reveal">
+                <span class="label">05 — Download</span>
+                <h2 data-i18n="dl_title">Get Started Today</h2>
+                <p data-i18n="dl_sub">Free to download. No account needed for local mode.</p>
+            </div>
+            <div class="dl-card reveal">
+                <div class="dl-h" data-i18n="dl_card_h">Windows Installer</div>
+                <div class="dl-p" data-i18n="dl_card_p">
+                    v1.2 for Windows 10/11. Everything bundled — no Python, no setup. Optional: install Ollama to run local models.
+                </div>
+                <div class="dl-btns">
+                    <a href="https://github.com/Frederic-123-cell/working-mate/releases/download/v1.3.0/AIAgent-Setup-1.3.0.exe" class="btn btn-primary" data-i18n="dl_btn1">Download for Windows</a>
+                    <a href="pricing.html" class="btn btn-secondary" data-i18n="dl_btn2">See Plans</a>
+                </div>
+                <div class="dl-note" data-i18n="dl_note">Linux (via WSL) · macOS (coming soon)</div>
+            </div>
+
+            <div class="test-card reveal">
+                <div class="test-head">
+                    <span class="test-badge" data-i18n="test_badge">BETA</span>
+                    <span class="test-title" data-i18n="test_title">Testing Period Quick Start</span>
+                </div>
+                <div class="test-body" data-i18n-html="test_steps">
+                    <ol>
+                        <li>Download and install the app above, then launch it.</li>
+                        <li>Top-right <b>Mode</b> dropdown → pick <b>Standard</b> → click <b>Enter activation code</b> in the popup and use the code below.</li>
+                        <li>Send your first message. If Ollama is not installed, the app will guide you to download it (about 100 MB, runs in the background).</li>
+                    </ol>
+                </div>
+                <div class="test-codes">
+                    Standard: <b>AIA-FRIEND-STD</b> &nbsp;·&nbsp; Pro: <b>AIA-FRIEND-PRO</b>
+                </div>
+                <div class="test-note" data-i18n="test_note">
+                    Codes are valid for 90 days during the testing period. Please do not repost them publicly.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>
+            <strong>Working Mate</strong> — <span data-i18n="ft_tag">Local Desktop Intelligence</span><br>
+            <span data-i18n="ft_line">Built with PySide6 + Ollama. Powered by the world's best models.</span><br>
+            <a href="mailto:wanjunjie13341418310@outlook.com">wanjunjie13341418310@outlook.com</a><br><br>
+            <a href="pricing.html" data-i18n="ft_pricing">Pricing</a>·
+            <a href="privacy.html" data-i18n="ft_privacy">Privacy</a>·
+            <a href="terms.html" data-i18n="ft_terms">Terms</a>·
+            <a href="refunds.html" data-i18n="ft_refunds">Refunds</a>·
+            <a href="acceptable-use.html" data-i18n="ft_aup">Acceptable Use</a>
+        </p>
+    </footer>
+
+    <script>
+        // i18n（保持原样）
+        const I18N = {
+            en: {
+                nav_features: 'Features', nav_pricing: 'Pricing', nav_models: 'Models', nav_download: 'Download', nav_login: 'Sign in',
+                hero_badge: 'Desktop AI \u00b7 Local + Cloud',
+                hero_title: 'Your <span class="accent-word">Working Mate.</span><br>Runs Local. Scales Global.',
+                hero_sub: "A desktop AI assistant that runs on your hardware with local models, or taps cloud intelligence with one click. 87 built-in tools, AI video & music generation, and your data stays on your machine.",
+                hero_btn1: 'Free Download', hero_btn2: 'Learn More',
+                stat_tools: 'Built-in Tools', stat_models: 'AI Models',
+                stat_media_v: 'Video + Music', stat_media_l: 'AI Generation', stat_free: 'Free Tier',
+                sp_badge: 'FLAGSHIP',
+                sp_title: 'Project Space · Multi-Agent Collaboration',
+                sp_desc: 'Hand one big goal to a team of AI experts: the admin agent breaks it into subtasks, dispatches them to the right specialists, reviews and scores each delivery (out of 10, retries below threshold), then compiles everything into result files you can open with one click.',
+                sp_go: 'Learn more \u2192',
+                feat_title: 'Everything You Need',
+                feat_sub: 'Local-first AI with the power to scale globally when you need it.',
+                feat1_h: 'Local-First',
+                feat1_p: 'Runs entirely offline with local models via Ollama. No internet needed. Your conversations never leave your machine.',
+                feat2_h: 'Agent Mode',
+                feat2_p: '87 built-in tools: file operations, document conversion, folder search, scheduled automation, and desktop GUI control \u2014 all with safety guardrails.',
+                feat3_h: 'AI Video Generation',
+                feat3_p: 'Text-to-video and image-to-video powered by Kling. Generate any character, any scene \u2014 even make your own photos move.',
+                tag_pro: 'PRO',
+                feat4_h: 'AI Music Generation',
+                feat4_p: 'Full songs with vocals, powered by Suno. Give it a theme or your own lyrics \u2014 get two finished tracks back.',
+                feat5_h: 'Vision + Multimodal',
+                feat5_p: 'Upload screenshots or photos and ask questions. OCR, image understanding, and document analysis built-in.',
+                feat6_h: '41 Models, Smart Routing',
+                feat6_p: 'Automatically picks the right model for the task \u2014 reasoning, coding, vision \u2014 no manual switching.',
+                feat7_h: 'Your Prompts, Your Business',
+                feat7_p: "We don't bolt extra refusals or filters on top of the models. You get the raw capability you're paying for.",
+                feat8_h: 'Safe by Default',
+                feat8_p: 'Every destructive action requires confirmation. Deletions go to trash. High-risk commands are blocked. Full audit trail.',
+                feat9_h: 'Skill Hub & Workflow Designer',
+                feat9_p: '87 built-in tools. The AI distills reusable skills after complex tasks, or you build workflows on a drag-and-drop canvas.',
+                feat10_h: 'Scheduled Automations',
+                feat10_p: 'Run any AI task on a schedule — daily briefing, folder digest, scheduled report. Runs locally, even when you are away.',
+                feat11_h: '10 Interface Languages',
+                feat11_p: 'English, Chinese, Japanese, Korean, French, Russian, Arabic, Spanish, Portuguese and German — switch once, done.',
+                click_more: 'Learn more',
+                feat1_detail: 'Runs on your own hardware via Ollama — Qwen, DeepSeek, Llama and Gemma. From 0.5B ultra-light models that run on any office laptop, to 14B models for gaming rigs. Auto-detects your disk, memory, GPU and network speed to pick the model that fits best. Nothing ever leaves your machine.',
+                feat2_detail: '87 tools across file operations, Office and PDF conversion, OCR, web search, Git, memory, skills, video, music, image design and stock quotes. Routes your request to the right expert, executes tool calls step by step, and guards every destructive action.',
+                feat3_detail: 'Text-to-video and image-to-video powered by Kling. Generate any character, any scene, or bring your own photos to life. PRO tier.',
+                feat4_detail: 'Full songs with vocals powered by Suno. Give it a theme or your own lyrics and get two finished tracks back. PRO tier.',
+                feat5_detail: 'Upload screenshots or photos and ask questions directly. Built-in OCR, image understanding, and native reading of PDF, Word, PPT and Excel.',
+                feat6_detail: 'Picks the right model per task \u2014 reasoning, coding, vision \u2014 no manual switching. 28 built-in models need no API key; bring your own key to add OpenAI, Claude or Gemini. Local + cloud dual engine, one click to flip.',
+                feat7_detail: 'No extra refusal lists or filters bolted on top of the models. You get the full capability you are paying for.',
+                feat8_detail: 'Every destructive action requires confirmation. Deletions go to the trash. High-risk commands are blocked. Full audit trail of every action.',
+                ui_title: 'Real Screens, Real Work',
+                ui_sub: 'Actual screenshots of the app running in English. Click any image to view it full-size.',
+                shot_home: 'Home — type a task, AI routes it to the best expert',
+                shot_agent: 'Agent Mode — the AI works on your code while you watch, side by side',
+                shot_spaces: 'Project Spaces — you are the CEO, the Admin Agent runs the team',
+                shot_skills: 'Skill Hub — skills the AI taught itself, ready to reuse',
+                shot_automation: 'Automations — AI tasks that run on a schedule',
+                shot_research: 'Research — paper search, citations, summaries, knowledge wormhole',
+                shot_video: 'Video — script to storyboard to finished MP4',
+                shot_image: 'Images — posters, charts, enhancement, ID photos',
+                shot_finance: 'Finance — live stock quotes and actuarial calculators',
+                shot_software: 'Software — architecture, full-stack, AI apps, code',
+                shot_personal: 'Personal — solopreneur, office assistant, free chat, Agent',
+                shot_tasks: 'Task Center — every session\u2019s progress in one place',
+                ui_mocker_title: 'Working Mate \u2014 Multi-Model Router', ui_you: 'You', ui_sys: 'System',
+                ui_msg1: 'Search my Desktop for all PDF files and convert them to Word documents',
+                ui_msg2: 'Executing search_files(path="C:/Users/Desktop", keyword=".pdf")...',
+                ui_msg3: 'Found 12 PDF files. Converting to Word...',
+                ui_msg4: 'All conversions complete. Files saved to C:/Users/Desktop/converted/',
+                pr_title: 'Simple, Honest',
+                pr_sub: 'Start free, upgrade when you need more power. Cheaper than any mainstream subscription.',
+                pr_free_h: 'Free', pr_free_d: 'Local deployment, zero cost', pr_free_n: 'forever',
+                pr_free_1: 'Local models via Ollama', pr_free_2: '87 built-in tools',
+                pr_free_3: 'Agent mode + safety guardrails', pr_free_4: 'File ops, GUI control, automation',
+                pr_free_5: 'Image tools & OCR', pr_free_6: 'Memory & scheduled tasks',
+                pr_free_btn: 'Download Free',
+                pr_pro_h: 'Professional', pr_pro_d: 'Flagship models + AI video & music',
+                pr_pro_n: 'Cancel anytime',
+                pr_pro_1: 'Everything in Standard', pr_pro_2: 'Qwen3.8 Max \u00b7 GLM 5.3 \u00b7 Kimi K3',
+                pr_pro_3: 'MiniMax M3 \u00b7 Doubao Seed 2.1 Pro \u00b7 DeepSeek V4 Pro',
+                pr_pro_4: 'AI video generation (Kling)', pr_pro_5: 'AI music generation (Suno)',
+                pr_pro_6: 'Priority support', pr_pro_btn: 'Go Pro',
+                pr_std_h: 'Standard', pr_std_d: 'Cloud models, great value', pr_std_n: 'Cancel anytime',
+                pr_std_1: 'Everything in Free', pr_std_2: 'DeepSeek V4 Flash \u00b7 Qwen3.8 Flash \u00b7 GLM 4.6',
+                pr_std_3: 'DeepSeek V4 Flash', pr_std_4: 'Smart model routing',
+                pr_std_5: 'Multimodal vision', pr_std_6: 'Switch models anytime',
+                pr_std_btn: 'Choose Standard',
+                prov_title: 'World-Class Roster',
+                prov_sub: "Switch between the best AI models from anywhere. One app, no API keys to manage.",
+                prov_note_html: '<strong>28 built-in</strong> work out of the box, no API key needed \u00b7 OpenAI / Claude / Gemini / DeepSeek / Qwen <strong>13 more with your own key</strong> \u00b7 <strong>Pro</strong> unlocks every built-in model',
+                dl_title: 'Get Started Today',
+                dl_sub: 'Free to download. No account needed for local mode.',
+                dl_card_h: 'Windows Installer',
+                dl_card_p: 'v1.2 for Windows 10/11. Everything bundled \u2014 no Python, no setup. Optional: install Ollama to run local models.',
+                dl_btn1: 'Download for Windows', dl_btn2: 'See Plans',
+                dl_note: 'Linux (via WSL) \u00b7 macOS (coming soon)',
+                test_badge: 'BETA',
+                test_title: 'Testing Period Quick Start',
+                test_steps: '<ol style="margin: 0 0 0.8rem 0; padding-left: 1.3rem;"><li>Download and install the app above, then launch it.</li><li>Top-right <b>Mode</b> dropdown \u2192 pick <b>Standard</b> \u2192 click <b>Enter activation code</b> in the popup and use the code below.</li><li>Send your first message. If Ollama is not installed, the app will guide you to download it (about 100 MB, runs in the background).</li></ol>',
+                test_note: 'Codes are valid for 90 days during the testing period. Please do not repost them publicly.',
+                ft_tag: 'Local Desktop Intelligence',
+                ft_line: 'Built with PySide6 + Ollama. Powered by the world\u2019s best models.',
+                ft_pricing: 'Pricing', ft_privacy: 'Privacy', ft_terms: 'Terms', ft_refunds: 'Refunds', ft_aup: 'Acceptable Use'
+            },
+            zh: {
+                nav_features: '功能', nav_pricing: '价格', nav_models: '模型', nav_download: '下载', nav_login: '登录',
+                hero_badge: '桌面 AI · 本地 + 云端',
+                hero_title: '你的 <span class="accent-word">工作搭子。</span><br>本地运行，全球算力。',
+                hero_sub: '一款桌面 AI 助手：本地模型离线跑在你自己的电脑上，一键切换云端大模型。87 个内置工具、AI 视频与音乐生成，数据始终留在你手里。',
+                hero_btn1: '免费下载', hero_btn2: '了解更多',
+                stat_tools: '内置工具', stat_models: 'AI 模型',
+                stat_media_v: '视频 + 音乐', stat_media_l: 'AI 生成', stat_free: '免费版',
+                sp_badge: '旗舰功能',
+                sp_title: '项目空间 · 多智能体协作',
+                sp_desc: '把一个大目标丢给一群 AI 专家：管理智能体自动拆解任务、派给对应专家、执行后打分验收（满分 10，低于阈值打回重做），最终汇总成可一键打开的成果文件。',
+                sp_go: '了解更多 →',
+                feat_title: '你需要的一切',
+                feat_sub: '本地优先的 AI，需要全球算力时随时扩展。',
+                feat1_h: '本地优先',
+                feat1_p: '通过 Ollama 接本地模型，完全离线运行，无需联网。对话永远不离开你的电脑。',
+                feat2_h: '智能体模式',
+                feat2_p: '87 个内置工具：文件操作、文档转换、全盘搜索、定时自动化、桌面 GUI 控制——全部带安全护栏。',
+                feat3_h: 'AI 视频生成',
+                feat3_p: '基于可灵的文生视频 / 图生视频。任意角色、任意场景——还能让你自己的照片动起来。',
+                tag_pro: 'PRO',
+                feat4_h: 'AI 音乐生成',
+                feat4_p: '基于 Suno 生成带人声的完整歌曲。给个主题或你自己的歌词，一次产出两首成品。',
+                feat5_h: '视觉 + 多模态',
+                feat5_p: '上传截图或照片直接提问。内置 OCR、图像理解与文档分析。',
+                feat6_h: '41 个模型，智能路由',
+                feat6_p: '自动为任务挑选最合适的模型——推理、编码、视觉各有专攻，无需手动切换。',
+                feat7_h: '你的提示词，你做主',
+                feat7_p: '我们不在模型上额外叠加拒绝词表或过滤器。你付了钱，就得到模型的完整能力。',
+                feat8_h: '默认安全',
+                feat8_p: '所有破坏性操作均需确认；删除进回收站；高危命令直接拦截；操作全程留痕。',
+                feat9_h: '技能库与工作流设计器',
+                feat9_p: '内置 87 个工具。复杂任务完成后 AI 自动沉淀技能，也可以在拖拽画布上搭建工作流。',
+                feat10_h: '定时自动化任务',
+                feat10_p: '按计划运行任意 AI 任务——每日简报、文件夹摘要、定时报告。本地执行，你不在也在跑。',
+                feat11_h: '10 种界面语言',
+                feat11_p: '中、英、日、韩、法、俄、阿拉伯、西、葡、德——一次切换，全局生效。',
+                click_more: '了解更多 →',
+                feat1_detail: '通过 Ollama 跑在你自己的硬件上——Qwen、DeepSeek、Llama、Gemma 等都能装。从办公本也能跑的 0.5B 超轻量，到游戏本可跑的 14B。自动检测磁盘、内存、显卡、网速，为你匹配最合适的模型。数据永远不离开你的电脑。',
+                feat2_detail: '87 个工具覆盖文件操作、Office/PDF 转换、OCR、联网搜索、Git、记忆、技能、视频、音乐、图片设计、股票行情。把请求路由到对应专家，逐步调用工具执行，破坏性操作全程有护栏。',
+                feat3_detail: '基于可灵的文生视频 + 图生视频。任意角色、任意场景，还能让你自己的照片动起来。专业版功能。',
+                feat4_detail: '基于 Suno 生成带人声的完整歌曲。给个主题或自己的歌词，一次产出两首成品。专业版功能。',
+                feat5_detail: '上传截图或照片直接提问。内置 OCR、图像理解，原生读取 PDF、Word、PPT、Excel。',
+                feat6_detail: '自动为任务挑最合适的模型——推理、编码、视觉各有专攻，无需手动切换。内置 28 个模型无需自备 Key；自带 Key 可再加 OpenAI、Claude、Gemini 等。本地 + 云端双引擎，一键切换。',
+                feat7_detail: '不在模型上额外叠加拒绝词表或过滤器。你付了钱，就得到模型的完整能力。',
+                feat8_detail: '所有破坏性操作需确认；删除进回收站；高危命令直接拦截；每个动作全程留痕。',
+                ui_title: '真实截图，真实工作',
+                ui_sub: '应用英文界面的实际截图。点击任意图片可查看原图。',
+                shot_home: '主页——输入任务，AI 自动路由到最合适的专家',
+                shot_agent: 'Agent 模式——AI 与你并排，实时改代码',
+                shot_spaces: '项目空间——你是董事长，Admin Agent 带队干活',
+                shot_skills: '技能库——AI 自学的技能，随时复用',
+                shot_automation: '自动化——按计划运行的 AI 任务',
+                shot_research: '科研——论文搜索、引用、综述、知识虫洞',
+                shot_video: '视频——从剧本到分镜到成品 MP4',
+                shot_image: '图片——海报、图表、清晰化、证件照',
+                shot_finance: '金融——实时行情与精算计算器',
+                shot_software: '软件——架构、全栈、AI 应用、代码',
+                shot_personal: '个人——一人企业、办公助手、自由对话、Agent',
+                shot_tasks: '任务中心——所有会话进度一屏掌握',
+                ui_mocker_title: 'Working Mate — 多模型路由', ui_you: '你', ui_sys: '系统',
+                ui_msg1: '把桌面上所有 PDF 找出来并转成 Word 文档',
+                ui_msg2: '正在执行 search_files(path="C:/Users/Desktop", keyword=".pdf")...',
+                ui_msg3: '找到 12 个 PDF，正在转换为 Word...',
+                ui_msg4: '全部转换完成，文件已保存到 C:/Users/Desktop/converted/',
+                pr_title: '简单、诚实',
+                pr_sub: '免费开始，需要更强算力再升级。比任何主流订阅都便宜。',
+                pr_free_h: '免费版', pr_free_d: '本地部署，零成本', pr_free_n: '永久',
+                pr_free_1: 'Ollama 本地模型', pr_free_2: '87 个内置工具',
+                pr_free_3: '智能体模式 + 安全护栏', pr_free_4: '文件操作 / GUI 控制 / 自动化',
+                pr_free_5: '图像工具 & OCR', pr_free_6: '记忆 & 定时任务',
+                pr_free_btn: '免费下载',
+                pr_pro_h: '专业版', pr_pro_d: '旗舰模型 + AI 视频与音乐',
+                pr_pro_n: '随时可取消',
+                pr_pro_1: '包含标准版全部功能', pr_pro_2: 'Qwen3.8 Max · GLM 5.3 · Kimi K3',
+                pr_pro_3: 'MiniMax M3 · Doubao Seed 2.1 Pro · DeepSeek V4 Pro',
+                pr_pro_4: 'AI 视频生成（可灵）', pr_pro_5: 'AI 音乐生成（Suno）',
+                pr_pro_6: '优先支持', pr_pro_btn: '升级专业版',
+                pr_std_h: '标准版', pr_std_d: '云端模型，超值', pr_std_n: '随时可取消',
+                pr_std_1: '包含免费版全部功能', pr_std_2: 'DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6',
+                pr_std_3: 'DeepSeek V4 Flash', pr_std_4: '智能模型路由',
+                pr_std_5: '多模态视觉', pr_std_6: '随时切换模型',
+                pr_std_btn: '选择标准版',
+                prov_title: '世界级模型阵容',
+                prov_sub: '一个应用切换全球最好的模型，无需自己管 API Key。',
+                prov_note_html: '<strong>内置 28 个</strong>开箱即用，无需自备 Key · OpenAI / Claude / Gemini / DeepSeek / 通义千问 <strong>13 个需自带 Key</strong> · <strong>专业版</strong>解锁全部内置模型',
+                dl_title: '即刻开始',
+                dl_sub: '免费下载，本地模式无需注册账号。',
+                dl_card_h: 'Windows 安装包',
+                dl_card_p: 'v1.2，支持 Windows 10/11。全部打包好——无需 Python、无需配置。可选：安装 Ollama 跑本地模型。',
+                dl_btn1: '下载 Windows 版', dl_btn2: '查看套餐',
+                dl_note: 'Linux（通过 WSL）· macOS（即将推出）',
+                test_badge: '内测中',
+                test_title: '测试期快速上手',
+                test_steps: '<ol style="margin: 0 0 0.8rem 0; padding-left: 1.3rem;"><li>下载上方安装包，双击安装后启动（旧版本可直接覆盖安装）。</li><li>右上角「模式」下拉 → 选「标准会员」→ 弹窗里点「输入激活码」，填入下方测试码即可解锁。</li><li>发第一条消息。若未安装 Ollama，软件会弹窗引导下载（约 100 MB，装好后后台自动运行）。</li></ol>',
+                test_note: '测试码有效期 90 天，请勿公开转发到群或朋友圈。',
+                ft_tag: '本地桌面智能',
+                ft_line: '基于 PySide6 + Ollama 构建，由全球最好的模型驱动。',
+                ft_pricing: '价格', ft_privacy: '隐私', ft_terms: '条款', ft_refunds: '退款', ft_aup: '使用规范'
+            }
+        };
+
+        const LANG_KEY = 'agent_site_lang';
+        let lang = localStorage.getItem(LANG_KEY) || 'en';
+
+        function applyLang(l) {
+            lang = (l === 'zh') ? 'zh' : 'en';
+            localStorage.setItem(LANG_KEY, lang);
+            document.documentElement.lang = lang;
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const k = el.getAttribute('data-i18n');
+                if (I18N[lang][k] !== undefined) el.textContent = I18N[lang][k];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(el => {
+                const k = el.getAttribute('data-i18n-html');
+                if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+            });
+            document.getElementById('langToggle').textContent = (lang === 'zh') ? 'EN' : '中文';
+            document.title = (lang === 'zh') ? 'Working Mate — 本地桌面智能助手' : 'Working Mate — Local Desktop Intelligence';
+        }
+
+        document.getElementById('langToggle').addEventListener('click', () => {
+            applyLang(lang === 'zh' ? 'en' : 'zh');
+        });
+
+        applyLang(lang);
+
+        // Feature cards are now <a> links to feature.html (handled by href)
+
+        // Scroll reveal
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

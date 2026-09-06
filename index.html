@@ -408,7 +408,7 @@
             border-bottom: 1.5px solid var(--line);
         }
         .pricing-grid {
-            display: grid; grid-template-columns: repeat(3, 1fr);
+            display: grid; grid-template-columns: repeat(4, 1fr);
             border-top: 1.5px solid var(--line); border-left: 1.5px solid var(--line);
         }
         .pricing-card {
@@ -466,6 +466,15 @@
             font-family: 'Space Grotesk', sans-serif;
         }
         .pricing-card.popular li { border-bottom-color: var(--line-soft); }
+        .pricing-card.coming-soon { opacity: 0.78; }
+        .pricing-card.coming-soon .btn { pointer-events: none; cursor: default; opacity: 0.55; }
+        .pricing-card .coming-soon-badge {
+            position: absolute; top: -1.5px; right: -1.5px;
+            background: var(--muted); color: var(--bg);
+            padding: 0.3rem 0.8rem;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+        }
         .pricing-card .btn { width: 100%; justify-content: center; }
 
         /* ── 厂商 ── */
@@ -608,8 +617,8 @@
             .hero-inner { grid-template-columns: 1fr; }
             .hero-figure { display: none; }
             .feature-grid { grid-template-columns: repeat(2, 1fr); }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .provider-grid { grid-template-columns: repeat(2, 1fr); }
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+            .provider-grid { grid-template-columns: 1fr; }
             .stats { grid-template-columns: repeat(2, 1fr); }
             .stat:nth-child(2) { border-right: none; }
             .stat:nth-child(1), .stat:nth-child(2) { border-bottom: 1.5px solid var(--line); }
@@ -887,42 +896,55 @@
                     </ul>
                     <a href="#download" class="btn btn-secondary" data-i18n="pr_free_btn">Download Free</a>
                 </div>
+                <div class="pricing-card reveal">
+                    <h3 data-i18n="pr_std_h">Standard</h3>
+                    <div class="tier-desc" data-i18n="pr_std_d">12 cloud models with smart routing</div>
+                    <div class="price"><span class="currency">$</span>9<span class="per" data-i18n="pr_std_n">/ month</span></div>
+                    <div class="price-note" data-i18n="pr_std_cancel">Cancel anytime</div>
+                    <ul>
+                        <li data-i18n="pr_std_1">Everything in Free</li>
+                        <li data-i18n="pr_std_2">DeepSeek V4 Flash &middot; Qwen3.8 Flash &middot; GLM 4.6</li>
+                        <li data-i18n="pr_std_3">Smart model routing, switch anytime</li>
+                        <li data-i18n="pr_std_4">Vision &amp; multimodal input</li>
+                        <li data-i18n="pr_std_5">Email support</li>
+                    </ul>
+                    <a href="pricing.html?v=20260906c" class="btn btn-secondary" data-i18n="pr_std_btn">Get Standard</a>
+                </div>
                 <div class="pricing-card popular reveal">
-                    <div class="popular-badge">Most Popular</div>
-                    <h3 data-i18n="pr_pro_h">Professional</h3>
-                    <div class="tier-desc" data-i18n="pr_pro_d">Flagship models + AI video &amp; music</div>
-                    <div class="price"><span class="currency">$</span>15<span class="per">/mo</span></div>
+                    <div class="popular-badge">Popular</div>
+                    <h3 data-i18n="pr_pro_h">Pro</h3>
+                    <div class="tier-desc" data-i18n="pr_pro_d">All 28 built-in cloud models &mdash; Qwen3.8 Max, GLM 5.3, Kimi K3 &mdash; plus AI video &amp; music generation.</div>
+                    <div class="price"><span class="currency">$</span>29<span class="per">/ month</span></div>
                     <div class="price-note" data-i18n="pr_pro_n">Cancel anytime</div>
                     <ul>
                         <li data-i18n="pr_pro_1">Everything in Standard</li>
-                        <li data-i18n="pr_pro_2">Qwen3.8 Max · GLM 5.3 · Kimi K3</li>
-                        <li data-i18n="pr_pro_3">MiniMax M3 · Doubao Seed 2.1 Pro · DeepSeek V4 Pro</li>
-                        <li data-i18n="pr_pro_4">AI video generation (Kling)</li>
-                        <li data-i18n="pr_pro_5">AI music generation (Suno)</li>
-                        <li data-i18n="pr_pro_6">Priority support</li>
+                        <li data-i18n="pr_pro_2">Qwen3.8 Max &middot; GLM 5.3 &middot; Kimi K3</li>
+                        <li data-i18n="pr_pro_3">AI video generation (Kling)</li>
+                        <li data-i18n="pr_pro_4">AI music generation (Suno)</li>
+                        <li data-i18n="pr_pro_5">Priority support</li>
                     </ul>
-                    <a href="pricing.html?v=20260906c" class="btn" data-i18n="pr_pro_btn">Go Pro</a>
+                    <a href="pricing.html?v=20260906c" class="btn" data-i18n="pr_pro_btn">Get Pro</a>
                 </div>
-                <div class="pricing-card reveal">
-                    <h3 data-i18n="pr_std_h">Standard</h3>
-                    <div class="tier-desc" data-i18n="pr_std_d">Cloud models, great value</div>
-                    <div class="price"><span class="currency">$</span>5<span class="per">/mo</span></div>
-                    <div class="price-note" data-i18n="pr_std_n">Cancel anytime</div>
+                <div class="pricing-card coming-soon reveal">
+                    <span class="coming-soon-badge">Coming Soon</span>
+                    <h3 data-i18n="pr_max_h">Max</h3>
+                    <div class="tier-desc" data-i18n="pr_max_d">Unlimited everything &mdash; team seats, highest rate limits, priority routing, early access to new providers.</div>
+                    <div class="price"><span class="currency">$</span>99<span class="per">/ month</span></div>
                     <ul>
-                        <li data-i18n="pr_std_1">Everything in Free</li>
-                        <li data-i18n="pr_std_2">DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6</li>
-                        <li data-i18n="pr_std_3">DeepSeek V4 Flash</li>
-                        <li data-i18n="pr_std_4">Smart model routing</li>
-                        <li data-i18n="pr_std_5">Multimodal vision</li>
-                        <li data-i18n="pr_std_6">Switch models anytime</li>
+                        <li data-i18n="pr_max_1">Everything in Pro</li>
+                        <li data-i18n="pr_max_2">Team / multi-seat license</li>
+                        <li data-i18n="pr_max_3">Highest rate limits &amp; priority routing</li>
+                        <li data-i18n="pr_max_4">Early access to new models &amp; providers</li>
+                        <li data-i18n="pr_max_5">Dedicated support</li>
                     </ul>
-                    <a href="pricing.html?v=20260906c" class="btn btn-secondary" data-i18n="pr_std_btn">Choose Standard</a>
+                    <a href="pricing.html?v=20260906c" class="btn btn-secondary" aria-disabled="true" data-i18n="pr_max_btn">Coming Soon &mdash; Stay Tuned</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="providers" id="providers">
+    <section class="providers"
+ id="providers">
         <div class="section-inner">
             <div class="section-title reveal">
                 <span class="label">04 — Models</span>
@@ -1086,17 +1108,26 @@
                 pr_free_3: 'Agent mode + safety guardrails', pr_free_4: 'File ops, GUI control, automation',
                 pr_free_5: 'Image tools & OCR', pr_free_6: 'Memory & scheduled tasks',
                 pr_free_btn: 'Download Free',
-                pr_pro_h: 'Professional', pr_pro_d: 'Flagship models + AI video & music',
+                pr_pro_h: 'Pro', pr_pro_d: 'All 28 built-in cloud models — Qwen3.8 Max, GLM 5.3, Kimi K3 — plus AI video & music generation.',
                 pr_pro_n: 'Cancel anytime',
                 pr_pro_1: 'Everything in Standard', pr_pro_2: 'Qwen3.8 Max \u00b7 GLM 5.3 \u00b7 Kimi K3',
-                pr_pro_3: 'MiniMax M3 \u00b7 Doubao Seed 2.1 Pro \u00b7 DeepSeek V4 Pro',
-                pr_pro_4: 'AI video generation (Kling)', pr_pro_5: 'AI music generation (Suno)',
-                pr_pro_6: 'Priority support', pr_pro_btn: 'Go Pro',
-                pr_std_h: 'Standard', pr_std_d: 'Cloud models, great value', pr_std_n: 'Cancel anytime',
+                pr_pro_3: 'AI video generation (Kling)',
+                pr_pro_4: 'AI music generation (Suno)',
+                pr_pro_5: 'Priority support', pr_pro_btn: 'Get Pro',
+                pr_std_h: 'Standard', pr_std_d: '12 cloud models with smart routing', pr_std_n: '/ month',
+                pr_std_cancel: 'Cancel anytime',
                 pr_std_1: 'Everything in Free', pr_std_2: 'DeepSeek V4 Flash \u00b7 Qwen3.8 Flash \u00b7 GLM 4.6',
-                pr_std_3: 'DeepSeek V4 Flash', pr_std_4: 'Smart model routing',
-                pr_std_5: 'Multimodal vision', pr_std_6: 'Switch models anytime',
-                pr_std_btn: 'Choose Standard',
+                pr_std_3: 'Smart model routing, switch anytime',
+                pr_std_4: 'Vision & multimodal input',
+                pr_std_5: 'Email support',
+                pr_std_btn: 'Get Standard',
+                pr_max_h: 'Max', pr_max_d: 'Unlimited everything — team seats, highest rate limits, priority routing, early access to new providers.',
+                pr_max_1: 'Everything in Pro',
+                pr_max_2: 'Team / multi-seat license',
+                pr_max_3: 'Highest rate limits & priority routing',
+                pr_max_4: 'Early access to new models & providers',
+                pr_max_5: 'Dedicated support',
+                pr_max_btn: 'Coming Soon — Stay Tuned',
                 prov_title: 'World-Class Roster',
                 prov_sub: "Switch between the best AI models from anywhere. One app, no API keys to manage.",
                 prov_note_html: '<strong>28 built-in</strong> work out of the box, no API key needed \u00b7 OpenAI / Claude / Gemini / DeepSeek / Qwen <strong>13 more with your own key</strong> \u00b7 <strong>Pro</strong> unlocks every built-in model',
@@ -1186,20 +1217,29 @@
                 pr_free_3: '智能体模式 + 安全护栏', pr_free_4: '文件操作 / GUI 控制 / 自动化',
                 pr_free_5: '图像工具 & OCR', pr_free_6: '记忆 & 定时任务',
                 pr_free_btn: '免费下载',
-                pr_pro_h: '专业版', pr_pro_d: '旗舰模型 + AI 视频与音乐',
+                pr_pro_h: '资质版', pr_pro_d: '全部 28 个内置云端模型——Qwen3.8 Max、GLM 5.3、Kimi K3——加 AI 视频与音乐生成。',
                 pr_pro_n: '随时可取消',
                 pr_pro_1: '包含标准版全部功能', pr_pro_2: 'Qwen3.8 Max · GLM 5.3 · Kimi K3',
-                pr_pro_3: 'MiniMax M3 · Doubao Seed 2.1 Pro · DeepSeek V4 Pro',
-                pr_pro_4: 'AI 视频生成（可灵）', pr_pro_5: 'AI 音乐生成（Suno）',
-                pr_pro_6: '优先支持', pr_pro_btn: '升级专业版',
-                pr_std_h: '标准版', pr_std_d: '云端模型，超值', pr_std_n: '随时可取消',
+                pr_pro_3: 'AI 视频生成（可灵）',
+                pr_pro_4: 'AI 音乐生成（Suno）',
+                pr_pro_5: '优先支持', pr_pro_btn: '升级资质版',
+                pr_std_h: '标准版', pr_std_d: '12 个云端模型 + 智能路由', pr_std_n: '/ 月',
+                pr_std_cancel: '随时可取消',
                 pr_std_1: '包含免费版全部功能', pr_std_2: 'DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6',
-                pr_std_3: 'DeepSeek V4 Flash', pr_std_4: '智能模型路由',
-                pr_std_5: '多模态视觉', pr_std_6: '随时切换模型',
-                pr_std_btn: '选择标准版',
+                pr_std_3: '智能模型路由，随时切换',
+                pr_std_4: '视觉 & 多模态输入',
+                pr_std_5: '邮件支持',
+                pr_std_btn: '升级标准版',
+                pr_max_h: '资质·Max', pr_max_d: '一切不限——团队席位、最高请求限额、优先路由、新服务提前体验。',
+                pr_max_1: '包含资质版全部功能',
+                pr_max_2: '团队 / 多席位授权',
+                pr_max_3: '最高请求限额 + 优先路由',
+                pr_max_4: '新模型 / 新服务提前体验',
+                pr_max_5: '专业专属支持',
+                pr_max_btn: '即将上线——请期待',
                 prov_title: '世界级模型阵容',
                 prov_sub: '一个应用切换全球最好的模型，无需自己管 API Key。',
-                prov_note_html: '<strong>内置 28 个</strong>开箱即用，无需自备 Key · OpenAI / Claude / Gemini / DeepSeek / 通义千问 <strong>13 个需自带 Key</strong> · <strong>专业版</strong>解锁全部内置模型',
+                prov_note_html: '<strong>内置 28 个</strong>开箱即用，无需自备 Key · OpenAI / Claude / Gemini / DeepSeek / 通义千问 <strong>13 个需自带 Key</strong> · <strong>资质版</strong>解锁全部内置模型',
                 dl_title: '即刻开始',
                 dl_sub: '免费下载，本地模式无需注册账号。',
                 dl_card_h: 'Windows 安装包',

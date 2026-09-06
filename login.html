@@ -126,8 +126,19 @@
         .back a { color: var(--ink); font-size: 0.84rem; text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 1px; }
         .back a:hover { background: var(--accent); }
     </style>
+    <link rel="stylesheet" href="minimal.css">
+    <script src="minimal.js"></script>
 </head>
 <body>
+
+    <div id="minimalBg" aria-hidden="true">
+        <div class="m-blob m-b1"></div>
+        <div class="m-blob m-b2"></div>
+        <div class="m-blob m-b3"></div>
+        <div class="m-blob m-b4"></div>
+        <div class="m-sheen"></div>
+    </div>
+    <button class="mode-toggle floating" id="modeToggle" aria-pressed="false"><span class="mt-dot"></span>简约</button>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
     <div class="card">
         <div class="logo"><img src="images/favicon.png" alt=""> Working Mate</div>

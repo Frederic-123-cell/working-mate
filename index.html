@@ -611,8 +611,18 @@
         .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
     </style>
+    <link rel="stylesheet" href="minimal.css">
+    <script src="minimal.js"></script>
 </head>
 <body>
+
+    <div id="minimalBg" aria-hidden="true">
+        <div class="m-blob m-b1"></div>
+        <div class="m-blob m-b2"></div>
+        <div class="m-blob m-b3"></div>
+        <div class="m-blob m-b4"></div>
+        <div class="m-sheen"></div>
+    </div>
 
     <nav>
         <div class="nav-inner">
@@ -626,6 +636,7 @@
                 <li><a href="#providers" data-i18n="nav_models">Models</a></li>
             </ul>
             <div class="nav-right">
+                <button class="mode-toggle" id="modeToggle" aria-pressed="false"><span class="mt-dot"></span>简约</button>
                 <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
                 <button class="lang-toggle" id="langToggle">中文</button>
                 <a href="login.html" class="nav-links-login" data-i18n="nav_login">登录</a>

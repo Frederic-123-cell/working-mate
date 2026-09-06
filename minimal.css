@@ -1,0 +1,146 @@
+/* ============================================================
+   Working Mate — Minimal Mode (简约模式)
+   黑蓝紫 彩色律动背景，可一键开关，偏好存 localStorage。
+
+   用法：
+     <link rel="stylesheet" href="minimal.css">
+     <script src="minimal.js"></script>   (放在 </head> 前，与 theme.js 同级)
+     <div id="minimalBg"><!-- 4 个 blob + sheen --></div>   (紧跟 <body> 后)
+     <button class="mode-toggle" id="modeToggle">…</button>  (放进 nav-right)
+
+   开关状态写在 <html data-mode="minimal">。
+   ============================================================ */
+
+/* ── 律动背景层：默认隐藏，开启时淡入 ── */
+#minimalBg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    opacity: 0;
+    overflow: hidden;
+    background: #060814;            /* 近黑藏蓝底 */
+    transition: opacity .7s ease;
+}
+[data-mode="minimal"] #minimalBg { opacity: 1; }
+
+/* 彩色光斑：黑 / 蓝 / 靛 / 紫 缓慢漂移，营造「律动」 */
+#minimalBg .m-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(72px);
+    opacity: .55;
+    mix-blend-mode: screen;
+    will-change: transform;
+}
+#minimalBg .m-b1 {
+    width: 46vw; height: 46vw; left: -8vw; top: -6vw;
+    background: radial-gradient(circle at 30% 30%, #2540ff, rgba(37,64,255,0) 70%);
+    animation: mFloat1 18s ease-in-out infinite;
+}
+#minimalBg .m-b2 {
+    width: 52vw; height: 52vw; right: -12vw; top: 2vw;
+    background: radial-gradient(circle at 50% 50%, #6d28d9, rgba(109,40,217,0) 70%);
+    animation: mFloat2 23s ease-in-out infinite;
+}
+#minimalBg .m-b3 {
+    width: 44vw; height: 44vw; left: 16vw; bottom: -16vw;
+    background: radial-gradient(circle at 50% 50%, #7c3aed, rgba(124,58,237,0) 70%);
+    animation: mFloat3 27s ease-in-out infinite;
+}
+#minimalBg .m-b4 {
+    width: 40vw; height: 40vw; right: 10vw; bottom: -10vw;
+    background: radial-gradient(circle at 50% 50%, #1e6bff, rgba(30,107,255,0) 70%);
+    animation: mFloat4 21s ease-in-out infinite;
+}
+
+/* 缓慢旋转的光晕，增强整体律动感 */
+#minimalBg .m-sheen {
+    position: absolute;
+    inset: -30%;
+    background: conic-gradient(from 0deg,
+        rgba(37,64,255,.16), rgba(124,58,237,.18), rgba(30,107,255,.14),
+        rgba(109,40,217,.18), rgba(37,64,255,.16));
+    filter: blur(46px);
+    animation: mSpin 46s linear infinite;
+}
+
+@keyframes mFloat1 { 0%,100% { transform: translate(0,0) scale(1); }     50% { transform: translate(8vw,6vh) scale(1.15); } }
+@keyframes mFloat2 { 0%,100% { transform: translate(0,0) scale(1); }     50% { transform: translate(-7vw,9vh) scale(1.1); } }
+@keyframes mFloat3 { 0%,100% { transform: translate(0,0) scale(1); }     50% { transform: translate(6vw,-7vh) scale(1.2); } }
+@keyframes mFloat4 { 0%,100% { transform: translate(0,0) scale(1); }     50% { transform: translate(-6vw,-6vh) scale(1.12); } }
+@keyframes mSpin   { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+    #minimalBg .m-blob, #minimalBg .m-sheen { animation: none; }
+}
+
+/* ============================================================
+   简约模式配色：黑蓝紫主题（覆盖 Bauhaus 变量）
+   ============================================================ */
+[data-mode="minimal"] {
+    --bg:        #060814;
+    --paper:     rgba(255,255,255,.05);
+    --ink:       #eef0ff;
+    --ink-soft:  #c8caf0;
+    --muted:     #8b8fce;
+    --line:      rgba(255,255,255,.16);
+    --line-soft: rgba(255,255,255,.08);
+    --accent:    #7c6bff;          /* 主题色：蓝紫 */
+    --accent-d:  #9a8bff;
+    --danger:    #ff7a8c;
+    --success:   #5ad6a0;
+}
+/* 背景让出，露出律动层 */
+[data-mode="minimal"] body { background: transparent; }
+
+/* 导航半透明玻璃，透出背景 */
+[data-mode="minimal"] nav {
+    background: rgba(7,8,20,.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+/* 卡片玻璃化 */
+[data-mode="minimal"] .plan,
+[data-mode="minimal"] .card,
+[data-mode="minimal"] .feature-card,
+[data-mode="minimal"] .box,
+[data-mode="minimal"] .stat,
+[data-mode="minimal"] .hero-figure {
+    background: rgba(255,255,255,.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-color: rgba(255,255,255,.14);
+}
+[data-mode="minimal"] .hero-grid { opacity: .05; }
+[data-mode="minimal"] ::selection { background: var(--accent); color: #06121a; }
+
+/* ============================================================
+   简约模式开关按钮（放在 nav-right，与 themeToggle 同款风格）
+   ============================================================ */
+.mode-toggle {
+    display: inline-flex; align-items: center; gap: .4rem;
+    background: transparent; color: var(--ink);
+    border: 1.5px solid var(--line);
+    padding: .35rem .8rem;
+    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-size: .78rem; font-weight: 600; letter-spacing: .08em;
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s, color .15s;
+}
+.mode-toggle:hover { background: var(--accent); border-color: var(--accent); color: #06121a; }
+.mode-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.mode-toggle .mt-dot {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    transition: box-shadow .15s;
+}
+/* 开启态：按钮填充主题色 */
+[data-mode="minimal"] .mode-toggle {
+    background: var(--accent); border-color: var(--accent); color: #06121a;
+}
+[data-mode="minimal"] .mode-toggle .mt-dot { background: #06121a; box-shadow: none; }
+
+/* 登录页：开关浮动在主题按钮左侧 */
+.mode-toggle.floating { position: fixed; top: 1rem; right: 4rem; z-index: 200; }

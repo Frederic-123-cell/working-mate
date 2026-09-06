@@ -173,9 +173,19 @@
     .plan:nth-child(2n) { border-right: none; }
     .plan:last-child { border-bottom: none; }
   }
-</style>
+  </style>
+  <link rel="stylesheet" href="minimal.css">
+  <script src="minimal.js"></script>
 </head>
 <body>
+
+    <div id="minimalBg" aria-hidden="true">
+        <div class="m-blob m-b1"></div>
+        <div class="m-blob m-b2"></div>
+        <div class="m-blob m-b3"></div>
+        <div class="m-blob m-b4"></div>
+        <div class="m-sheen"></div>
+    </div>
 
 <nav>
   <div class="nav-inner">
@@ -186,6 +196,7 @@
       <li><a href="index.html#providers">Models</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:0.6rem;">
+      <button class="mode-toggle" id="modeToggle" aria-pressed="false"><span class="mt-dot"></span>简约</button>
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
       <a href="index.html#download" class="nav-cta">Download</a>
     </div>

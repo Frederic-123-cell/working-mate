@@ -91,7 +91,7 @@
 
   /* 定价网格 */
   .grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
+    display: grid; grid-template-columns: repeat(4, 1fr);
     border-bottom: 1.5px solid var(--line);
   }
   .plan {
@@ -160,10 +160,17 @@
   footer a { color: var(--ink); text-decoration: none; margin: 0 0.3rem; }
   footer a:hover { background: var(--accent); }
 
+  @media (max-width: 1080px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+    .plan { border-bottom: 1.5px solid var(--line); }
+    .plan:nth-child(2n) { border-right: none; }
+    .plan:last-child { border-bottom: none; }
+  }
   @media (max-width: 860px) {
     .nav-links { display: none; }
     .grid { grid-template-columns: 1fr; }
     .plan { border-right: none; border-bottom: 1.5px solid var(--line); }
+    .plan:nth-child(2n) { border-right: none; }
     .plan:last-child { border-bottom: none; }
   }
 </style>
@@ -224,8 +231,8 @@
     <a class="btn btn-primary" href="#checkout-standard">Get Standard</a>
   </div>
 
-  <div class="plan pro" style="opacity: 0.78;">
-    <span class="tag">Coming Soon</span>
+  <div class="plan pro">
+    <span class="tag">Popular</span>
     <h2>Pro</h2>
     <div class="desc">All 28 built-in cloud models — Qwen3.8 Max, GLM 5.3, Kimi K3 — plus AI video &amp; music generation.</div>
     <div class="price"><span class="currency">$</span><span class="num">29</span><span class="per">/ month</span></div>
@@ -236,7 +243,22 @@
       <li>Everything in Standard</li>
       <li>Priority support</li>
     </ul>
-    <a class="btn" aria-disabled="true" style="pointer-events: none; cursor: default; opacity: 0.6;" href="#checkout-pro">Coming Soon — Stay Tuned</a>
+    <a class="btn" href="#checkout-pro">Get Pro</a>
+  </div>
+
+  <div class="plan" style="opacity: 0.78;">
+    <span class="tag">Coming Soon</span>
+    <h2>Max</h2>
+    <div class="desc">Unlimited everything — team seats, highest rate limits, priority routing, early access to new providers.</div>
+    <div class="price"><span class="currency">$</span><span class="num">99</span><span class="per">/ month</span></div>
+    <ul>
+      <li>Unlimited everything in Pro</li>
+      <li>Team / multi-seat license</li>
+      <li>Highest rate limits &amp; priority routing</li>
+      <li>Early access to new models &amp; providers</li>
+      <li>Dedicated support</li>
+    </ul>
+    <a class="btn" aria-disabled="true" style="pointer-events: none; cursor: default; opacity: 0.6;" href="#checkout-max">Coming Soon — Stay Tuned</a>
   </div>
 </section>
 

@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+    <script>
+    (function(){
+      var V = '20260906c';
+      var p = new URLSearchParams(location.search);
+      if (p.get('v') !== V) {
+        p.set('v', V);
+        var q = p.toString();
+        location.replace(location.pathname + (q ? '?' + q : '') + location.hash);
+      }
+    })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="max-age=300">

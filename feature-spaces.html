@@ -6,19 +6,20 @@
 <title>项目空间 & 任务中心 · Working Mate 功能</title>
 <meta name="description" content="一个目标一个空间，多个任务并行推进、互不串味；所有产物、日志、上下文都归档在空间里，随时回来接着做。">
 <link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
 </head>
 <body>
 <nav class="top" id="topnav">
   <div class="top-in">
-    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
     <div class="nav-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="index-v3.html#workflow">工作流</a>
-      <a href="index-v3.html#models">模型</a>
-      <a href="pricing.html">价格</a>
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
     </div>
   </div>
 </nav>
@@ -26,71 +27,82 @@
 <header class="fhero">
   <div class="aurora aurora-1 on"></div>
   <div class="wrap fhero-in">
-    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
     <div class="fico ico-violet">⬢</div>
-    <div class="ftag">Projects & Tasks</div>
-    <h1>项目空间 & 任务中心</h1>
-    <p class="fsub">一个目标一个空间，多个任务并行推进、互不串味；所有产物、日志、上下文都归档在空间里，随时回来接着做。</p>
-    <div class="facts"><span class="fchip">多任务并行</span><span class="fchip">空间级上下文隔离</span><span class="fchip">产物自动归档</span><span class="fchip">看板式进度</span></div>
+    <div class="ftag" data-i18n="feat.spaces.tag">Projects & Tasks</div>
+    <h1 data-i18n="feat.spaces.title">项目空间 & 任务中心</h1>
+    <p class="fsub" data-i18n="feat.spaces.sub">一个目标一个空间，多个任务并行推进、互不串味；所有产物、日志、上下文都归档在空间里，随时回来接着做。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.spaces.fact0">多任务并行</span><span class="fchip" data-i18n="feat.spaces.fact1">空间级上下文隔离</span><span class="fchip" data-i18n="feat.spaces.fact2">产物自动归档</span><span class="fchip" data-i18n="feat.spaces.fact3">看板式进度</span></div>
     <div class="fcta-row">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
-      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
   <section class="fsec reveal">
-    <h2>它能做什么</h2>
-    <div class="fgrid"><div class="fcard"><h3>项目空间</h3><p>给一个项目开一个空间，它的目标、附件、产物、对话历史都独立存放，不会被别的项目污染。</p></div><div class="fcard"><h3>多任务并行</h3><p>同一个空间里可以同时推进多个子任务，各自跑各自的进度。</p></div><div class="fcard"><h3>任务中心看板</h3><p>所有任务集中在一个看板里：状态、耗时、产物、失败原因一目了然。</p></div><div class="fcard"><h3>上下文总线</h3><p>空间之间可以有限度地互相引用产物；调用次数有上限，防止互相依赖成环。</p></div><div class="fcard"><h3>产物归档</h3><p>生成的文件、图片、视频、表格自动落到空间目录，不用自己找。</p></div><div class="fcard"><h3>随时接着做</h3><p>关掉客户端再打开，空间还在，进度还在。</p></div></div>
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.spaces.what0t">项目空间</h3><p data-i18n="feat.spaces.what0d">给一个项目开一个空间，它的目标、附件、产物、对话历史都独立存放，不会被别的项目污染。</p></div><div class="fcard"><h3 data-i18n="feat.spaces.what1t">多任务并行</h3><p data-i18n="feat.spaces.what1d">同一个空间里可以同时推进多个子任务，各自跑各自的进度。</p></div><div class="fcard"><h3 data-i18n="feat.spaces.what2t">任务中心看板</h3><p data-i18n="feat.spaces.what2d">所有任务集中在一个看板里：状态、耗时、产物、失败原因一目了然。</p></div><div class="fcard"><h3 data-i18n="feat.spaces.what3t">上下文总线</h3><p data-i18n="feat.spaces.what3d">空间之间可以有限度地互相引用产物；调用次数有上限，防止互相依赖成环。</p></div><div class="fcard"><h3 data-i18n="feat.spaces.what4t">产物归档</h3><p data-i18n="feat.spaces.what4d">生成的文件、图片、视频、表格自动落到空间目录，不用自己找。</p></div><div class="fcard"><h3 data-i18n="feat.spaces.what5t">随时接着做</h3><p data-i18n="feat.spaces.what5d">关掉客户端再打开，空间还在，进度还在。</p></div></div>
   </section>
 
   <section class="fsec reveal">
-    <h2>怎么用</h2>
-    <ol class="fsteps"><li><span class="n">1</span><div>侧栏「项目空间」→ 新建空间，写清目标并挂上参考文件。</div></li><li><span class="n">2</span><div>在空间里把目标交给 Agent，它会拆成多个子任务并行推进。</div></li><li><span class="n">3</span><div>「任务中心」看整体进度与每个任务的产物。</div></li><li><span class="n">4</span><div>完成后在空间目录取走全部产物；需要继续迭代就在同一个空间里接着说。</div></li></ol>
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.spaces.step0">侧栏「项目空间」→ 新建空间，写清目标并挂上参考文件。</div></li><li><span class="n">2</span><div data-i18n="feat.spaces.step1">在空间里把目标交给 Agent，它会拆成多个子任务并行推进。</div></li><li><span class="n">3</span><div data-i18n="feat.spaces.step2">「任务中心」看整体进度与每个任务的产物。</div></li><li><span class="n">4</span><div data-i18n="feat.spaces.step3">完成后在空间目录取走全部产物；需要继续迭代就在同一个空间里接着说。</div></li></ol>
   </section>
 
   <section class="fsec reveal">
-    <h2>技术亮点</h2>
-    <ul class="fpoints"><li>空间之间通过上下文总线传递产物引用，跨空间调用有次数上限防止循环引用。</li><li>任务状态与产物路径持久化，重启不丢。</li><li>每个空间的执行日志独立留存，便于回溯是哪一步出的问题。</li></ul>
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.spaces.tech0">空间之间通过上下文总线传递产物引用，跨空间调用有次数上限防止循环引用。</li><li data-i18n="feat.spaces.tech1">任务状态与产物路径持久化，重启不丢。</li><li data-i18n="feat.spaces.tech2">每个空间的执行日志独立留存，便于回溯是哪一步出的问题。</li></ul>
   </section>
 
   <section class="fsec reveal">
-    <h2>看一眼</h2>
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
       <img src="assets/shots/project-spaces.png" alt="项目空间 & 任务中心 界面截图" loading="lazy">
-      <figcaption>项目空间：目标、任务、产物都在一处</figcaption>
+      <figcaption data-i18n="feat.spaces.shot">项目空间：目标、任务、产物都在一处</figcaption>
     </figure>
   </section>
 
   <section class="fsec reveal">
-    <h2>相关功能</h2>
-    <div class="frels"><a class="frel" href="feature-task_center.html"><span class="fico sm ico-blue">▤</span><span><b>任务中心</b><em>Task Center</em></span><i>→</i></a><a class="frel" href="feature-automation.html"><span class="fico sm ico-amber">◔</span><span><b>自动化定时任务</b><em>Automation</em></span><i>→</i></a></div>
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-task_center.html"><span class="fico sm ico-blue">▤</span><span><b data-i18n="feat.task_center.title">任务中心</b><em data-i18n="feat.task_center.tag">Task Center</em></span><i>→</i></a><a class="frel" href="feature-automation.html"><span class="fico sm ico-amber">◔</span><span><b data-i18n="feat.automation.title">自动化定时任务</b><em data-i18n="feat.automation.tag">Automation</em></span><i>→</i></a></div>
   </section>
 
   <section class="fsec fend reveal">
     <div class="fend-in">
-      <h2>现在就试试「项目空间 & 任务中心」</h2>
-      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
     <div class="foot-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
     </div>
   </div>
 </footer>
+<div id="langmount"></div>
 <script>
 const n=document.getElementById('topnav');
 addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

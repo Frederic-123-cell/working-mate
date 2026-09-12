@@ -14,6 +14,7 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="lang.css">
 <title>Working Mate · 本地 AI Agent</title>
 <style>
 /* ══════════════════════════════════════════
@@ -286,15 +287,15 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
   <div class="top-in">
     <a href="#" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
     <div class="nav-links">
-      <a href="#capability">能力</a>
-      <a href="#features" class="hot">全部功能</a>
-      <a href="#workflow">工作流</a>
-      <a href="#models">模型</a>
-      <a href="#pricing">价格</a>
+      <a href="#capability" data-i18n="home.nav.capability">能力</a>
+      <a href="#features" class="hot" data-i18n="home.nav.features">全部功能</a>
+      <a href="#workflow" data-i18n="home.nav.workflow">工作流</a>
+      <a href="#models" data-i18n="home.nav.models">模型</a>
+      <a href="#pricing" data-i18n="home.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
-      <a href="#" class="btn btn-ghost">控制台</a>
-      <a href="#" class="btn btn-text">登录</a>
+      <a href="#" class="btn btn-ghost" data-i18n="home.nav.console">控制台</a>
+      <a href="#" class="btn btn-text" data-i18n="home.nav.login">登录</a>
     </div>
   </div>
 </nav>
@@ -310,54 +311,54 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 
       <div class="slide">
         <div class="slide-in">
-          <div class="eyebrow"><span class="pin"></span>v1.4 已发布 · 本地优先的多模型 AI Agent</div>
-          <h1 class="big">让 AI <span class="glow">真正干活</span><br>而不只是陪你聊天</h1>
-          <p class="sub">本地 Ollama 与云端大模型统一调度，节点式工作流把剧本、分镜、视频、配乐串成一条流水线。
+          <div class="eyebrow"><span class="pin"></span><span data-i18n="home.hero1.eyebrow">v1.4 已发布 · 本地优先的多模型 AI Agent</span></div>
+          <h1 class="big" data-i18n-html="home.hero1.h1">让 AI <span class="glow">真正干活</span><br>而不只是陪你聊天</h1>
+          <p class="sub" data-i18n="home.hero1.sub">本地 Ollama 与云端大模型统一调度，节点式工作流把剧本、分镜、视频、配乐串成一条流水线。
             四层记忆越用越懂你，数据留在本机，断网也能跑。</p>
           <div class="stats">
-            <div class="stat"><b>60<small>+</small></b><span>可接入模型</span></div>
-            <div class="stat"><b>0</b><span>数据外传</span></div>
-            <div class="stat"><b>4<small>层</small></b><span>自进化记忆</span></div>
+            <div class="stat"><b>60<small>+</small></b><span data-i18n="home.hero1.stat1">可接入模型</span></div>
+            <div class="stat"><b>0</b><span data-i18n="home.hero1.stat2">数据外传</span></div>
+            <div class="stat"><b>4</b><span data-i18n="home.hero1.stat3">自进化记忆</span></div>
           </div>
           <div class="cta-row">
-            <a href="#pricing" class="btn btn-amber">免费下载 · 免费版</a>
-            <a href="#workflow" class="btn btn-text">看工作流演示</a>
+            <a href="#pricing" class="btn btn-amber" data-i18n="home.hero1.cta1">免费下载 · 免费版</a>
+            <a href="#workflow" class="btn btn-text" data-i18n="home.hero1.cta2">看工作流演示</a>
           </div>
         </div>
       </div>
 
       <div class="slide">
         <div class="slide-in">
-          <div class="eyebrow"><span class="pin"></span>工作流 · 节点画布</div>
-          <h1 class="big">拖一拖<br>搭出 <span class="glow">AI 流水线</span></h1>
-          <p class="sub">剧本→分镜→视频镜头→背景配乐，一条龙跑完。
+          <div class="eyebrow"><span class="pin"></span><span data-i18n="home.hero2.eyebrow">工作流 · 节点画布</span></div>
+          <h1 class="big" data-i18n-html="home.hero2.h1">拖一拖<br>搭出 <span class="glow">AI 流水线</span></h1>
+          <p class="sub" data-i18n="home.hero2.sub">剧本→分镜→视频镜头→背景配乐，一条龙跑完。
             每步可预览、可单节点重跑，支持自定义卡片与本地素材插入。</p>
           <div class="stats">
-            <div class="stat"><b>17</b><span>领域专家</span></div>
-            <div class="stat"><b>6</b><span>开箱模板</span></div>
-            <div class="stat"><b>1</b><span>拖即用</span></div>
+            <div class="stat"><b>17</b><span data-i18n="home.hero2.stat1">领域专家</span></div>
+            <div class="stat"><b>6</b><span data-i18n="home.hero2.stat2">开箱模板</span></div>
+            <div class="stat"><b>1</b><span data-i18n="home.hero2.stat3">拖即用</span></div>
           </div>
           <div class="cta-row">
-            <a href="#" class="btn btn-amber">打开工作流</a>
-            <a href="#" class="btn btn-text">看 60 秒演示</a>
+            <a href="#" class="btn btn-amber" data-i18n="home.hero2.cta1">打开工作流</a>
+            <a href="#" class="btn btn-text" data-i18n="home.hero2.cta2">看 60 秒演示</a>
           </div>
         </div>
       </div>
 
       <div class="slide">
         <div class="slide-in">
-          <div class="eyebrow"><span class="pin"></span>v1.4 · 限时首发优惠</div>
-          <h1 class="big">年中大促<br>0 元 <span class="glow">永久</span>用</h1>
-          <p class="sub">免费版永久可用，本地模型不限量。
+          <div class="eyebrow"><span class="pin"></span><span data-i18n="home.hero3.eyebrow">v1.4 · 限时首发优惠</span></div>
+          <h1 class="big" data-i18n-html="home.hero3.h1">年中大促<br>0 元 <span class="glow">永久</span>用</h1>
+          <p class="sub" data-i18n="home.hero3.sub">免费版永久可用，本地模型不限量。
             付费档解锁更长记忆、旗舰模型与云端生成额度。</p>
           <div class="stats">
-            <div class="stat"><b>¥0</b><span>起 / 免费版</span></div>
-            <div class="stat"><b>$9<small>/月</small></b><span>标准版</span></div>
-            <div class="stat"><b>团队版</b><span>规划中</span></div>
+            <div class="stat"><b>¥0</b><span data-i18n="home.hero3.stat1">起 / 免费版</span></div>
+            <div class="stat"><b>$9<small>/月</small></b><span data-i18n="home.hero3.stat2">标准版</span></div>
+            <div class="stat"><b data-i18n="home.hero3.stat3">团队版 · 规划中</b></div>
           </div>
           <div class="cta-row">
-            <a href="#pricing" class="btn btn-amber">立即下载</a>
-            <a href="#" class="btn btn-text">看更新日志</a>
+            <a href="#pricing" class="btn btn-amber" data-i18n="home.hero3.cta1">立即下载</a>
+            <a href="#" class="btn btn-text" data-i18n="home.hero3.cta2">看更新日志</a>
           </div>
         </div>
       </div>
@@ -374,69 +375,68 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 
 <!-- ══ 右下浮窗控件（智能助手/客服/电话，参考站范式） ══ -->
 <div class="float-widgets">
-  <div class="fw assist" title="智能助手"><span>AI</span><span class="label">智能助手</span></div>
-  <div class="fw" title="客服">☏<span class="label">人工客服</span></div>
-  <div class="fw" title="电话">✆<span class="label">销售电话</span></div>
+  <div class="fw assist" title="智能助手" data-i18n-attr="title:home.float.assist"><span>AI</span><span class="label" data-i18n="home.float.assist">智能助手</span></div>
+  <div class="fw" title="客服" data-i18n-attr="title:home.float.service">☏<span class="label" data-i18n="home.float.service">人工客服</span></div>
+  <div class="fw" title="电话" data-i18n-attr="title:home.float.sales">✆<span class="label" data-i18n="home.float.sales">销售电话</span></div>
 </div>
 
 <!-- ══ 能力分区 ══ -->
 <section class="zone" id="capability">
   <div class="wrap">
     <div class="zone-head reveal">
-      <div class="zone-tag">Capability</div>
-      <h2>一个客户端，装下整套 AI 工作间</h2>
+      <div class="zone-tag" data-i18n="home.cap.tag">Capability</div>
+      <h2 data-i18n="home.cap.h2">一个客户端，装下整套 AI 工作间</h2>
     </div>
     <div class="bento">
       <a class="b-card span3 reveal" href="feature-models.html">
-        <div class="ico ico-blue">◧</div><h3>本地 + 云端混合调度</h3>
-        <p>断网用 Ollama 本地模型，联网自动切云端旗舰。同一会话里随手换模型。</p>
-        <span class="go">查看详情 →</span>
+        <div class="ico ico-blue">◧</div><h3 data-i18n="home.cap.c1t">本地 + 云端混合调度</h3>
+        <p data-i18n="home.cap.c1d">断网用 Ollama 本地模型，联网自动切云端旗舰。同一会话里随手换模型。</p>
+        <span class="go" data-i18n="feat.tpl.view">查看详情 →</span>
       </a>
       <a class="b-card span3 reveal" href="feature-experts.html">
-        <div class="ico ico-violet">◇</div><h3>17 位领域专家协作</h3>
-        <p>给一个目标，AdminAgent 自动拆子任务、派给对应专家、汇总结果。</p>
-        <span class="go">查看详情 →</span>
+        <div class="ico ico-violet">◇</div><h3 data-i18n="home.cap.c2t">17 位领域专家协作</h3>
+        <p data-i18n="home.cap.c2d">给一个目标，AdminAgent 自动拆子任务、派给对应专家、汇总结果。</p>
+        <span class="go" data-i18n="feat.tpl.view">查看详情 →</span>
       </a>
       <a class="b-card span2 reveal" href="feature-memory.html">
-        <div class="ico ico-mint">◈</div><h3>四层记忆</h3><p>常驻事实、会话归档、技能库、用户画像。</p>
-        <span class="go">查看详情 →</span>
+        <div class="ico ico-mint">◈</div><h3 data-i18n="home.cap.c3t">四层记忆</h3><p data-i18n="home.cap.c3d">常驻事实、会话归档、技能库、用户画像。</p>
+        <span class="go" data-i18n="feat.tpl.view">查看详情 →</span>
       </a>
       <a class="b-card span2 reveal" href="feature-skills.html">
-        <div class="ico ico-amber">▲</div><h3>技能自动沉淀</h3><p>跑通过的流程自动抽成可复用技能。</p>
-        <span class="go">查看详情 →</span>
+        <div class="ico ico-amber">▲</div><h3 data-i18n="home.cap.c4t">技能自动沉淀</h3><p data-i18n="home.cap.c4d">跑通过的流程自动抽成可复用技能。</p>
+        <span class="go" data-i18n="feat.tpl.view">查看详情 →</span>
       </a>
       <a class="b-card span2 reveal" href="feature-files.html">
-        <div class="ico ico-coral">●</div><h3>真实干文件</h3><p>读写文档表格、跑脚本、操作窗口。</p>
-        <span class="go">查看详情 →</span>
+        <div class="ico ico-coral">●</div><h3 data-i18n="home.cap.c5t">真实干文件</h3><p data-i18n="home.cap.c5d">读写文档表格、跑脚本、操作窗口。</p>
+        <span class="go" data-i18n="feat.tpl.view">查看详情 →</span>
       </a>
     </div>
   </div>
 </section>
 
-<!-- ══ 全部功能：卡片可点进详情页 ══ -->
 <section class="zone" id="features">
   <div class="wrap">
     <div class="zone-head reveal" style="margin:0 auto 40px;text-align:center;max-width:660px">
-      <div class="zone-tag">All Features</div>
-      <h2>全部功能，点开看细节</h2>
-      <p style="color:var(--text2);margin-top:12px">每张卡片都能点进去看完整介绍：能做什么、怎么用、技术亮点。</p>
+      <div class="zone-tag" data-i18n="home.feat.tag">All Features</div>
+      <h2 data-i18n="home.feat.h2">全部功能，点开看细节</h2>
+      <p data-i18n="home.feat.p" style="color:var(--text2);margin-top:12px">每张卡片都能点进去看完整介绍：能做什么、怎么用、技术亮点。</p>
     </div>
     <div class="feature-grid">
-      <a class="b-card fcard-link reveal" href="feature-models.html"><div class="ico ico-blue">◧</div><h3>多模型混合调度</h3><p>60+ 可接入模型 · 本地 / 云端统一入口</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-experts.html"><div class="ico ico-violet">◇</div><h3>17 位领域专家协作</h3><p>17 位领域专家 · 自动拆任务 / 派单</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-memory.html"><div class="ico ico-mint">◈</div><h3>四层记忆系统</h3><p>4 层记忆结构 · 中文 n-gram 检索</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-skills.html"><div class="ico ico-amber">▲</div><h3>技能自动沉淀</h3><p>自动抽取工作流 · 技能库集中管理</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-workflow.html"><div class="ico ico-blue">◎</div><h3>节点式工作流画布</h3><p>10 种节点类型 · 拖拽 + 自动连线 + 自动排版</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-media.html"><div class="ico ico-coral">▶</div><h3>AI 媒体工厂</h3><p>剧本 / 分镜 / 视频 / 配乐 · 字幕 + GIF</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-modules.html"><div class="ico ico-mint">▦</div><h3>六大行业场景模块</h3><p>6 大场景 · 预置卡片快捷开工</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-spaces.html"><div class="ico ico-violet">⬢</div><h3>项目空间 & 任务中心</h3><p>多任务并行 · 空间级上下文隔离</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-task_center.html"><div class="ico ico-blue">▤</div><h3>任务中心</h3><p>集中看板 · 状态实时刷新</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-automation.html"><div class="ico ico-amber">◔</div><h3>自动化定时任务</h3><p>定时 / 周期执行 · 本地调度</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-gui.html"><div class="ico ico-coral">⊙</div><h3>GUI 自动化</h3><p>模拟鼠标键盘 · 开启前能力检测</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-safety.html"><div class="ico ico-mint">⛨</div><h3>安全护栏：免确认 & 急停</h3><p>操作分级：WARNING / BLOCKED · 免确认模式</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-files.html"><div class="ico ico-blue">◧</div><h3>真实干文件</h3><p>读写 Office / 表格 · 执行脚本</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-i18n.html"><div class="ico ico-violet">⌘</div><h3>多语言界面</h3><p>10 种语言 · 实时切换</p><span class="go">查看详情 →</span></a>
-      <a class="b-card fcard-link reveal" href="feature-privacy.html"><div class="ico ico-amber">⚿</div><h3>本地优先 & 隐私</h3><p>0 数据外传（本地模式） · 断网可用</p><span class="go">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-models.html"><div class="ico ico-blue">◧</div><h3 data-i18n="feat.models.title">多模型混合调度</h3><p data-i18n="feat.models.grid">60+ 可接入模型 · 本地 / 云端统一入口</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-experts.html"><div class="ico ico-violet">◇</div><h3 data-i18n="feat.experts.title">17 位领域专家协作</h3><p data-i18n="feat.experts.grid">17 位领域专家 · 自动拆任务 / 派单</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-memory.html"><div class="ico ico-mint">◈</div><h3 data-i18n="feat.memory.title">四层记忆系统</h3><p data-i18n="feat.memory.grid">4 层记忆结构 · 中文 n-gram 检索</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-skills.html"><div class="ico ico-amber">▲</div><h3 data-i18n="feat.skills.title">技能自动沉淀</h3><p data-i18n="feat.skills.grid">自动抽取工作流 · 技能库集中管理</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-workflow.html"><div class="ico ico-blue">◎</div><h3 data-i18n="feat.workflow.title">节点式工作流画布</h3><p data-i18n="feat.workflow.grid">10 种节点类型 · 拖拽 + 自动连线 + 自动排版</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-media.html"><div class="ico ico-coral">▶</div><h3 data-i18n="feat.media.title">AI 媒体工厂</h3><p data-i18n="feat.media.grid">剧本 / 分镜 / 视频 / 配乐 · 字幕 + GIF</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-modules.html"><div class="ico ico-mint">▦</div><h3 data-i18n="feat.modules.title">六大行业场景模块</h3><p data-i18n="feat.modules.grid">6 大场景 · 预置卡片快捷开工</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-spaces.html"><div class="ico ico-violet">⬢</div><h3 data-i18n="feat.spaces.title">项目空间 & 任务中心</h3><p data-i18n="feat.spaces.grid">多任务并行 · 空间级上下文隔离</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-task_center.html"><div class="ico ico-blue">▤</div><h3 data-i18n="feat.task_center.title">任务中心</h3><p data-i18n="feat.task_center.grid">集中看板 · 状态实时刷新</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-automation.html"><div class="ico ico-amber">◔</div><h3 data-i18n="feat.automation.title">自动化定时任务</h3><p data-i18n="feat.automation.grid">定时 / 周期执行 · 本地调度</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-gui.html"><div class="ico ico-coral">⊙</div><h3 data-i18n="feat.gui.title">GUI 自动化</h3><p data-i18n="feat.gui.grid">模拟鼠标键盘 · 开启前能力检测</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-safety.html"><div class="ico ico-mint">⛨</div><h3 data-i18n="feat.safety.title">安全护栏：免确认 & 急停</h3><p data-i18n="feat.safety.grid">操作分级：WARNING / BLOCKED · 免确认模式</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-files.html"><div class="ico ico-blue">◧</div><h3 data-i18n="feat.files.title">真实干文件</h3><p data-i18n="feat.files.grid">读写 Office / 表格 · 执行脚本</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-i18n.html"><div class="ico ico-violet">⌘</div><h3 data-i18n="feat.i18n.title">多语言界面</h3><p data-i18n="feat.i18n.grid">10 种语言 · 实时切换</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-privacy.html"><div class="ico ico-amber">⚿</div><h3 data-i18n="feat.privacy.title">本地优先 & 隐私</h3><p data-i18n="feat.privacy.grid">0 数据外传（本地模式） · 断网可用</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
     </div>
   </div>
 </section>
@@ -446,15 +446,15 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
   <div class="wrap">
     <div class="showcase">
       <div class="reveal">
-        <div class="zone-tag">Workflow</div>
-        <h2>把重复流程，拖成一条流水线</h2>
+        <div class="zone-tag" data-i18n="home.wf.tag">Workflow</div>
+        <h2 data-i18n="home.wf.h2">把重复流程，拖成一条流水线</h2>
         <div class="sc-list">
-          <div class="sc-item"><span class="sc-dot">✓</span><div><b>自由拖拽与连线</b>
-            <span>像搭积木一样组织流程，改一步不用重来</span></div></div>
-          <div class="sc-item"><span class="sc-dot">✓</span><div><b>每步即时预览</b>
-            <span>文本、图片、视频、音频，点节点就看</span></div></div>
-          <div class="sc-item"><span class="sc-dot">✓</span><div><b>模板一键开跑</b>
-            <span>AI 短剧 / 音乐单曲 / 概念图，内置现成流程</span></div></div>
+          <div class="sc-item"><span class="sc-dot">✓</span><div><b data-i18n="home.wf.i1t">自由拖拽与连线</b>
+            <span data-i18n="home.wf.i1d">像搭积木一样组织流程，改一步不用重来</span></div></div>
+          <div class="sc-item"><span class="sc-dot">✓</span><div><b data-i18n="home.wf.i2t">每步即时预览</b>
+            <span data-i18n="home.wf.i2d">文本、图片、视频、音频，点节点就看</span></div></div>
+          <div class="sc-item"><span class="sc-dot">✓</span><div><b data-i18n="home.wf.i3t">模板一键开跑</b>
+            <span data-i18n="home.wf.i3d">AI 短剧 / 音乐单曲 / 概念图，内置现成流程</span></div></div>
         </div>
       </div>
       <div class="canvas-demo reveal">
@@ -473,22 +473,22 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
     <div class="showcase">
       <div class="mem-stack reveal">
         <div class="mem-row"><span class="mem-badge" style="background:#2540ff">L1</span>
-          <div><b>常驻记忆</b><br><span>最关键的事实与偏好，每轮都注入</span></div></div>
+          <div><b data-i18n="home.mem.l1t">常驻记忆</b><br><span data-i18n="home.mem.l1d">最关键的事实与偏好，每轮都注入</span></div></div>
         <div class="mem-row"><span class="mem-badge" style="background:#7c3aed">L2</span>
-          <div><b>会话归档</b><br><span>全部历史，按关键词命中数检索</span></div></div>
+          <div><b data-i18n="home.mem.l2t">会话归档</b><br><span data-i18n="home.mem.l2d">全部历史，按关键词命中数检索</span></div></div>
         <div class="mem-row"><span class="mem-badge" style="background:#5ad6a0">L3</span>
-          <div><b>技能库</b><br><span>跑通过的流程自动沉淀复用</span></div></div>
+          <div><b data-i18n="home.mem.l3t">技能库</b><br><span data-i18n="home.mem.l3d">跑通过的流程自动沉淀复用</span></div></div>
         <div class="mem-row"><span class="mem-badge" style="background:#F5B642;color:#1A1E2A">L4</span>
-          <div><b>用户画像</b><br><span>沟通风格与领域知识长期积累</span></div></div>
+          <div><b data-i18n="home.mem.l4t">用户画像</b><br><span data-i18n="home.mem.l4d">沟通风格与领域知识长期积累</span></div></div>
       </div>
       <div class="reveal">
-        <div class="zone-tag">Memory</div>
-        <h2>它不是每次都从零开始</h2>
+        <div class="zone-tag" data-i18n="home.wf.memtag">Memory</div>
+        <h2 data-i18n="home.wf.memh2">它不是每次都从零开始</h2>
         <div class="sc-list">
-          <div class="sc-item"><span class="sc-dot">✓</span><div><b>换话题不断片</b>
-            <span>上周聊过的需求，这周接着来</span></div></div>
-          <div class="sc-item"><span class="sc-dot">✓</span><div><b>流程自动变技能</b>
-            <span>同样的活第二次只需一句话</span></div></div>
+          <div class="sc-item"><span class="sc-dot">✓</span><div><b data-i18n="home.wf.mem.i1t">换话题不断片</b>
+            <span data-i18n="home.wf.mem.i1d">上周聊过的需求，这周接着来</span></div></div>
+          <div class="sc-item"><span class="sc-dot">✓</span><div><b data-i18n="home.wf.mem.i2t">流程自动变技能</b>
+            <span data-i18n="home.wf.mem.i2d">同样的活第二次只需一句话</span></div></div>
         </div>
       </div>
     </div>
@@ -499,16 +499,16 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 <section class="zone" id="models">
   <div class="wrap">
     <div class="zone-head reveal" style="margin:0 auto 32px;text-align:center;max-width:640px">
-      <div class="zone-tag">Models</div>
-      <h2>你想用的模型，基本都在这儿</h2>
+      <div class="zone-tag" data-i18n="home.models.tag">Models</div>
+      <h2 data-i18n="home.models.h2">你想用的模型，基本都在这儿</h2>
     </div>
     <div class="models reveal">
-      <span class="mchip">Ollama 本地</span><span class="mchip">DeepSeek V4</span>
-      <span class="mchip">Qwen3.8 Max</span><span class="mchip">GLM 5.3</span>
-      <span class="mchip">Kimi K3</span><span class="mchip">豆包 Seed</span>
-      <span class="mchip">Claude Opus / Sonnet</span><span class="mchip">GPT-5.6</span>
-      <span class="mchip">Gemini</span><span class="mchip">可灵 Kling</span>
-      <span class="mchip">Suno 音乐</span><span class="mchip">OpenRouter 全量</span>
+      <span class="mchip" data-i18n="home.models.m1">Ollama 本地</span><span class="mchip" data-i18n="home.models.m2">DeepSeek V4</span>
+      <span class="mchip" data-i18n="home.models.m3">Qwen3.8 Max</span><span class="mchip" data-i18n="home.models.m4">GLM 5.3</span>
+      <span class="mchip" data-i18n="home.models.m5">Kimi K3</span><span class="mchip" data-i18n="home.models.m6">豆包 Seed</span>
+      <span class="mchip" data-i18n="home.models.m7">Claude Opus / Sonnet</span><span class="mchip" data-i18n="home.models.m8">GPT-5.6</span>
+      <span class="mchip" data-i18n="home.models.m9">Gemini</span><span class="mchip" data-i18n="home.models.m10">可灵 Kling</span>
+      <span class="mchip" data-i18n="home.models.m11">Suno 音乐</span><span class="mchip" data-i18n="home.models.m12">OpenRouter 全量</span>
     </div>
   </div>
 </section>
@@ -517,30 +517,30 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 <section class="zone alt" id="pricing">
   <div class="wrap">
     <div class="zone-head reveal" style="margin:0 auto 38px;text-align:center;max-width:620px">
-      <div class="zone-tag">Pricing</div>
-      <h2>先免费用，需要更多再升级</h2>
+      <div class="zone-tag" data-i18n="home.price.tag">Pricing</div>
+      <h2 data-i18n="home.price.h2">先免费用，需要更多再升级</h2>
     </div>
     <div class="prices">
       <div class="price reveal">
-        <h3>免费版</h3><div class="amt">¥0</div>
-        <ul><li>本地模型不限量</li><li>基础对话与文件操作</li><li>含广告位</li><li>社区支持</li></ul>
-        <a href="#" class="btn btn-ghost">免费下载</a>
+        <h3 data-i18n="home.price.free.name">免费版</h3><div class="amt">¥0</div>
+        <ul><li data-i18n="home.price.free.li1">本地模型不限量</li><li data-i18n="home.price.free.li2">基础对话与文件操作</li><li data-i18n="home.price.free.li3">含广告位</li><li data-i18n="home.price.free.li4">社区支持</li></ul>
+        <a href="#" class="btn btn-ghost" data-i18n="home.price.free.cta">免费下载</a>
       </div>
       <div class="price hot reveal">
-        <span class="flag">最受欢迎</span>
-        <h3>标准版</h3><div class="amt">$9<small>/月</small></div>
-        <ul><li>更长上下文与记忆</li><li>云端性价比模型</li><li>无广告</li><li>工作流全功能</li></ul>
-        <a href="#" class="btn btn-amber">升级标准版</a>
+        <span class="flag" data-i18n="home.price.std.flag">最受欢迎</span>
+        <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt">$9<small>/月</small></div>
+        <ul><li data-i18n="home.price.std.li1">更长上下文与记忆</li><li data-i18n="home.price.std.li2">云端性价比模型</li><li data-i18n="home.price.std.li3">无广告</li><li data-i18n="home.price.std.li4">工作流全功能</li></ul>
+        <a href="#" class="btn btn-amber" data-i18n="home.price.std.cta">升级标准版</a>
       </div>
       <div class="price reveal">
-        <h3>专业版</h3><div class="amt">$29<small>/月</small></div>
-        <ul><li>旗舰模型全解锁</li><li>AI 视频 / 音乐生成</li><li>多专家协作</li><li>优先支持</li></ul>
-        <a href="#" class="btn btn-ghost">升级专业版</a>
+        <h3 data-i18n="home.price.pro.name">专业版</h3><div class="amt">$29<small>/月</small></div>
+        <ul><li data-i18n="home.price.pro.li1">旗舰模型全解锁</li><li data-i18n="home.price.pro.li2">AI 视频 / 音乐生成</li><li data-i18n="home.price.pro.li3">多专家协作</li><li data-i18n="home.price.pro.li4">优先支持</li></ul>
+        <a href="#" class="btn btn-ghost" data-i18n="home.price.pro.cta">升级专业版</a>
       </div>
       <div class="price reveal">
-        <h3>旗舰版</h3><div class="amt">$99<small>/月</small></div>
-        <ul style="color:var(--text3)"><li>超大上下文</li><li>独占顶配模型</li><li>团队协作（规划中）</li><li>——</li></ul>
-        <a href="#" class="btn btn-ghost" style="opacity:.6">即将推出</a>
+        <h3 data-i18n="home.price.ult.name">旗舰版</h3><div class="amt">$99<small>/月</small></div>
+        <ul style="color:var(--text3)"><li data-i18n="home.price.ult.li1">超大上下文</li><li data-i18n="home.price.ult.li2">独占顶配模型</li><li data-i18n="home.price.ult.li3">团队协作（规划中）</li><li data-i18n="home.price.ult.li4">——</li></ul>
+        <a href="#" class="btn btn-ghost" style="opacity:.6" data-i18n="home.price.ult.cta">即将推出</a>
       </div>
     </div>
   </div>
@@ -550,17 +550,17 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 <section class="zone">
   <div class="wrap">
     <div class="zone-head reveal" style="margin:0 auto 34px;text-align:center;max-width:600px">
-      <h2>常见问题</h2>
+      <h2 data-i18n="home.faq.h2">常见问题</h2>
     </div>
     <div class="faq">
-      <details class="qa reveal"><summary>断网还能用吗？</summary>
-        <p>能。本地 Ollama 模型完全离线运行，对话、文件操作、工作流编排都不依赖网络。</p></details>
-      <details class="qa reveal"><summary>我的数据会上传吗？</summary>
-        <p>不会。对话记录、知识库、记忆全部存在你本机。</p></details>
-      <details class="qa reveal"><summary>免费版有什么限制？</summary>
-        <p>免费版可用全部本地能力与基础工具，界面含广告位；云端旗舰模型、AI 视频/音乐生成属于付费档。</p></details>
-      <details class="qa reveal"><summary>支持哪些系统？</summary>
-        <p>Windows 与 macOS。移动端（Android / iOS / 鸿蒙）在规划中。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q1">断网还能用吗？</summary>
+        <p data-i18n="home.faq.a1">能。本地 Ollama 模型完全离线运行，对话、文件操作、工作流编排都不依赖网络。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q2">我的数据会上传吗？</summary>
+        <p data-i18n="home.faq.a2">不会。对话记录、知识库、记忆全部存在你本机。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q3">免费版有什么限制？</summary>
+        <p data-i18n="home.faq.a3">免费版可用全部本地能力与基础工具，界面含广告位；云端旗舰模型、AI 视频/音乐生成属于付费档。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q4">支持哪些系统？</summary>
+        <p data-i18n="home.faq.a4">Windows 与 macOS。移动端（Android / iOS / 鸿蒙）在规划中。</p></details>
     </div>
   </div>
 </section>
@@ -569,19 +569,19 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 <section class="cta-z">
   <div class="wrap">
     <div class="cta-in reveal">
-      <h2>现在就让 AI 开始干活</h2>
-      <p>免费版永久可用，一分钟装好，不需要信用卡。</p>
-      <a href="#" class="btn btn-amber" style="padding:14px 34px;font-size:15px">免费下载 Working Mate</a>
+      <h2 data-i18n="home.cta.h2">现在就让 AI 开始干活</h2>
+      <p data-i18n="home.cta.p">免费版永久可用，一分钟装好，不需要信用卡。</p>
+      <a href="#" class="btn btn-amber" style="padding:14px 34px;font-size:15px" data-i18n="home.cta.btn">免费下载 Working Mate</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div data-i18n="home.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
     <div style="display:flex;gap:20px">
-      <a href="privacy.html">隐私</a><a href="terms.html">条款</a>
-      <a href="refunds.html">退款</a><a href="#">working_mate@outlook.com</a>
+      <a href="privacy.html" data-i18n="home.foot.privacy">隐私</a><a href="terms.html" data-i18n="home.foot.terms">条款</a>
+      <a href="refunds.html" data-i18n="home.foot.refunds">退款</a><a href="#">working_mate@outlook.com</a>
     </div>
   </div>
 </footer>
@@ -639,5 +639,16 @@ const io=new IntersectionObserver(es=>{
 },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<div id="langmount"></div>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

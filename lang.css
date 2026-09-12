@@ -1,0 +1,33 @@
+/* ═══ 多语言切换器 + RTL 适配（与首页/功能页同一套设计令牌） ═══ */
+.lang-sw{position:relative;font-size:13px}
+.lang-btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;
+  background:rgba(255,255,255,.06);border:1px solid var(--stroke2);color:var(--text);
+  cursor:pointer;font-size:13px;font-weight:600;transition:background var(--t-fast) var(--ease),transform var(--t-fast) var(--ease-spring)}
+.lang-btn:hover{background:rgba(255,255,255,.12)}
+.lang-btn:active{transform:scale(.96)}
+.lang-btn .globe{font-size:14px;line-height:1}
+.lang-btn .caret{font-size:10px;opacity:.7;transition:transform var(--t-fast) var(--ease)}
+.lang-sw.open .lang-btn .caret{transform:rotate(180deg)}
+.lang-menu{position:absolute;top:calc(100% + 10px);right:0;min-width:172px;list-style:none;
+  background:rgba(26,30,42,.96);backdrop-filter:blur(20px) saturate(180%);
+  border:1px solid var(--stroke2);border-radius:14px;padding:7px;margin:0;
+  box-shadow:0 18px 48px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-8px);
+  transition:opacity var(--t-fast) var(--ease),transform var(--t-fast) var(--ease),visibility var(--t-fast)}
+.lang-sw.open .lang-menu{opacity:1;visibility:visible;transform:none}
+.lang-menu li{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:9px;
+  cursor:pointer;color:var(--text2);font-weight:500;transition:background var(--t-fast),color var(--t-fast)}
+.lang-menu li:hover{background:rgba(255,255,255,.07);color:var(--text)}
+.lang-menu li.active{color:var(--brand);background:rgba(245,182,66,.10)}
+.lang-menu li .dot-zh,.lang-menu li .dot-en,.lang-menu li .dot-ja,.lang-menu li .dot-ko,
+.lang-menu li .dot-fr,.lang-menu li .dot-de,.lang-menu li .dot-ru,.lang-menu li .dot-ar,
+.lang-menu li .dot-es,.lang-menu li .dot-pt{width:9px;height:9px;border-radius:50%;flex:none;
+  background:linear-gradient(135deg,var(--brand),var(--brandDeep))}
+
+/* 阿拉伯语 RTL：把部分视觉方向翻转 */
+html[dir="rtl"] body{direction:rtl}
+html[dir="rtl"] .nav-right{margin-left:0;margin-right:auto}
+html[dir="rtl"] .foot{justify-content:space-between}
+html[dir="rtl"] .lang-menu{right:auto;left:0}
+html[dir="rtl"] .cta-row,.bento,.feature-grid,.prices,.models,.faq{direction:ltr}
+html[dir="rtl"] .fw .label{right:auto;left:54px}
+html[dir="rtl"] .float-widgets{right:auto;left:18px}

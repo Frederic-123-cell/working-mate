@@ -426,59 +426,67 @@ BY_SLUG = {f["slug"]: f for f in FEATURES}
 
 NAV = """<nav class="top" id="topnav">
   <div class="top-in">
-    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
     <div class="nav-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="index-v3.html#workflow">工作流</a>
-      <a href="index-v3.html#models">模型</a>
-      <a href="pricing.html">价格</a>
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
     </div>
   </div>
 </nav>"""
 
 FOOT = """<footer>
   <div class="wrap foot">
-    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
     <div class="foot-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
     </div>
   </div>
 </footer>"""
 
 
-def _li(items, cls="fcard"):
+def _li(items, slug, cls="fcard"):
     return "".join(
-        f'<div class="{cls}"><h3>{t}</h3><p>{d}</p></div>' for t, d in items
+        f'<div class="{cls}"><h3 data-i18n="feat.{slug}.what{i}t">{t}</h3>'
+        f'<p data-i18n="feat.{slug}.what{i}d">{d}</p></div>'
+        for i, (t, d) in enumerate(items)
     )
 
 
-def _steps(items):
+def _steps(items, slug):
     return "".join(
-        f'<li><span class="n">{i+1}</span><div>{s}</div></li>' for i, s in enumerate(items)
+        f'<li><span class="n">{i+1}</span><div data-i18n="feat.{slug}.step{i}">{s}</div></li>'
+        for i, s in enumerate(items)
     )
 
 
-def _facts(items):
-    return "".join(f'<span class="fchip">{x}</span>' for x in items)
+def _facts(items, slug):
+    return "".join(
+        f'<span class="fchip" data-i18n="feat.{slug}.fact{i}">{x}</span>'
+        for i, x in enumerate(items)
+    )
 
 
-def _tech(items):
-    return "".join(f"<li>{x}</li>" for x in items)
+def _tech(items, slug):
+    return "".join(
+        f'<li data-i18n="feat.{slug}.tech{i}">{x}</li>' for i, x in enumerate(items)
+    )
 
 
-def _shot(f):
+def _shot(f, slug):
     if not f.get("shot"):
         return ""
     return f"""
   <section class="fsec reveal">
-    <h2>看一眼</h2>
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
       <img src="{f['shot']}" alt="{f['title']} 界面截图" loading="lazy">
-      <figcaption>{f.get('shot_cap','')}</figcaption>
+      <figcaption data-i18n="feat.{slug}.shot">{f.get('shot_cap','')}</figcaption>
     </figure>
   </section>"""
 
@@ -492,18 +500,20 @@ def _related(f):
         cards.append(
             f'<a class="frel" href="feature-{r["slug"]}.html">'
             f'<span class="fico sm {r["ico"]}">{r["icon"]}</span>'
-            f'<span><b>{r["title"]}</b><em>{r["tag"]}</em></span><i>→</i></a>'
+            f'<span><b data-i18n="feat.{r["slug"]}.title">{r["title"]}</b>'
+            f'<em data-i18n="feat.{r["slug"]}.tag">{r["tag"]}</em></span><i>→</i></a>'
         )
     if not cards:
         return ""
     return f"""
   <section class="fsec reveal">
-    <h2>相关功能</h2>
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
     <div class="frels">{''.join(cards)}</div>
   </section>"""
 
 
 def render(f):
+    slug = f["slug"]
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -512,6 +522,7 @@ def render(f):
 <title>{f['title']} · {SITE} 功能</title>
 <meta name="description" content="{f['sub'][:110]}">
 <link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
 </head>
 <body>
 {NAV}
@@ -519,53 +530,64 @@ def render(f):
 <header class="fhero">
   <div class="aurora aurora-1 on"></div>
   <div class="wrap fhero-in">
-    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
     <div class="fico {f['ico']}">{f['icon']}</div>
-    <div class="ftag">{f['tag']}</div>
-    <h1>{f['title']}</h1>
-    <p class="fsub">{f['sub']}</p>
-    <div class="facts">{_facts(f['facts'])}</div>
+    <div class="ftag" data-i18n="feat.{slug}.tag">{f['tag']}</div>
+    <h1 data-i18n="feat.{slug}.title">{f['title']}</h1>
+    <p class="fsub" data-i18n="feat.{slug}.sub">{f['sub']}</p>
+    <div class="facts">{_facts(f['facts'], slug)}</div>
     <div class="fcta-row">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
-      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
   <section class="fsec reveal">
-    <h2>它能做什么</h2>
-    <div class="fgrid">{_li(f['what'])}</div>
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid">{_li(f['what'], slug)}</div>
   </section>
 
   <section class="fsec reveal">
-    <h2>怎么用</h2>
-    <ol class="fsteps">{_steps(f['steps'])}</ol>
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps">{_steps(f['steps'], slug)}</ol>
   </section>
 
   <section class="fsec reveal">
-    <h2>技术亮点</h2>
-    <ul class="fpoints">{_tech(f['tech'])}</ul>
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints">{_tech(f['tech'], slug)}</ul>
   </section>
-{_shot(f)}
+{_shot(f, slug)}
 {_related(f)}
 
   <section class="fsec fend reveal">
     <div class="fend-in">
-      <h2>现在就试试「{f['title']}」</h2>
-      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 {SITE}</a>
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 {SITE}</a>
     </div>
   </section>
 </main>
 
 {FOOT}
+<div id="langmount"></div>
 <script>
 const n=document.getElementById('topnav');
 addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{{passive:true}});
 const io=new IntersectionObserver(es=>{{es.forEach(e=>{{if(e.isIntersecting){{e.target.classList.add('in');io.unobserve(e.target)}}}})}},{{threshold:.12,rootMargin:'0px 0px -8% 0px'}});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>
 """
@@ -574,19 +596,21 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 def grid_html():
     cards = []
     for f in FEATURES:
+        slug = f["slug"]
         cards.append(
-            f'<a class="b-card fcard-link reveal" href="feature-{f["slug"]}.html">'
+            f'<a class="b-card fcard-link reveal" href="feature-{slug}.html">'
             f'<div class="ico {f["ico"]}">{f["icon"]}</div>'
-            f'<h3>{f["title"]}</h3><p>{f["facts"][0]} · {f["facts"][1]}</p>'
-            f'<span class="go">查看详情 →</span></a>'
+            f'<h3 data-i18n="feat.{slug}.title">{f["title"]}</h3>'
+            f'<p data-i18n="feat.{slug}.grid">{f["facts"][0]} · {f["facts"][1]}</p>'
+            f'<span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>'
         )
     return (
         '<section class="zone" id="features">\n'
         '  <div class="wrap">\n'
         '    <div class="zone-head reveal" style="margin:0 auto 40px;text-align:center;max-width:660px">\n'
-        '      <div class="zone-tag">All Features</div>\n'
-        '      <h2>全部功能，点开看细节</h2>\n'
-        '      <p style="color:var(--text2);margin-top:12px">每张卡片都能点进去看完整介绍：能做什么、怎么用、技术亮点。</p>\n'
+        '      <div class="zone-tag" data-i18n="home.feat.tag">All Features</div>\n'
+        '      <h2 data-i18n="home.feat.h2">全部功能，点开看细节</h2>\n'
+        '      <p data-i18n="home.feat.p" style="color:var(--text2);margin-top:12px">每张卡片都能点进去看完整介绍：能做什么、怎么用、技术亮点。</p>\n'
         '    </div>\n'
         '    <div class="feature-grid">\n      ' + "\n      ".join(cards) + '\n    </div>\n'
         '  </div>\n'
@@ -602,7 +626,7 @@ def main():
     css = (HERE / "feature.css").write_text(FEATURE_CSS, encoding="utf-8")
     print("[ok] 写入 feature.css")
 
-    idx = HERE / "index-v3.html"
+    idx = HERE / "index.html"
     if idx.exists():
         html = idx.read_text(encoding="utf-8")
         if GRID_MARK in html:

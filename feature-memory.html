@@ -6,19 +6,20 @@
 <title>四层记忆系统 · Working Mate 功能</title>
 <meta name="description" content="它不是每次都从零开始。关键事实、历史会话、跑通过的流程、你的偏好与沟通风格，分别沉淀在四层记忆里，越用越懂你。">
 <link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
 </head>
 <body>
 <nav class="top" id="topnav">
   <div class="top-in">
-    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
     <div class="nav-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="index-v3.html#workflow">工作流</a>
-      <a href="index-v3.html#models">模型</a>
-      <a href="pricing.html">价格</a>
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
     </div>
   </div>
 </nav>
@@ -26,71 +27,82 @@
 <header class="fhero">
   <div class="aurora aurora-1 on"></div>
   <div class="wrap fhero-in">
-    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
     <div class="fico ico-mint">◈</div>
-    <div class="ftag">Memory</div>
-    <h1>四层记忆系统</h1>
-    <p class="fsub">它不是每次都从零开始。关键事实、历史会话、跑通过的流程、你的偏好与沟通风格，分别沉淀在四层记忆里，越用越懂你。</p>
-    <div class="facts"><span class="fchip">4 层记忆结构</span><span class="fchip">中文 n-gram 检索</span><span class="fchip">本地 SQLite 存储</span><span class="fchip">容量上限强制筛选</span></div>
+    <div class="ftag" data-i18n="feat.memory.tag">Memory</div>
+    <h1 data-i18n="feat.memory.title">四层记忆系统</h1>
+    <p class="fsub" data-i18n="feat.memory.sub">它不是每次都从零开始。关键事实、历史会话、跑通过的流程、你的偏好与沟通风格，分别沉淀在四层记忆里，越用越懂你。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.memory.fact0">4 层记忆结构</span><span class="fchip" data-i18n="feat.memory.fact1">中文 n-gram 检索</span><span class="fchip" data-i18n="feat.memory.fact2">本地 SQLite 存储</span><span class="fchip" data-i18n="feat.memory.fact3">容量上限强制筛选</span></div>
     <div class="fcta-row">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
-      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
   <section class="fsec reveal">
-    <h2>它能做什么</h2>
-    <div class="fgrid"><div class="fcard"><h3>L1 常驻记忆</h3><p>最重要的事实与偏好，每轮对话都注入。因为有容量上限，系统被强迫只留最有价值的那几条。</p></div><div class="fcard"><h3>L2 会话归档</h3><p>全部历史会话存进本地数据库，按关键词命中数召回最相关的几段，需要时才注入，不占用常驻预算。</p></div><div class="fcard"><h3>L3 技能库</h3><p>跑通过的流程会被自动抽成可复用技能——同样的活第二次只要一句话。</p></div><div class="fcard"><h3>L4 用户画像</h3><p>沟通风格、领域知识、做事习惯长期积累，让回复越来越像在跟你说话。</p></div><div class="fcard"><h3>换话题不断片</h3><p>上周聊过的需求，这周接着来；换到别的话题再回来，它还记得上下文。</p></div><div class="fcard"><h3>记忆可查可清</h3><p>侧栏「记忆文件」随时查看，觉得记错了可以清空或纠正。</p></div></div>
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.memory.what0t">L1 常驻记忆</h3><p data-i18n="feat.memory.what0d">最重要的事实与偏好，每轮对话都注入。因为有容量上限，系统被强迫只留最有价值的那几条。</p></div><div class="fcard"><h3 data-i18n="feat.memory.what1t">L2 会话归档</h3><p data-i18n="feat.memory.what1d">全部历史会话存进本地数据库，按关键词命中数召回最相关的几段，需要时才注入，不占用常驻预算。</p></div><div class="fcard"><h3 data-i18n="feat.memory.what2t">L3 技能库</h3><p data-i18n="feat.memory.what2d">跑通过的流程会被自动抽成可复用技能——同样的活第二次只要一句话。</p></div><div class="fcard"><h3 data-i18n="feat.memory.what3t">L4 用户画像</h3><p data-i18n="feat.memory.what3d">沟通风格、领域知识、做事习惯长期积累，让回复越来越像在跟你说话。</p></div><div class="fcard"><h3 data-i18n="feat.memory.what4t">换话题不断片</h3><p data-i18n="feat.memory.what4d">上周聊过的需求，这周接着来；换到别的话题再回来，它还记得上下文。</p></div><div class="fcard"><h3 data-i18n="feat.memory.what5t">记忆可查可清</h3><p data-i18n="feat.memory.what5d">侧栏「记忆文件」随时查看，觉得记错了可以清空或纠正。</p></div></div>
   </section>
 
   <section class="fsec reveal">
-    <h2>怎么用</h2>
-    <ol class="fsteps"><li><span class="n">1</span><div>正常聊天即可，不需要手动「记住」。</div></li><li><span class="n">2</span><div>侧栏「记忆文件」查看当前 L1 常驻记忆与 L4 画像。</div></li><li><span class="n">3</span><div>「记忆清理」可以一键清空某层记忆，或删掉指定会话。</div></li><li><span class="n">4</span><div>想让它记住某条硬性规则，直接在对话里说明即可被判为长期事实。</div></li></ol>
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.memory.step0">正常聊天即可，不需要手动「记住」。</div></li><li><span class="n">2</span><div data-i18n="feat.memory.step1">侧栏「记忆文件」查看当前 L1 常驻记忆与 L4 画像。</div></li><li><span class="n">3</span><div data-i18n="feat.memory.step2">「记忆清理」可以一键清空某层记忆，或删掉指定会话。</div></li><li><span class="n">4</span><div data-i18n="feat.memory.step3">想让它记住某条硬性规则，直接在对话里说明即可被判为长期事实。</div></li></ol>
   </section>
 
   <section class="fsec reveal">
-    <h2>技术亮点</h2>
-    <ul class="fpoints"><li>中文用 2-4 字 n-gram 切片配合英文串分词，解决整串 LIKE 命中率低的问题。</li><li>L2 用命中数评分排序，SQLite FTS5 不可用时自动降级为普通表 + LIKE 检索。</li><li>轻量摘要不调 LLM，用首尾轮次拼接，控制成本。</li><li>每层都有字符上限，保护记忆不被过时内容淹没。</li></ul>
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.memory.tech0">中文用 2-4 字 n-gram 切片配合英文串分词，解决整串 LIKE 命中率低的问题。</li><li data-i18n="feat.memory.tech1">L2 用命中数评分排序，SQLite FTS5 不可用时自动降级为普通表 + LIKE 检索。</li><li data-i18n="feat.memory.tech2">轻量摘要不调 LLM，用首尾轮次拼接，控制成本。</li><li data-i18n="feat.memory.tech3">每层都有字符上限，保护记忆不被过时内容淹没。</li></ul>
   </section>
 
   <section class="fsec reveal">
-    <h2>看一眼</h2>
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
       <img src="assets/shots/home.png" alt="四层记忆系统 界面截图" loading="lazy">
-      <figcaption>记忆文件随时可查可清</figcaption>
+      <figcaption data-i18n="feat.memory.shot">记忆文件随时可查可清</figcaption>
     </figure>
   </section>
 
   <section class="fsec reveal">
-    <h2>相关功能</h2>
-    <div class="frels"><a class="frel" href="feature-skills.html"><span class="fico sm ico-amber">▲</span><span><b>技能自动沉淀</b><em>Self-Evolving Skills</em></span><i>→</i></a><a class="frel" href="feature-privacy.html"><span class="fico sm ico-amber">⚿</span><span><b>本地优先 & 隐私</b><em>Local First</em></span><i>→</i></a></div>
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-skills.html"><span class="fico sm ico-amber">▲</span><span><b data-i18n="feat.skills.title">技能自动沉淀</b><em data-i18n="feat.skills.tag">Self-Evolving Skills</em></span><i>→</i></a><a class="frel" href="feature-privacy.html"><span class="fico sm ico-amber">⚿</span><span><b data-i18n="feat.privacy.title">本地优先 & 隐私</b><em data-i18n="feat.privacy.tag">Local First</em></span><i>→</i></a></div>
   </section>
 
   <section class="fsec fend reveal">
     <div class="fend-in">
-      <h2>现在就试试「四层记忆系统」</h2>
-      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
     <div class="foot-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
     </div>
   </div>
 </footer>
+<div id="langmount"></div>
 <script>
 const n=document.getElementById('topnav');
 addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

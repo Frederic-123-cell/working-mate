@@ -6,19 +6,20 @@
 <title>GUI 自动化 · Working Mate 功能</title>
 <meta name="description" content="让 AI 直接操控本机上的其他程序：点按钮、填表单、翻菜单——那些没有 API 的老软件也能被自动化。">
 <link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
 </head>
 <body>
 <nav class="top" id="topnav">
   <div class="top-in">
-    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
     <div class="nav-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="index-v3.html#workflow">工作流</a>
-      <a href="index-v3.html#models">模型</a>
-      <a href="pricing.html">价格</a>
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
     </div>
   </div>
 </nav>
@@ -26,71 +27,82 @@
 <header class="fhero">
   <div class="aurora aurora-1 on"></div>
   <div class="wrap fhero-in">
-    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
     <div class="fico ico-coral">⊙</div>
-    <div class="ftag">Computer Control</div>
-    <h1>GUI 自动化</h1>
-    <p class="fsub">让 AI 直接操控本机上的其他程序：点按钮、填表单、翻菜单——那些没有 API 的老软件也能被自动化。</p>
-    <div class="facts"><span class="fchip">模拟鼠标键盘</span><span class="fchip">开启前能力检测</span><span class="fchip">每个操作可要求确认</span><span class="fchip">可随时关闭</span></div>
+    <div class="ftag" data-i18n="feat.gui.tag">Computer Control</div>
+    <h1 data-i18n="feat.gui.title">GUI 自动化</h1>
+    <p class="fsub" data-i18n="feat.gui.sub">让 AI 直接操控本机上的其他程序：点按钮、填表单、翻菜单——那些没有 API 的老软件也能被自动化。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.gui.fact0">模拟鼠标键盘</span><span class="fchip" data-i18n="feat.gui.fact1">开启前能力检测</span><span class="fchip" data-i18n="feat.gui.fact2">每个操作可要求确认</span><span class="fchip" data-i18n="feat.gui.fact3">可随时关闭</span></div>
     <div class="fcta-row">
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
-      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
     </div>
   </div>
 </header>
 
 <main class="wrap">
   <section class="fsec reveal">
-    <h2>它能做什么</h2>
-    <div class="fgrid"><div class="fcard"><h3>像人一样操作界面</h3><p>AI 会先「看」当前窗口，再决定点哪里、输入什么，逐步推进任务。</p></div><div class="fcard"><h3>开启前先做能力检测</h3><p>系统会先检查当前环境是否支持，不支持就直接告诉你原因，而不是开了之后一直失败。</p></div><div class="fcard"><h3>操作前请求确认</h3><p>默认每次关键操作都会问你一声；开了免确认模式才会自动放行。</p></div><div class="fcard"><h3>高危动作仍然拦截</h3><p>删除、覆盖等破坏性操作不会被免确认放行。</p></div><div class="fcard"><h3>随时可关</h3><p>一键关闭，AI 立刻失去键鼠控制权。</p></div></div>
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.gui.what0t">像人一样操作界面</h3><p data-i18n="feat.gui.what0d">AI 会先「看」当前窗口，再决定点哪里、输入什么，逐步推进任务。</p></div><div class="fcard"><h3 data-i18n="feat.gui.what1t">开启前先做能力检测</h3><p data-i18n="feat.gui.what1d">系统会先检查当前环境是否支持，不支持就直接告诉你原因，而不是开了之后一直失败。</p></div><div class="fcard"><h3 data-i18n="feat.gui.what2t">操作前请求确认</h3><p data-i18n="feat.gui.what2d">默认每次关键操作都会问你一声；开了免确认模式才会自动放行。</p></div><div class="fcard"><h3 data-i18n="feat.gui.what3t">高危动作仍然拦截</h3><p data-i18n="feat.gui.what3d">删除、覆盖等破坏性操作不会被免确认放行。</p></div><div class="fcard"><h3 data-i18n="feat.gui.what4t">随时可关</h3><p data-i18n="feat.gui.what4d">一键关闭，AI 立刻失去键鼠控制权。</p></div></div>
   </section>
 
   <section class="fsec reveal">
-    <h2>怎么用</h2>
-    <ol class="fsteps"><li><span class="n">1</span><div>设置 → 开启「GUI 自动化」，先通过能力检测。</div></li><li><span class="n">2</span><div>描述要完成的操作（越具体越好）。</div></li><li><span class="n">3</span><div>按提示确认每一步关键动作。</div></li><li><span class="n">4</span><div>任务结束后关闭开关。</div></li></ol>
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.gui.step0">设置 → 开启「GUI 自动化」，先通过能力检测。</div></li><li><span class="n">2</span><div data-i18n="feat.gui.step1">描述要完成的操作（越具体越好）。</div></li><li><span class="n">3</span><div data-i18n="feat.gui.step2">按提示确认每一步关键动作。</div></li><li><span class="n">4</span><div data-i18n="feat.gui.step3">任务结束后关闭开关。</div></li></ol>
   </section>
 
   <section class="fsec reveal">
-    <h2>技术亮点</h2>
-    <ul class="fpoints"><li>能力检测在开启时执行并缓存结果，避免执行中途才发现环境不支持。</li><li>操作粒度可配置，默认走逐条确认。</li><li>与免确认模式联动：只有显式开启免确认才会跳过弹窗确认。</li></ul>
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.gui.tech0">能力检测在开启时执行并缓存结果，避免执行中途才发现环境不支持。</li><li data-i18n="feat.gui.tech1">操作粒度可配置，默认走逐条确认。</li><li data-i18n="feat.gui.tech2">与免确认模式联动：只有显式开启免确认才会跳过弹窗确认。</li></ul>
   </section>
 
   <section class="fsec reveal">
-    <h2>看一眼</h2>
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
       <img src="assets/shots/automation.png" alt="GUI 自动化 界面截图" loading="lazy">
-      <figcaption>没有 API 的老软件也能自动化</figcaption>
+      <figcaption data-i18n="feat.gui.shot">没有 API 的老软件也能自动化</figcaption>
     </figure>
   </section>
 
   <section class="fsec reveal">
-    <h2>相关功能</h2>
-    <div class="frels"><a class="frel" href="feature-safety.html"><span class="fico sm ico-mint">⛨</span><span><b>安全护栏：免确认 & 急停</b><em>Safety</em></span><i>→</i></a><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b>17 位领域专家协作</b><em>Expert Team</em></span><i>→</i></a></div>
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-safety.html"><span class="fico sm ico-mint">⛨</span><span><b data-i18n="feat.safety.title">安全护栏：免确认 & 急停</b><em data-i18n="feat.safety.tag">Safety</em></span><i>→</i></a><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b data-i18n="feat.experts.title">17 位领域专家协作</b><em data-i18n="feat.experts.tag">Expert Team</em></span><i>→</i></a></div>
   </section>
 
   <section class="fsec fend reveal">
     <div class="fend-in">
-      <h2>现在就试试「GUI 自动化」</h2>
-      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
-      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
     </div>
   </section>
 </main>
 
 <footer>
   <div class="wrap foot">
-    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
     <div class="foot-links">
-      <a href="index-v3.html#features">功能</a>
-      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
     </div>
   </div>
 </footer>
+<div id="langmount"></div>
 <script>
 const n=document.getElementById('topnav');
 addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
 const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
 </body>
 </html>

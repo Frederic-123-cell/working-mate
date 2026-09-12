@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI 媒体工厂 · Working Mate 功能</title>
+<meta name="description" content="从一句主题到一条成片：剧本 → 分镜 → AI 视频镜头 → 背景配乐 → 字幕 → 合成，整条链路内置在客户端里，不用来回切七八个网站。">
+<link rel="stylesheet" href="feature.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="index-v3.html#workflow">工作流</a>
+      <a href="index-v3.html#models">模型</a>
+      <a href="pricing.html">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <div class="fico ico-coral">▶</div>
+    <div class="ftag">AI Media Studio</div>
+    <h1>AI 媒体工厂</h1>
+    <p class="fsub">从一句主题到一条成片：剧本 → 分镜 → AI 视频镜头 → 背景配乐 → 字幕 → 合成，整条链路内置在客户端里，不用来回切七八个网站。</p>
+    <div class="facts"><span class="fchip">剧本 / 分镜 / 视频 / 配乐</span><span class="fchip">字幕 + GIF</span><span class="fchip">短视频竖屏 9:16</span><span class="fchip">结果自动归档</span></div>
+    <div class="fcta-row">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
+      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2>它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3>剧本生成</h3><p>给一个主题，产出 60 秒三镜头微短剧剧本，并自动切出每个镜头的画面提示词。</p></div><div class="fcard"><h3>分镜拆解</h3><p>把剧本里的镜头描述自动提取成结构化列表，逐个喂给视频节点。</p></div><div class="fcard"><h3>AI 视频镜头</h3><p>调用文生视频模型生成每个镜头，支持竖屏 9:16、时长可调，可单镜头重跑。</p></div><div class="fcard"><h3>背景配乐</h3><p>按剧本情绪生成纯音乐主题曲，或让 AI 写带歌词的完整歌曲。</p></div><div class="fcard"><h3>AI 配图</h3><p>电影感构图的概念图、封面图、分镜参考图，比例可选。</p></div><div class="fcard"><h3>字幕与 GIF</h3><p>自动生成字幕文件，也能把片段导出成 GIF 动图。</p></div><div class="fcard"><h3>视频合成</h3><p>把多个镜头按顺序合成一条成片输出。</p></div><div class="fcard"><h3>本地素材可插入</h3><p>自己的图片、音乐可以直接拖进工作流当参考图或配乐，和 AI 产物混合编排。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div>工作流 → 载入「🎬 AI 短剧（3 镜头 + 配乐）」模板。</div></li><li><span class="n">2</span><div>把主题改成本次内容（如「一只打工小龙的日常」）。</div></li><li><span class="n">3</span><div>点剧本节点，手写剧本或点 🪄 让 AI 写；确认后运行。</div></li><li><span class="n">4</span><div>逐节点预览：先看剧本与分镜，再看生成的镜头视频与配乐。</div></li><li><span class="n">5</span><div>合成节点输出成片；产物自动落到本次任务的归档目录。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>技术亮点</h2>
+    <ul class="fpoints"><li>视频 / 音乐 / 图像分别对接可灵、Suno、图像生成模型，走统一的工具注册表。</li><li>媒体节点按次计费，界面对消耗有明确提示（免费版可先用本地能力练流程）。</li><li>镜头数量、比例、时长都可编辑；镜头提示词支持硬编码覆盖上游。</li><li>产物路径自动回填到节点，下次重跑可直接复用。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/cards-video.png" alt="AI 媒体工厂 界面截图" loading="lazy">
+      <figcaption>剧本 → 分镜 → 镜头 → 配乐</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-workflow.html"><span class="fico sm ico-blue">◎</span><span><b>节点式工作流画布</b><em>Workflow Canvas</em></span><i>→</i></a><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b>17 位领域专家协作</b><em>Expert Team</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2>现在就试试「AI 媒体工厂」</h2>
+      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+    </div>
+  </div>
+</footer>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

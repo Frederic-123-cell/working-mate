@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>多模型混合调度 · Working Mate 功能</title>
+<meta name="description" content="本地 Ollama 与云端旗舰模型统一在一个对话框里，断网自动用本地，联网自动切云端；同一会话随手换模型，不用重启、不用改配置。">
+<link rel="stylesheet" href="feature.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="index-v3.html#workflow">工作流</a>
+      <a href="index-v3.html#models">模型</a>
+      <a href="pricing.html">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <div class="fico ico-blue">◧</div>
+    <div class="ftag">Multi-Model Router</div>
+    <h1>多模型混合调度</h1>
+    <p class="fsub">本地 Ollama 与云端旗舰模型统一在一个对话框里，断网自动用本地，联网自动切云端；同一会话随手换模型，不用重启、不用改配置。</p>
+    <div class="facts"><span class="fchip">60+ 可接入模型</span><span class="fchip">本地 / 云端统一入口</span><span class="fchip">自动降级切换</span><span class="fchip">0 数据外传（本地模式）</span></div>
+    <div class="fcta-row">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
+      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2>它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3>一个输入框，连通所有模型</h3><p>不用记 API、不用开一堆网页。DeepSeek、Qwen、GLM、Kimi、豆包、GPT、Claude、Gemini、OpenRouter 全量模型都在同一个下拉里。</p></div><div class="fcard"><h3>本地优先，断网也能跑</h3><p>接上 Ollama 即可完全离线：对话、文件操作、工作流编排都不依赖网络，数据不出本机。</p></div><div class="fcard"><h3>三档模型策略</h3><p>标准 / 专业 / 旗舰三档一键切换，系统按任务复杂度自动挑性价比最高的模型，也能手动指定。</p></div><div class="fcard"><h3>多模型自动降级</h3><p>一个模型限频或 5xx，自动切到下一个备选模型继续跑；只有余额不足、鉴权失败才停下并明确报错，不会静默失败。</p></div><div class="fcard"><h3>专家各带模型组</h3><p>17 位领域专家各自绑定「推理 / 通用 / 代码」三模型组，让写代码的用代码模型、写文案的用文案模型。</p></div><div class="fcard"><h3>同一会话实时切换</h3><p>聊到一半换模型，上下文不丢——真正意义上的「随手换脑子」。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div>设置 → 模型与运行环境，选档位（标准 / 专业 / 旗舰）。</div></li><li><span class="n">2</span><div>需要离线就把本地 Ollama 打开，客户端会自动发现本地模型。</div></li><li><span class="n">3</span><div>在顶部模型下拉里选具体模型，或直接用「自动路由」让它自己挑。</div></li><li><span class="n">4</span><div>断网时自动落到本地模型，联网后自动恢复云端，无需手动干预。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>技术亮点</h2>
+    <ul class="fpoints"><li>统一 cloud_client 抽象层，本地 / 云端同一套调用签名。</li><li>429 区分「限频」与「余额不足」：限频读 Retry-After 重试一次，余额不足立即停并提示充值。</li><li>多模型 fallback 链：限频 / 5xx 才切换，鉴权类错误不切换（避免无意义重试烧钱）。</li><li>模型按「档位 × 用途」索引，专家可直接引用模型组。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="多模型混合调度 界面截图" loading="lazy">
+      <figcaption>同一个输入框，连通本地与云端</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b>17 位领域专家协作</b><em>Expert Team</em></span><i>→</i></a><a class="frel" href="feature-workflow.html"><span class="fico sm ico-blue">◎</span><span><b>节点式工作流画布</b><em>Workflow Canvas</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2>现在就试试「多模型混合调度」</h2>
+      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+    </div>
+  </div>
+</footer>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

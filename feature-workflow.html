@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>节点式工作流画布 · Working Mate 功能</title>
+<meta name="description" content="像搭积木一样把 AI 串成流水线：拖节点、连线、跑起来。每一步都能单独预览、单独重跑、单独改提示词——提示词既能自己手写，也能让 AI 代写。">
+<link rel="stylesheet" href="feature.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="index-v3.html#workflow">工作流</a>
+      <a href="index-v3.html#models">模型</a>
+      <a href="pricing.html">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <div class="fico ico-blue">◎</div>
+    <div class="ftag">Workflow Canvas</div>
+    <h1>节点式工作流画布</h1>
+    <p class="fsub">像搭积木一样把 AI 串成流水线：拖节点、连线、跑起来。每一步都能单独预览、单独重跑、单独改提示词——提示词既能自己手写，也能让 AI 代写。</p>
+    <div class="facts"><span class="fchip">10 种节点类型</span><span class="fchip">拖拽 + 自动连线 + 自动排版</span><span class="fchip">单节点重跑</span><span class="fchip">提示词 DIY 或 AI 代写</span></div>
+    <div class="fcta-row">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
+      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2>它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3>10 种节点，覆盖全流程</h3><p>LLM 文本、分镜拆解、AI 配图、AI 视频、AI 音乐、视频合成、工具节点、文本卡片、本地图片、本地音乐。</p></div><div class="fcard"><h3>拖拽 + 连线</h3><p>左侧节点库拖到画布，按住节点右侧拖到目标即可连线；也有「⚡ 自动连线」按类型逻辑一次接好。</p></div><div class="fcard"><h3>自动排版</h3><p>「⌗ 自动排版」按依赖关系分层排列，节点散了一键归位。</p></div><div class="fcard"><h3>每步即时预览</h3><p>点任意节点，右侧立刻显示该节点的文本 / 图片 / 视频 / 音频产物，带播放器。</p></div><div class="fcard"><h3>提示词完全可 DIY</h3><p>每个文本参数都是多行编辑器，想怎么写就怎么写；支持 {{节点名}} 占位符引用上游产物。</p></div><div class="fcard"><h3>🪄 AI 帮我写提示词</h3><p>给一句话需求，AI 按节点类型自动写出专业提示词（分镜师 / 美术指导 / 音乐制作人角色各有专用模板），生成后仍可继续手改。</p></div><div class="fcard"><h3>模板一键开跑</h3><p>内置 AI 短剧、音乐单曲、主题概念图等现成流程，改个主题就能跑。</p></div><div class="fcard"><h3>可靠性分析</h3><p>「🛡 可靠性分析」检查缺参数、缺 Key、断链、成环，给出评分和修复建议。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div>打开侧栏「工作流」，从左侧拖入需要的节点（或直接「载入模板」）。</div></li><li><span class="n">2</span><div>连线：按住节点右侧拖到目标节点；懒人可直接点「⚡ 自动连线」。</div></li><li><span class="n">3</span><div>点节点，在右侧把提示词改成本次任务的内容（手写或点 🪄 让 AI 写）。</div></li><li><span class="n">4</span><div>「▶ 运行工作流」跑全流程，单节点失败不影响其余分支。</div></li><li><span class="n">5</span><div>画布可存成 JSON，「保存 JSON / 打开 JSON」方便复用与分享。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>技术亮点</h2>
+    <ul class="fpoints"><li>节点用扁平 dict + deps 表达依赖，引擎按拓扑串行执行，失败分支自动跳过下游。</li><li>占位符引用上游产物，支持取列表第 N 项（如分镜第 1 个镜头）。</li><li>参数按类型自动归一（时长转整数、纯音乐转布尔），避免云端接口报类型错。</li><li>LLM 节点返回值做错误标记识别，避免把报错文本当成剧本流到下游。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/agent-split.png" alt="节点式工作流画布 界面截图" loading="lazy">
+      <figcaption>节点画布：拖拽、连线、逐节点预览</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-media.html"><span class="fico sm ico-coral">▶</span><span><b>AI 媒体工厂</b><em>AI Media Studio</em></span><i>→</i></a><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b>17 位领域专家协作</b><em>Expert Team</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2>现在就试试「节点式工作流画布」</h2>
+      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+    </div>
+  </div>
+</footer>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

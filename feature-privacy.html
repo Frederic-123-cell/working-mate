@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>本地优先 & 隐私 · Working Mate 功能</title>
+<meta name="description" content="对话、记忆、知识库、技能、产物默认全部存在你自己的电脑上。不联网也能用完整能力，联网只是为了调用你主动选择的云端模型。">
+<link rel="stylesheet" href="feature.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index-v3.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="index-v3.html#workflow">工作流</a>
+      <a href="index-v3.html#models">模型</a>
+      <a href="pricing.html">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index-v3.html#features">← 返回功能全景</a>
+    <div class="fico ico-amber">⚿</div>
+    <div class="ftag">Local First</div>
+    <h1>本地优先 & 隐私</h1>
+    <p class="fsub">对话、记忆、知识库、技能、产物默认全部存在你自己的电脑上。不联网也能用完整能力，联网只是为了调用你主动选择的云端模型。</p>
+    <div class="facts"><span class="fchip">0 数据外传（本地模式）</span><span class="fchip">断网可用</span><span class="fchip">数据全在本机</span><span class="fchip">本地数据库存储</span></div>
+    <div class="fcta-row">
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载体验</a>
+      <a href="index-v3.html#features" class="btn btn-ghost">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2>它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3>数据留在本机</h3><p>对话历史、四层记忆、技能库、项目产物都以本地文件 / 本地数据库形式存放。</p></div><div class="fcard"><h3>断网可用</h3><p>接上本地模型后，对话、文件操作、工作流编排完全不依赖网络。</p></div><div class="fcard"><h3>联网是你主动的选择</h3><p>只有当你选择使用云端模型或云端生成时，相关内容才会发给对应服务商。</p></div><div class="fcard"><h3>一键清理</h3><p>「记忆清理」可以清空指定记忆层或删除历史会话，清完就是真的没了。</p></div><div class="fcard"><h3>没有账号也能用</h3><p>免费版不强制注册，本地能力开箱即用。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div>需要完全离线时，只用本地模型即可。</div></li><li><span class="n">2</span><div>想清空记录：侧栏「记忆清理」。</div></li><li><span class="n">3</span><div>担心某次对话内容敏感，就别选云端模型。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>技术亮点</h2>
+    <ul class="fpoints"><li>本地存储使用 SQLite 与本地目录，不依赖任何自建云服务。</li><li>云端调用仅走你配置的服务商 Key，直连对应 API。</li><li>记忆分层各自可清理，避免「清一个把全部清掉」。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="本地优先 & 隐私 界面截图" loading="lazy">
+      <figcaption>数据全在本机，断网也能跑</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2>相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-memory.html"><span class="fico sm ico-mint">◈</span><span><b>四层记忆系统</b><em>Memory</em></span><i>→</i></a><a class="frel" href="feature-safety.html"><span class="fico sm ico-mint">⛨</span><span><b>安全护栏：免确认 & 急停</b><em>Safety</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2>现在就试试「本地优先 & 隐私」</h2>
+      <p>免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index-v3.html#pricing" class="btn btn-amber">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index-v3.html#features">功能</a>
+      <a href="privacy.html">隐私</a><a href="terms.html">条款</a><a href="refunds.html">退款</a>
+    </div>
+  </div>
+</footer>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <script>
     (function(){
-      var V = '20260906c';
+      var V = '20260919a';
       var p = new URLSearchParams(location.search);
       if (p.get('v') !== V) {
         p.set('v', V);
@@ -202,10 +202,10 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html?v=20260906c" class="logo"><img src="images/favicon.png" alt=""> Working Mate</a>
+    <a href="index.html?v=20260919a" class="logo"><img src="images/favicon.png" alt=""> Working Mate</a>
     <ul class="nav-links">
       <li><a href="index.html#features">Features</a></li>
-      <li><a href="pricing.html?v=20260906c">Pricing</a></li>
+      <li><a href="pricing.html?v=20260919a">Pricing</a></li>
       <li><a href="index.html#providers">Models</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:0.6rem;">
@@ -230,10 +230,12 @@
 <section class="grid">
   <div class="plan">
     <h2>Free</h2>
-    <div class="desc">Local AI, running on your own GPU. Zero cost, zero cloud.</div>
+    <div class="desc">Local AI on your own GPU, plus free OpenRouter models. Zero cost, nothing leaves your PC.</div>
     <div class="price"><span class="currency">$</span><span class="num">0</span><span class="per">forever</span></div>
     <ul>
       <li>Unlimited local chat via Ollama</li>
+      <li>78 built-in models, 14 China-direct platforms</li>
+      <li>Free OpenRouter models included</li>
       <li>87 built-in agent tools</li>
       <li>File / image / vision support</li>
       <li>Full privacy — nothing leaves your PC</li>
@@ -244,15 +246,15 @@
 
   <div class="plan">
     <h2>Standard</h2>
-    <div class="desc">12 cloud models with smart routing — DeepSeek V4 Flash, Qwen3.8 Flash, GLM 4.6 and more.</div>
-    <div class="price"><span class="currency">$</span><span class="num">9</span><span class="per">/ month</span></div>
+    <div class="desc">The value lineup — DeepSeek V4 Flash, Qwen3.8 Flash, GLM 4.6, Doubao Seed Lite. Fast, cheap, vision included.</div>
+    <div class="price"><span class="currency">$</span><span class="num">4</span><span class="per">/ month</span></div>
     <ul>
       <li>DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6</li>
-      <li>Smart model routing, switch anytime</li>
+      <li>Smart routing with sticky model choice</li>
+      <li>Rolling context compression (saves tokens)</li>
       <li>Vision &amp; multimodal input</li>
       <li>Everything in Free</li>
-      <li>Ad-free experience</li>
-      <li>Email support</li>
+      <li>Ad-free experience · Email support</li>
     </ul>
     <a class="btn btn-primary" href="#checkout-standard">Get Standard</a>
   </div>
@@ -260,31 +262,49 @@
   <div class="plan pro">
     <span class="tag">Popular</span>
     <h2>Pro</h2>
-    <div class="desc">All 28 built-in cloud models — Qwen3.8 Max, GLM 5.3, Kimi K3 — plus AI video &amp; music generation.</div>
-    <div class="price"><span class="currency">$</span><span class="num">29</span><span class="per">/ month</span></div>
+    <div class="desc">Flagship Chinese lineup — DeepSeek V4 Pro, GLM 5.3, Kimi K3, Qwen3.8 Max — plus AI video and music generation.</div>
+    <div class="price"><span class="currency">$</span><span class="num">14</span><span class="per">/ month</span></div>
     <ul>
-      <li>Qwen3.8 Max · GLM 5.3 · Kimi K3</li>
-      <li>AI video generation (Kling) — any character, animate your photos</li>
+      <li>DeepSeek V4 Pro · GLM 5.3 · Kimi K3 · Qwen3.8 Max</li>
+      <li>Dual-channel failover (primary + fallback)</li>
+      <li>AI video generation (Kling) — animate any photo</li>
       <li>AI music generation (Suno) — full songs with vocals</li>
-      <li>Everything in Standard</li>
-      <li>Priority support</li>
+      <li>Bring your own key: any OpenAI-compatible platform</li>
+      <li>Everything in Standard · Priority support</li>
     </ul>
     <a class="btn" href="#checkout-pro">Get Pro</a>
   </div>
 
-  <div class="plan" style="opacity: 0.78;">
-    <span class="tag">Coming Soon</span>
-    <h2>Max</h2>
-    <div class="desc">Unlimited everything — team seats, highest rate limits, priority routing, early access to new providers.</div>
-    <div class="price"><span class="currency">$</span><span class="num">99</span><span class="per">/ month</span></div>
+  <div class="plan">
+    <h2>Ultra</h2>
+    <div class="desc">Engineering-grade capability: true CAD modeling with B-rep solids, STEP / DXF export, larger context and higher limits.</div>
+    <div class="price"><span class="currency">$</span><span class="num">42</span><span class="per">/ month</span></div>
     <ul>
-      <li>Unlimited everything in Pro</li>
-      <li>Team / multi-seat license</li>
-      <li>Highest rate limits &amp; priority routing</li>
+      <li>Engineering-level CAD (CadQuery / OpenCASCADE)</li>
+      <li>True B-rep solids — fillet, chamfer, boolean, holes</li>
+      <li>Export STEP / DXF / STL / OBJ</li>
+      <li>Self-researched, cross-validated dimensions</li>
+      <li>Larger context windows · Higher daily limits</li>
+      <li>Everything in Pro</li>
+    </ul>
+    <a class="btn btn-primary" href="#checkout-ultra">Get Ultra</a>
+  </div>
+
+  <div class="plan">
+    <span class="tag">No ceiling</span>
+    <h2>Max</h2>
+    <div class="desc">Pay as you go with no monthly ceiling — top up any time or let your card auto-charge. $5 starting credit included.</div>
+    <div class="price"><span class="currency">$</span><span class="num">0</span><span class="per">+ usage</span></div>
+    <ul>
+      <li>No monthly message ceiling — billed by usage</li>
+      <li>$5 starting credit, auto-charge or top up</li>
+      <li>Specialist agents: deep research, autonomous coding</li>
+      <li>Self-researching CAD modeling agent</li>
+      <li>Short-drama storyboarding &amp; music agents</li>
       <li>Early access to new models &amp; providers</li>
       <li>Dedicated support</li>
     </ul>
-    <a class="btn" aria-disabled="true" style="pointer-events: none; cursor: default; opacity: 0.6;" href="#checkout-max">Coming Soon — Stay Tuned</a>
+    <a class="btn" href="#checkout-max">Get Max</a>
   </div>
 </section>
 
@@ -311,9 +331,21 @@
     <summary>Is my data private?</summary>
     <p>Completely. Chat history, memories and settings are stored only on your computer. In Free mode nothing ever leaves your machine.</p>
   </details>
+  <details>
+    <summary>Which models can I use — and does my region matter?</summary>
+    <p>You get 78 built-in models across five plans, spanning DeepSeek, Qwen, GLM, Kimi, MiniMax, Doubao, Hunyuan, Ernie and Grok, plus the OpenRouter catalogue. Some closed models from OpenAI, Anthropic and Google are unavailable in certain billing regions. The app probes this automatically at startup (once per key, at no meaningful cost), badges the affected models as region-locked, and routes around them — so you are never left guessing why a model will not run. Fourteen China-direct platforms are also preconfigured, covering exactly the models that international aggregators restrict.</p>
+  </details>
+  <details>
+    <summary>Can I bring my own API key?</summary>
+    <p>Yes — and it is encouraged. Any OpenAI-compatible platform works: SiliconFlow, Alibaba Bailian, DeepSeek official, Volcano Ark, Zhipu, Moonshot Kimi, MiniMax, Tencent Hunyuan, ModelScope, 302.AI, DMXAPI, AIHubMix, NVIDIA NIM, StepFun or OpenRouter. Pick the platform from a dropdown, the base URL fills itself in, paste your key and you are running on your own quota. You can add two platforms at once and the app will fail over between them automatically.</p>
+  </details>
+  <details>
+    <summary>What counts as "usage" on the Max plan?</summary>
+    <p>Token consumption on the cloud models you actually call, billed at the provider's rate plus routing. There is no monthly message ceiling and no per-seat charge. You start with $5 of credit; after that you top up manually or let a linked card auto-charge. Every call logs model, input/output tokens and estimated cost, so you can reconcile against your provider bill.</p>
+  </details>
 </section>
 
-<footer>© 2026 Working Mate. <a href="terms.html?v=20260906c">Terms</a> · <a href="refunds.html?v=20260906c">Refunds</a> · <a href="privacy.html?v=20260906c">Privacy</a> · <a href="acceptable-use.html?v=20260906c">Acceptable Use</a> · <a href="index.html?v=20260906c">Home</a> · <a href="mailto:working_mate@outlook.com">working_mate@outlook.com</a></footer>
+<footer>© 2026 Working Mate. <a href="terms.html?v=20260919a">Terms</a> · <a href="refunds.html?v=20260919a">Refunds</a> · <a href="privacy.html?v=20260919a">Privacy</a> · <a href="acceptable-use.html?v=20260919a">Acceptable Use</a> · <a href="index.html?v=20260919a">Home</a> · <a href="mailto:working_mate@outlook.com">working_mate@outlook.com</a></footer>
 
 </body>
 </html>

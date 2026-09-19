@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>智能路由与成本控制 · Working Mate 功能</title>
+<meta name="description" content="大模型按 token 计费，而最烧钱的往往不是你问的那句话，是每一轮都在重复发送的长上下文。三道防线——粘性选模、前缀缓存、滚动压缩——把账单压到最低。">
+<link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
+    <div class="fico ico-amber">⇄</div>
+    <div class="ftag" data-i18n="feat.routing.tag">Smart Routing & Cost Control</div>
+    <h1 data-i18n="feat.routing.title">智能路由与成本控制</h1>
+    <p class="fsub" data-i18n="feat.routing.sub">大模型按 token 计费，而最烧钱的往往不是你问的那句话，是每一轮都在重复发送的长上下文。三道防线——粘性选模、前缀缓存、滚动压缩——把账单压到最低。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.routing.fact0">三道省 token 防线</span><span class="fchip" data-i18n="feat.routing.fact1">上下文压缩 4 倍+</span><span class="fchip" data-i18n="feat.routing.fact2">前缀缓存输入按 1/10 计费</span><span class="fchip" data-i18n="feat.routing.fact3">用量与花费可追溯</span></div>
+    <div class="fcta-row">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.routing.what0t">第一道：粘性选模，不来回换</h3><p data-i18n="feat.routing.what0d">每次切换模型，服务商侧缓存的前缀就作废，整段上下文要重新按原价计费一遍。所以自动选模是「粘」的——同一类任务保持同一个模型，只在上下文将要超出窗口时才升级，避免为了省小钱反而多花大钱。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what1t">第二道：提示前缀缓存</h3><p data-i18n="feat.routing.what1d">系统提示词、专家人设、工具说明这些每轮都要重发的内容，被打上缓存标记。命中缓存后，这部分输入按约 1/10 的价格计费；聊得越久、前缀越长，省得越多。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what2t">第三道：滚动上下文压缩</h3><p data-i18n="feat.routing.what2d">保留最近若干轮原文（保证对话连贯），更早的内容折叠成增量摘要。实测一段 5975 token 的对话压到 1401 token，压缩比 4.3 倍，语义不丢。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what3t">按任务类型挑模型</h3><p data-i18n="feat.routing.what3d">写代码交给代码模型，图像理解交给视觉模型，长文推理交给大窗口推理模型。自动选模按「类别匹配 + 档位达标 + 价格」三项打分，同价位优先便宜的。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what4t">限频退避，不硬撞</h3><p data-i18n="feat.routing.what4d">撞上速率限制时读 Retry-After 做两段式退避（8 秒 → 30 秒等窗口滚动），而不是无脑重试；连续失败才降级换模型，避免把配额烧在重试上。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what5t">失败自动换通道</h3><p data-i18n="feat.routing.what5d">通道 5xx、超时、余额不足、地区封锁，各有不同的处理策略：能换模型就换，换不了就明确告诉你原因（而不是静默失败或重复扣费）。</p></div><div class="fcard"><h3 data-i18n="feat.routing.what6t">花费透明</h3><p data-i18n="feat.routing.what6d">每次调用记录模型、输入输出 token 与预估花费；配合上游账单可以核对「钱花在哪了」，不会出现「不知道怎么就没了」。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.routing.step0">默认什么都不用设：自动路由会自动做粘性与压缩。</div></li><li><span class="n">2</span><div data-i18n="feat.routing.step1">想省钱就选低档模型跑日常任务，把旗舰模型留给建模、深度研究这类硬活。</div></li><li><span class="n">3</span><div data-i18n="feat.routing.step2">长对话不必手动清理历史——滚动压缩会自动折叠早期轮次。</div></li><li><span class="n">4</span><div data-i18n="feat.routing.step3">在设置里查看当前档位与模型池，确认自动选模用的是你想要的那一档。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.routing.tech0">滚动上下文采用「保最近 K 轮原文 + 更早轮次增量摘要」结构，摘要不调 LLM，用轮次拼接，额外成本为 0。</li><li data-i18n="feat.routing.tech1">预算裁剪按窗口余量动态回收最旧内容，保证请求永不超出模型上下文窗口。</li><li data-i18n="feat.routing.tech2">提示缓存对 OpenRouter / Claude 系在 system 前缀挂 cache_control，其余网关忽略该字段、无副作用。</li><li data-i18n="feat.routing.tech3">粘性决策只比较「当前模型是否还能装下上下文」，能装就不动——切模型带来的 KV 缓存失效成本远大于单价差异。</li><li data-i18n="feat.routing.tech4">token 估算用字符数与中英文差分（中文约 1.5 字符/token，英文约 4 字符/token），不额外调用 tokenizer 接口。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="智能路由与成本控制 界面截图" loading="lazy">
+      <figcaption data-i18n="feat.routing.shot">同样的活，账单更低</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-models.html"><span class="fico sm ico-blue">◧</span><span><b data-i18n="feat.models.title">多模型混合调度</b><em data-i18n="feat.models.tag">Multi-Model Router</em></span><i>→</i></a><a class="frel" href="feature-membership.html"><span class="fico sm ico-mint">◆</span><span><b data-i18n="feat.membership.title">会员档位与用量</b><em data-i18n="feat.membership.tag">Plans & Usage</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
+    </div>
+  </div>
+</footer>
+<div id="langmount"></div>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

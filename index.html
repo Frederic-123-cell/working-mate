@@ -3,7 +3,7 @@
 <head>
 <script>
 (function(){
-  var V = '20260912a';
+  var V = '20260919a';
   var p = new URLSearchParams(location.search);
   if (p.get('v') !== V) {
     p.set('v', V);
@@ -422,7 +422,7 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <p data-i18n="home.feat.p" style="color:var(--text2);margin-top:12px">每张卡片都能点进去看完整介绍：能做什么、怎么用、技术亮点。</p>
     </div>
     <div class="feature-grid">
-      <a class="b-card fcard-link reveal" href="feature-models.html"><div class="ico ico-blue">◧</div><h3 data-i18n="feat.models.title">多模型混合调度</h3><p data-i18n="feat.models.grid">60+ 可接入模型 · 本地 / 云端统一入口</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-models.html"><div class="ico ico-blue">◧</div><h3 data-i18n="feat.models.title">多模型混合调度</h3><p data-i18n="feat.models.grid">78 个内置模型 · OpenRouter + 14 个国内直连通道</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
       <a class="b-card fcard-link reveal" href="feature-experts.html"><div class="ico ico-violet">◇</div><h3 data-i18n="feat.experts.title">17 位领域专家协作</h3><p data-i18n="feat.experts.grid">17 位领域专家 · 自动拆任务 / 派单</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
       <a class="b-card fcard-link reveal" href="feature-memory.html"><div class="ico ico-mint">◈</div><h3 data-i18n="feat.memory.title">四层记忆系统</h3><p data-i18n="feat.memory.grid">4 层记忆结构 · 中文 n-gram 检索</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
       <a class="b-card fcard-link reveal" href="feature-skills.html"><div class="ico ico-amber">▲</div><h3 data-i18n="feat.skills.title">技能自动沉淀</h3><p data-i18n="feat.skills.grid">自动抽取工作流 · 技能库集中管理</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
@@ -437,6 +437,13 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <a class="b-card fcard-link reveal" href="feature-files.html"><div class="ico ico-blue">◧</div><h3 data-i18n="feat.files.title">真实干文件</h3><p data-i18n="feat.files.grid">读写 Office / 表格 · 执行脚本</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
       <a class="b-card fcard-link reveal" href="feature-i18n.html"><div class="ico ico-violet">⌘</div><h3 data-i18n="feat.i18n.title">多语言界面</h3><p data-i18n="feat.i18n.grid">10 种语言 · 实时切换</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
       <a class="b-card fcard-link reveal" href="feature-privacy.html"><div class="ico ico-amber">⚿</div><h3 data-i18n="feat.privacy.title">本地优先 & 隐私</h3><p data-i18n="feat.privacy.grid">0 数据外传（本地模式） · 断网可用</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-engineering.html"><div class="ico ico-blue">📐</div><h3 data-i18n="feat.engineering.title">工程绘图</h3><p data-i18n="feat.engineering.grid">聊天即绘图 · Origin 脚本一键导出</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-modeling.html"><div class="ico ico-violet">🧮</div><h3 data-i18n="feat.modeling.title">建模手</h3><p data-i18n="feat.modeling.grid">假设→建模→求解→出图 · scipy 数值求解</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-simulation.html"><div class="ico ico-mint">⚛</div><h3 data-i18n="feat.simulation.title">物理仿真</h3><p data-i18n="feat.simulation.grid">ODE/PDE 数值仿真 · 结果实时预览</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-routing.html"><div class="ico ico-amber">⇄</div><h3 data-i18n="feat.routing.title">智能路由与成本控制</h3><p data-i18n="feat.routing.grid">三道省 token 防线 · 上下文压缩 4 倍+</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-channels.html"><div class="ico ico-blue">◎</div><h3 data-i18n="feat.channels.title">模型通道与地区自适应</h3><p data-i18n="feat.channels.grid">14 个国内直连平台预设 · 双通道互备</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-cad3d.html"><div class="ico ico-violet">◫</div><h3 data-i18n="feat.cad3d.title">3D 建模与 CAD 出图</h3><p data-i18n="feat.cad3d.grid">自搜参数 + 多源交叉验证 · 概念级 / 工程级双内核</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
+      <a class="b-card fcard-link reveal" href="feature-membership.html"><div class="ico ico-mint">◆</div><h3 data-i18n="feat.membership.title">会员档位与用量</h3><p data-i18n="feat.membership.grid">5 档会员 · 新用户赠 $5 额度</p><span class="go" data-i18n="feat.tpl.view">查看详情 →</span></a>
     </div>
   </div>
 </section>
@@ -503,12 +510,13 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <h2 data-i18n="home.models.h2">你想用的模型，基本都在这儿</h2>
     </div>
     <div class="models reveal">
-      <span class="mchip" data-i18n="home.models.m1">Ollama 本地</span><span class="mchip" data-i18n="home.models.m2">DeepSeek V4</span>
+      <span class="mchip" data-i18n="home.models.m1">Ollama 本地</span><span class="mchip" data-i18n="home.models.m2">DeepSeek V4 Pro / Flash</span>
       <span class="mchip" data-i18n="home.models.m3">Qwen3.8 Max</span><span class="mchip" data-i18n="home.models.m4">GLM 5.3</span>
       <span class="mchip" data-i18n="home.models.m5">Kimi K3</span><span class="mchip" data-i18n="home.models.m6">豆包 Seed</span>
-      <span class="mchip" data-i18n="home.models.m7">Claude Opus / Sonnet</span><span class="mchip" data-i18n="home.models.m8">GPT-5.6</span>
-      <span class="mchip" data-i18n="home.models.m9">Gemini</span><span class="mchip" data-i18n="home.models.m10">可灵 Kling</span>
+      <span class="mchip" data-i18n="home.models.m7">MiniMax M3</span><span class="mchip" data-i18n="home.models.m8">硅基流动</span>
+      <span class="mchip" data-i18n="home.models.m9">阿里云百炼</span><span class="mchip" data-i18n="home.models.m10">可灵 Kling</span>
       <span class="mchip" data-i18n="home.models.m11">Suno 音乐</span><span class="mchip" data-i18n="home.models.m12">OpenRouter 全量</span>
+      <span class="mchip" data-i18n="home.models.m13">14 个国内直连通道</span><span class="mchip" data-i18n="home.models.m14">地区受限自动跳过</span>
     </div>
   </div>
 </section>
@@ -522,25 +530,30 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
     </div>
     <div class="prices">
       <div class="price reveal">
-        <h3 data-i18n="home.price.free.name">免费版</h3><div class="amt">¥0</div>
-        <ul><li data-i18n="home.price.free.li1">本地模型不限量</li><li data-i18n="home.price.free.li2">基础对话与文件操作</li><li data-i18n="home.price.free.li3">含广告位</li><li data-i18n="home.price.free.li4">社区支持</li></ul>
+        <h3 data-i18n="home.price.free.name">免费版</h3><div class="amt">$0</div>
+        <ul><li data-i18n="home.price.free.li1">本地模型不限量</li><li data-i18n="home.price.free.li2">含 OpenRouter 免费模型</li><li data-i18n="home.price.free.li3">基础对话与文件操作</li><li data-i18n="home.price.free.li4">含广告位 · 社区支持</li></ul>
         <a href="#" class="btn btn-ghost" data-i18n="home.price.free.cta">免费下载</a>
+      </div>
+      <div class="price reveal">
+        <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt">$4<small>/月</small></div>
+        <ul><li data-i18n="home.price.std.li1">性价比阵容：DeepSeek V4 Flash 等</li><li data-i18n="home.price.std.li2">智能路由 + 上下文压缩省 token</li><li data-i18n="home.price.std.li3">识图与多模态输入</li><li data-i18n="home.price.std.li4">无广告</li></ul>
+        <a href="#" class="btn btn-ghost" data-i18n="home.price.std.cta">升级标准版</a>
       </div>
       <div class="price hot reveal">
         <span class="flag" data-i18n="home.price.std.flag">最受欢迎</span>
-        <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt">$9<small>/月</small></div>
-        <ul><li data-i18n="home.price.std.li1">更长上下文与记忆</li><li data-i18n="home.price.std.li2">云端性价比模型</li><li data-i18n="home.price.std.li3">无广告</li><li data-i18n="home.price.std.li4">工作流全功能</li></ul>
-        <a href="#" class="btn btn-amber" data-i18n="home.price.std.cta">升级标准版</a>
+        <h3 data-i18n="home.price.pro.name">专业版</h3><div class="amt">$14<small>/月</small></div>
+        <ul><li data-i18n="home.price.pro.li1">旗舰国产阵容全解锁</li><li data-i18n="home.price.pro.li2">双通道互备（主 + 兜底）</li><li data-i18n="home.price.pro.li3">AI 视频 / 音乐生成</li><li data-i18n="home.price.pro.li4">可填自己的 API Key</li></ul>
+        <a href="#" class="btn btn-amber" data-i18n="home.price.pro.cta">升级专业版</a>
       </div>
       <div class="price reveal">
-        <h3 data-i18n="home.price.pro.name">专业版</h3><div class="amt">$29<small>/月</small></div>
-        <ul><li data-i18n="home.price.pro.li1">旗舰模型全解锁</li><li data-i18n="home.price.pro.li2">AI 视频 / 音乐生成</li><li data-i18n="home.price.pro.li3">多专家协作</li><li data-i18n="home.price.pro.li4">优先支持</li></ul>
-        <a href="#" class="btn btn-ghost" data-i18n="home.price.pro.cta">升级专业版</a>
+        <h3 data-i18n="home.price.ult.name">旗舰版</h3><div class="amt">$42<small>/月</small></div>
+        <ul><li data-i18n="home.price.ult.li1">工程级 CAD（真 B-rep 实体）</li><li data-i18n="home.price.ult.li2">STEP / DXF / STL 导出</li><li data-i18n="home.price.ult.li3">自搜自造 + 多源交叉验证</li><li data-i18n="home.price.ult.li4">更大上下文与更高额度</li></ul>
+        <a href="#" class="btn btn-ghost" data-i18n="home.price.ult.cta">升级旗舰版</a>
       </div>
       <div class="price reveal">
-        <h3 data-i18n="home.price.ult.name">旗舰版</h3><div class="amt">$99<small>/月</small></div>
-        <ul style="color:var(--text3)"><li data-i18n="home.price.ult.li1">超大上下文</li><li data-i18n="home.price.ult.li2">独占顶配模型</li><li data-i18n="home.price.ult.li3">团队协作（规划中）</li><li data-i18n="home.price.ult.li4">——</li></ul>
-        <a href="#" class="btn btn-ghost" style="opacity:.6" data-i18n="home.price.ult.cta">即将推出</a>
+        <h3 data-i18n="home.price.max.name">极限版</h3><div class="amt">$0<small>+ 按量</small></div>
+        <ul><li data-i18n="home.price.max.li1">不设月上限，按量实扣</li><li data-i18n="home.price.max.li2">赠 $5 初始额度</li><li data-i18n="home.price.max.li3">专攻 Agent：研究 / 编程 / 建模</li><li data-i18n="home.price.max.li4">短剧分镜 · 音乐创作 Agent</li></ul>
+        <a href="#" class="btn btn-amber" data-i18n="home.price.max.cta">开通极限版</a>
       </div>
     </div>
   </div>
@@ -561,6 +574,10 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
         <p data-i18n="home.faq.a3">免费版可用全部本地能力与基础工具，界面含广告位；云端旗舰模型、AI 视频/音乐生成属于付费档。</p></details>
       <details class="qa reveal"><summary data-i18n="home.faq.q4">支持哪些系统？</summary>
         <p data-i18n="home.faq.a4">Windows 与 macOS。移动端（Android / iOS / 鸿蒙）在规划中。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q5">模型会因为地区用不了吗？</summary>
+        <p data-i18n="home.faq.a5">部分海外厂商的闭源模型按账单地区限制。客户端启动时会自动体检，受限模型直接标注「🚫 地区受限」并在自动选模时跳过；同时内置 14 个国内直连平台（硅基流动、阿里云百炼、DeepSeek 官方等），不锁地区、一个 Key 打多家。</p></details>
+      <details class="qa reveal"><summary data-i18n="home.faq.q6">能填自己的 API Key 吗？</summary>
+        <p data-i18n="home.faq.a6">可以，而且推荐。任何 OpenAI 协议兼容的平台都行：硅基流动、阿里云百炼、DeepSeek 官方、火山方舟、智谱、Kimi、MiniMax、魔搭、OpenRouter……选中平台自动带出地址，粘 Key 即用；填两家还能自动互备。</p></details>
     </div>
   </div>
 </section>

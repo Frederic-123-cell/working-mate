@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>建模手 · Working Mate 功能</title>
+<meta name="description" content="数学建模竞赛水平的助手：建模假设 → 建立方程 → 代码求解 → 结果图，一条龙。可导出 MATLAB 脚本，给导师或队友一键复现。">
+<link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
+    <div class="fico ico-violet">🧮</div>
+    <div class="ftag" data-i18n="feat.modeling.tag">Modeling Assistant</div>
+    <h1 data-i18n="feat.modeling.title">建模手</h1>
+    <p class="fsub" data-i18n="feat.modeling.sub">数学建模竞赛水平的助手：建模假设 → 建立方程 → 代码求解 → 结果图，一条龙。可导出 MATLAB 脚本，给导师或队友一键复现。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.modeling.fact0">假设→建模→求解→出图</span><span class="fchip" data-i18n="feat.modeling.fact1">scipy 数值求解</span><span class="fchip" data-i18n="feat.modeling.fact2">MATLAB 脚本导出</span><span class="fchip" data-i18n="feat.modeling.fact3">国赛风格输出</span></div>
+    <div class="fcta-row">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.modeling.what0t">完整建模流程</h3><p data-i18n="feat.modeling.what0d">先给不超过 5 行的建模假设与思路，再给可运行的求解代码，最后用图展示结果并简短解读——就是竞赛论文的骨架。</p></div><div class="fcard"><h3 data-i18n="feat.modeling.what1t">方程 / 拟合 / 优化全覆盖</h3><p data-i18n="feat.modeling.what1d">微分方程（solve_ivp）、最小二乘拟合、线性规划、蒙特卡洛模拟等常用建模方法都支持。</p></div><div class="fcard"><h3 data-i18n="feat.modeling.what2t">结果立刻可视化</h3><p data-i18n="feat.modeling.what2d">求解完自动绘图：收敛曲线、相图、参数敏感性……直观检查模型行为。</p></div><div class="fcard"><h3 data-i18n="feat.modeling.what3t">一键导出 MATLAB 脚本</h3><p data-i18n="feat.modeling.what3d">方案定稿后导出 .m 脚本，方便在 MATLAB 里复现，或交给需要 MATLAB 的课程与队友。</p></div><div class="fcard"><h3 data-i18n="feat.modeling.what4t">参考历史不跑偏</h3><p data-i18n="feat.modeling.what4d">多轮对话保留上下文，改约束、换目标函数，接着说就行。</p></div><div class="fcard"><h3 data-i18n="feat.modeling.what5t">参数单位写清楚</h3><p data-i18n="feat.modeling.what5d">生成的代码里参数带物理量纲注释，避免「0.5 到底是啥」的尴尬。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.modeling.step0">侧栏点「🧮 建模手」。</div></li><li><span class="n">2</span><div data-i18n="feat.modeling.step1">描述问题，例如「用逻辑斯蒂模型预测种群增长并做参数拟合」。</div></li><li><span class="n">3</span><div data-i18n="feat.modeling.step2">阅读思路说明，等右侧出结果图；不满意就继续追问修改。</div></li><li><span class="n">4</span><div data-i18n="feat.modeling.step3">导出脚本 → MATLAB，保存 .m 文件复现。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.modeling.tech0">本地执行环境含 numpy / scipy / matplotlib 全家桶，数值能力完整。</li><li data-i18n="feat.modeling.tech1">solve_ivp、least_squares 等直接可用，无需自实现求解器。</li><li data-i18n="feat.modeling.tech2">多模型降级链复用主程序同一套调度，限频自动切换。</li><li data-i18n="feat.modeling.tech3">代码执行异常全捕获回传，模型写错不会崩掉 App。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="建模手 界面截图" loading="lazy">
+      <figcaption data-i18n="feat.modeling.shot">建模假设 → 求解 → 结果图</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b data-i18n="feat.experts.title">17 位领域专家协作</b><em data-i18n="feat.experts.tag">Expert Team</em></span><i>→</i></a><a class="frel" href="feature-engineering.html"><span class="fico sm ico-blue">📐</span><span><b data-i18n="feat.engineering.title">工程绘图</b><em data-i18n="feat.engineering.tag">Engineering Drawing</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
+    </div>
+  </div>
+</footer>
+<div id="langmount"></div>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>物理仿真 · Working Mate 功能</title>
+<meta name="description" content="描述物理过程，AI 建立数值模型并仿真：单摆、振动、传热、波动、电路……结果曲线当场看，还能导出 COMSOL 建模脚本继续细化。">
+<link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
+    <div class="fico ico-mint">⚛</div>
+    <div class="ftag" data-i18n="feat.simulation.tag">Physics Simulation</div>
+    <h1 data-i18n="feat.simulation.title">物理仿真</h1>
+    <p class="fsub" data-i18n="feat.simulation.sub">描述物理过程，AI 建立数值模型并仿真：单摆、振动、传热、波动、电路……结果曲线当场看，还能导出 COMSOL 建模脚本继续细化。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.simulation.fact0">ODE/PDE 数值仿真</span><span class="fchip" data-i18n="feat.simulation.fact1">结果实时预览</span><span class="fchip" data-i18n="feat.simulation.fact2">COMSOL 脚本导出</span><span class="fchip" data-i18n="feat.simulation.fact3">物理量与单位标注</span></div>
+    <div class="fcta-row">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.simulation.what0t">从描述到数值模型</h3><p data-i18n="feat.simulation.what0d">说出物理场景（单摆大角度摆动、悬臂梁振动、一维传热），AI 自动列方程、离散化、数值求解。</p></div><div class="fcard"><h3 data-i18n="feat.simulation.what1t">曲线 / 场图即时预览</h3><p data-i18n="feat.simulation.what1d">物理量随时间或空间的变化当场画出来，角度-时间、温度场、波形图直观可见。</p></div><div class="fcard"><h3 data-i18n="feat.simulation.what2t">物理量与单位齐全</h3><p data-i18n="feat.simulation.what2d">坐标轴标注物理量与单位，参数表带量纲，结果可直接放进报告。</p></div><div class="fcard"><h3 data-i18n="feat.simulation.what3t">一键导出 COMSOL 脚本</h3><p data-i18n="feat.simulation.what3d">需要精细有限元时，把方案导出为 COMSOL Java API 脚本（.java），在 COMSOL 里继续建模细化。</p></div><div class="fcard"><h3 data-i18n="feat.simulation.what4t">变参数对比实验</h3><p data-i18n="feat.simulation.what4d">「阻尼增大 3 倍再跑一次」——同一模型改参数重跑，对比曲线一目了然。</p></div><div class="fcard"><h3 data-i18n="feat.simulation.what5t">本地计算零上传</h3><p data-i18n="feat.simulation.what5d">仿真在你的电脑上跑，模型与数据不出本机。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.simulation.step0">侧栏点「⚛ 物理仿真」。</div></li><li><span class="n">2</span><div data-i18n="feat.simulation.step1">描述物理过程与想要的输出，例如「单摆大角度摆动，画角度-时间曲线」。</div></li><li><span class="n">3</span><div data-i18n="feat.simulation.step2">等右侧预览出图，继续追问改参数或换工况。</div></li><li><span class="n">4</span><div data-i18n="feat.simulation.step3">导出脚本 → COMSOL，保存 .java 建模代码。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.simulation.tech0">ODE 用 scipy solve_ivp（RK45），简单场景自动退化为 numpy 自实现欧拉 / RK4。</li><li data-i18n="feat.simulation.tech1">离屏 Agg 渲染，仿真结果 PNG 落本地，随看随取。</li><li data-i18n="feat.simulation.tech2">系统提示词强制约束输出格式与库白名单，生成代码可执行率优先。</li><li data-i18n="feat.simulation.tech3">导出 COMSOL 走模型二次转换：几何 → 物理场 → 网格 → 求解 → 后处理五步齐全。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="物理仿真 界面截图" loading="lazy">
+      <figcaption data-i18n="feat.simulation.shot">数值仿真，当场看曲线</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-engineering.html"><span class="fico sm ico-blue">📐</span><span><b data-i18n="feat.engineering.title">工程绘图</b><em data-i18n="feat.engineering.tag">Engineering Drawing</em></span><i>→</i></a><a class="frel" href="feature-models.html"><span class="fico sm ico-blue">◧</span><span><b data-i18n="feat.models.title">多模型混合调度</b><em data-i18n="feat.models.tag">Multi-Model Router</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
+    </div>
+  </div>
+</footer>
+<div id="langmount"></div>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

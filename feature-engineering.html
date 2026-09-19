@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>工程绘图 · Working Mate 功能</title>
+<meta name="description" content="左侧聊天描述需求，AI 生成可运行的绘图代码，右侧实时出图预览；一键导出 Origin LabTalk 脚本，装了 Origin 直接跑，满足期刊出图规范。">
+<link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
+    <div class="fico ico-blue">📐</div>
+    <div class="ftag" data-i18n="feat.engineering.tag">Engineering Drawing</div>
+    <h1 data-i18n="feat.engineering.title">工程绘图</h1>
+    <p class="fsub" data-i18n="feat.engineering.sub">左侧聊天描述需求，AI 生成可运行的绘图代码，右侧实时出图预览；一键导出 Origin LabTalk 脚本，装了 Origin 直接跑，满足期刊出图规范。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.engineering.fact0">聊天即绘图</span><span class="fchip" data-i18n="feat.engineering.fact1">Origin 脚本一键导出</span><span class="fchip" data-i18n="feat.engineering.fact2">本地执行 0 上传</span><span class="fchip" data-i18n="feat.engineering.fact3">专业工程图表</span></div>
+    <div class="fcta-row">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.engineering.what0t">聊天式绘图</h3><p data-i18n="feat.engineering.what0d">在对话框里描述你要的图——剪力图、弯矩图、伯德图、误差棒——AI 生成代码并立刻渲染到右侧预览区。</p></div><div class="fcard"><h3 data-i18n="feat.engineering.what1t">代码全透明</h3><p data-i18n="feat.engineering.what1d">每次生成都是可读的 Python 代码，参数、单位、公式都在明面上，可以改完再跑。</p></div><div class="fcard"><h3 data-i18n="feat.engineering.what2t">本地渲染，数据不出本机</h3><p data-i18n="feat.engineering.what2d">绘图代码在你的电脑上执行（numpy / matplotlib / scipy），原始数据不需要上传到任何云端。</p></div><div class="fcard"><h3 data-i18n="feat.engineering.what3t">一键导出 Origin 脚本</h3><p data-i18n="feat.engineering.what3d">预览满意后一键把方案转成 Origin LabTalk 脚本（.ogs），在正版 Origin 里打开即用。</p></div><div class="fcard"><h3 data-i18n="feat.engineering.what4t">多种图表类型</h3><p data-i18n="feat.engineering.what4d">折线、柱状、散点、误差棒、双 y 轴、极坐标、3D 曲面……工程里常用的图都覆盖。</p></div><div class="fcard"><h3 data-i18n="feat.engineering.what5t">上下文连续修改</h3><p data-i18n="feat.engineering.what5d">「把线改成红色」「y 轴取对数」——接着说就行，它记得上一轮画了什么。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.engineering.step0">侧栏点「📐 工程绘图」打开绘图面板。</div></li><li><span class="n">2</span><div data-i18n="feat.engineering.step1">左侧输入需求，例如「画悬臂梁在均布载荷下的剪力图与弯矩图」。</div></li><li><span class="n">3</span><div data-i18n="feat.engineering.step2">AI 生成代码并本地执行，右侧预览区立刻显示图像。</div></li><li><span class="n">4</span><div data-i18n="feat.engineering.step3">满意后选择「导出脚本 → Origin」，保存 .ogs 文件到本机。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.engineering.tech0">云端代码模型生成绘图代码，按档位自动选模型（OpenRouter / 国内直连通道自动路由），省钱优先。</li><li data-i18n="feat.engineering.tech1">本地沙箱执行：只预置 numpy / matplotlib / scipy，异常全捕获，报错直接显示在聊天区。</li><li data-i18n="feat.engineering.tech2">Agg 后端离屏渲染，不弹窗、不抢焦点，出图即存本地。</li><li data-i18n="feat.engineering.tech3">导出走第二次模型调用，把 Python 方案无损转成 LabTalk / MATLAB / COMSOL 代码。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="工程绘图 界面截图" loading="lazy">
+      <figcaption data-i18n="feat.engineering.shot">聊天出图，右侧实时预览</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-models.html"><span class="fico sm ico-blue">◧</span><span><b data-i18n="feat.models.title">多模型混合调度</b><em data-i18n="feat.models.tag">Multi-Model Router</em></span><i>→</i></a><a class="frel" href="feature-files.html"><span class="fico sm ico-blue">◧</span><span><b data-i18n="feat.files.title">真实干文件</b><em data-i18n="feat.files.tag">Real File Work</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
+    </div>
+  </div>
+</footer>
+<div id="langmount"></div>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

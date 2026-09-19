@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>多模型混合调度 · Working Mate 功能</title>
-<meta name="description" content="本地 Ollama 与云端旗舰模型统一在一个对话框里，断网自动用本地，联网自动切云端；同一会话随手换模型，不用重启、不用改配置。">
+<meta name="description" content="78 个内置模型 + 14 个国内直连平台，统一在一个对话框里。主通道与兜底通道双活互备，一条通道抽风自动换另一条接着跑；断网还有本地 Ollama 顶上。">
 <link rel="stylesheet" href="feature.css">
 <link rel="stylesheet" href="lang.css">
 </head>
@@ -31,8 +31,8 @@
     <div class="fico ico-blue">◧</div>
     <div class="ftag" data-i18n="feat.models.tag">Multi-Model Router</div>
     <h1 data-i18n="feat.models.title">多模型混合调度</h1>
-    <p class="fsub" data-i18n="feat.models.sub">本地 Ollama 与云端旗舰模型统一在一个对话框里，断网自动用本地，联网自动切云端；同一会话随手换模型，不用重启、不用改配置。</p>
-    <div class="facts"><span class="fchip" data-i18n="feat.models.fact0">60+ 可接入模型</span><span class="fchip" data-i18n="feat.models.fact1">本地 / 云端统一入口</span><span class="fchip" data-i18n="feat.models.fact2">自动降级切换</span><span class="fchip" data-i18n="feat.models.fact3">0 数据外传（本地模式）</span></div>
+    <p class="fsub" data-i18n="feat.models.sub">78 个内置模型 + 14 个国内直连平台，统一在一个对话框里。主通道与兜底通道双活互备，一条通道抽风自动换另一条接着跑；断网还有本地 Ollama 顶上。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.models.fact0">78 个内置模型</span><span class="fchip" data-i18n="feat.models.fact1">OpenRouter + 14 个国内直连通道</span><span class="fchip" data-i18n="feat.models.fact2">双通道互备自动顶替</span><span class="fchip" data-i18n="feat.models.fact3">地区受限模型自动跳过</span></div>
     <div class="fcta-row">
       <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
       <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
@@ -43,17 +43,17 @@
 <main class="wrap">
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.what">它能做什么</h2>
-    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.models.what0t">一个输入框，连通所有模型</h3><p data-i18n="feat.models.what0d">不用记 API、不用开一堆网页。DeepSeek、Qwen、GLM、Kimi、豆包、GPT、Claude、Gemini、OpenRouter 全量模型都在同一个下拉里。</p></div><div class="fcard"><h3 data-i18n="feat.models.what1t">本地优先，断网也能跑</h3><p data-i18n="feat.models.what1d">接上 Ollama 即可完全离线：对话、文件操作、工作流编排都不依赖网络，数据不出本机。</p></div><div class="fcard"><h3 data-i18n="feat.models.what2t">三档模型策略</h3><p data-i18n="feat.models.what2d">标准 / 专业 / 旗舰三档一键切换，系统按任务复杂度自动挑性价比最高的模型，也能手动指定。</p></div><div class="fcard"><h3 data-i18n="feat.models.what3t">多模型自动降级</h3><p data-i18n="feat.models.what3d">一个模型限频或 5xx，自动切到下一个备选模型继续跑；只有余额不足、鉴权失败才停下并明确报错，不会静默失败。</p></div><div class="fcard"><h3 data-i18n="feat.models.what4t">专家各带模型组</h3><p data-i18n="feat.models.what4d">17 位领域专家各自绑定「推理 / 通用 / 代码」三模型组，让写代码的用代码模型、写文案的用文案模型。</p></div><div class="fcard"><h3 data-i18n="feat.models.what5t">同一会话实时切换</h3><p data-i18n="feat.models.what5d">聊到一半换模型，上下文不丢——真正意义上的「随手换脑子」。</p></div></div>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.models.what0t">一个输入框，连通所有模型</h3><p data-i18n="feat.models.what0d">不用记 API、不用开一堆网页。DeepSeek、Qwen、GLM、Kimi、MiniMax、豆包、混元、文心、Grok，以及 OpenRouter 上的全量模型，都在同一个下拉框里；本地 Ollama 装的模型也在一起。</p></div><div class="fcard"><h3 data-i18n="feat.models.what1t">主通道 + 兜底通道，双活互备</h3><p data-i18n="feat.models.what1d">OpenRouter 作主力通道，七牛云或你自填的国内平台作兜底。某条通道限频、5xx、没配 Key、甚至整个挂掉，系统自动把请求交给另一条通道的同类模型继续跑——对话不中断，只会看到「已自动切换」。</p></div><div class="fcard"><h3 data-i18n="feat.models.what2t">地区受限模型自动识别与跳过</h3><p data-i18n="feat.models.what2d">部分地区账单地址拿不到 OpenAI / Anthropic / Google 的闭源模型。客户端启动时用最小请求实测一次（花费≈$0）并把结果落盘，受限模型在下拉框标「🚫 地区受限」，自动选模也会绕开它们，不再把时间浪费在必然失败的调用上。</p></div><div class="fcard"><h3 data-i18n="feat.models.what3t">14 个国内直连平台，预设一键切换</h3><p data-i18n="feat.models.what3d">硅基流动、阿里云百炼、DeepSeek 官方、火山方舟、智谱、Kimi、MiniMax、腾讯混元、魔搭、302.AI、DMXAPI、AIHubMix、NVIDIA NIM、阶跃星辰。选中即自动带出 Base URL，粘上 Key 就能用，不用翻文档抄地址。</p></div><div class="fcard"><h3 data-i18n="feat.models.what4t">本地优先，断网也能跑</h3><p data-i18n="feat.models.what4d">接上 Ollama 即可完全离线：对话、文件操作、工作流编排都不依赖网络，数据不出本机。</p></div><div class="fcard"><h3 data-i18n="feat.models.what5t">五档会员 × 多类用途矩阵</h3><p data-i18n="feat.models.what5d">免费 / 标准 / 专业 / 旗舰 / 极限五档，各档解锁不同模型池；模型按通用 / 推理 / 代码 / 视觉 / 音乐分类，系统按任务类型自动挑，也能手动锁定任意一个。</p></div><div class="fcard"><h3 data-i18n="feat.models.what6t">模型状态一目了然</h3><p data-i18n="feat.models.what6d">下拉框里每个模型都带状态标记：「🔒 需 OpenRouter Key」说明缺哪把钥匙，「🚫 地区受限」说明这个地区用不了。可用的排最前，需要补 Key 的沉底，不用一个个点开试。</p></div><div class="fcard"><h3 data-i18n="feat.models.what7t">同一会话实时切换</h3><p data-i18n="feat.models.what7d">聊到一半换模型，上下文不丢——真正意义上的「随手换脑子」。</p></div></div>
   </section>
 
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.how">怎么用</h2>
-    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.models.step0">设置 → 模型与运行环境，选档位（标准 / 专业 / 旗舰）。</div></li><li><span class="n">2</span><div data-i18n="feat.models.step1">需要离线就把本地 Ollama 打开，客户端会自动发现本地模型。</div></li><li><span class="n">3</span><div data-i18n="feat.models.step2">在顶部模型下拉里选具体模型，或直接用「自动路由」让它自己挑。</div></li><li><span class="n">4</span><div data-i18n="feat.models.step3">断网时自动落到本地模型，联网后自动恢复云端，无需手动干预。</div></li></ol>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.models.step0">设置 → 云端模型，把要用的通道 Key 填上（OpenRouter、硅基流动、DeepSeek 官方等，填几家就有几家可用）。</div></li><li><span class="n">2</span><div data-i18n="feat.models.step1">需要离线就把本地 Ollama 打开，客户端会自动发现本地模型。</div></li><li><span class="n">3</span><div data-i18n="feat.models.step2">在顶部模型下拉里选具体模型，或直接用「自动路由」让它自己挑——缺 Key、地区受限的模型会被自动跳过。</div></li><li><span class="n">4</span><div data-i18n="feat.models.step3">模型带「· 兜底」标记的，会在主通道失败时自动接手，无需手动干预。</div></li><li><span class="n">5</span><div data-i18n="feat.models.step4">断网时自动落到本地模型，联网后自动恢复云端。</div></li></ol>
   </section>
 
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
-    <ul class="fpoints"><li data-i18n="feat.models.tech0">统一 cloud_client 抽象层，本地 / 云端同一套调用签名。</li><li data-i18n="feat.models.tech1">429 区分「限频」与「余额不足」：限频读 Retry-After 重试一次，余额不足立即停并提示充值。</li><li data-i18n="feat.models.tech2">多模型 fallback 链：限频 / 5xx 才切换，鉴权类错误不切换（避免无意义重试烧钱）。</li><li data-i18n="feat.models.tech3">模型按「档位 × 用途」索引，专家可直接引用模型组。</li></ul>
+    <ul class="fpoints"><li data-i18n="feat.models.tech0">统一 cloud_client 抽象层：本地 / 云端 / 各家国内平台共用同一套调用签名，接一个新平台只需一条 base_url + Key。</li><li data-i18n="feat.models.tech1">双通道路由：同名模型 id 在两条通道都存在时（DeepSeek V4 Pro、GLM 5.3、Kimi K3 这类），按「哪条通道配了 Key」+ 通道优先级动态选边。</li><li data-i18n="feat.models.tech2">Key 不跨通道借用：七牛云的 Key 绝不会被打到 OpenRouter 上——这条修复消掉了一类「报 401 说 Key 过期、其实根本没配」的假故障。</li><li data-i18n="feat.models.tech3">429 区分「限频」与「余额不足」：限频读 Retry-After 退避重试，余额不足立即停并提示充值；403 判定地区封锁后直接切兜底模型。</li><li data-i18n="feat.models.tech4">启动时后台拉取 OpenRouter 公开目录（400+ 模型），实时刷新价格与上下文窗口；目录拉取本身不需要 Key。</li><li data-i18n="feat.models.tech5">模型元数据自带上下文窗口 / 单价 / 起解锁档位，自动选模在「类别匹配 + 档位达标」基础上按价格打分，同价位优先便宜的。</li></ul>
   </section>
 
   <section class="fsec reveal">
@@ -66,7 +66,7 @@
 
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.related">相关功能</h2>
-    <div class="frels"><a class="frel" href="feature-experts.html"><span class="fico sm ico-violet">◇</span><span><b data-i18n="feat.experts.title">17 位领域专家协作</b><em data-i18n="feat.experts.tag">Expert Team</em></span><i>→</i></a><a class="frel" href="feature-workflow.html"><span class="fico sm ico-blue">◎</span><span><b data-i18n="feat.workflow.title">节点式工作流画布</b><em data-i18n="feat.workflow.tag">Workflow Canvas</em></span><i>→</i></a></div>
+    <div class="frels"><a class="frel" href="feature-routing.html"><span class="fico sm ico-amber">⇄</span><span><b data-i18n="feat.routing.title">智能路由与成本控制</b><em data-i18n="feat.routing.tag">Smart Routing & Cost Control</em></span><i>→</i></a><a class="frel" href="feature-channels.html"><span class="fico sm ico-blue">◎</span><span><b data-i18n="feat.channels.title">模型通道与地区自适应</b><em data-i18n="feat.channels.tag">Providers & Region</em></span><i>→</i></a></div>
   </section>
 
   <section class="fsec fend reveal">

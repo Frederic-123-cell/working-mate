@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>模型通道与地区自适应 · Working Mate 功能</title>
+<meta name="description" content="国内直连、不锁地区、一个 Key 打多家。14 个平台预设 + 双通道互备 + 地区体检，让「模型用不了」这件事不再需要你排查。">
+<link rel="stylesheet" href="feature.css">
+<link rel="stylesheet" href="lang.css">
+</head>
+<body>
+<nav class="top" id="topnav">
+  <div class="top-in">
+    <a href="index.html" class="logo"><img src="images/favicon.png" alt="Working Mate"></a>
+    <div class="nav-links">
+      <a href="index.html#features" data-i18n="feat.nav.features">功能</a>
+      <a href="index.html#workflow" data-i18n="feat.nav.workflow">工作流</a>
+      <a href="index.html#models" data-i18n="feat.nav.models">模型</a>
+      <a href="pricing.html" data-i18n="feat.nav.pricing">价格</a>
+    </div>
+    <div class="nav-right">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.nav.download">免费下载</a>
+    </div>
+  </div>
+</nav>
+
+<header class="fhero">
+  <div class="aurora aurora-1 on"></div>
+  <div class="wrap fhero-in">
+    <a class="fback" href="index.html#features">← <span data-i18n="feat.tpl.back">返回功能全景</span></a>
+    <div class="fico ico-blue">◎</div>
+    <div class="ftag" data-i18n="feat.channels.tag">Providers & Region</div>
+    <h1 data-i18n="feat.channels.title">模型通道与地区自适应</h1>
+    <p class="fsub" data-i18n="feat.channels.sub">国内直连、不锁地区、一个 Key 打多家。14 个平台预设 + 双通道互备 + 地区体检，让「模型用不了」这件事不再需要你排查。</p>
+    <div class="facts"><span class="fchip" data-i18n="feat.channels.fact0">14 个国内直连平台预设</span><span class="fchip" data-i18n="feat.channels.fact1">双通道互备</span><span class="fchip" data-i18n="feat.channels.fact2">地区受限自动识别</span><span class="fchip" data-i18n="feat.channels.fact3">Key 绝不跨通道串用</span></div>
+    <div class="fcta-row">
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.heroCta1">免费下载体验</a>
+      <a href="index.html#features" class="btn btn-ghost" data-i18n="feat.tpl.heroCta2">看其它功能</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.what">它能做什么</h2>
+    <div class="fgrid"><div class="fcard"><h3 data-i18n="feat.channels.what0t">为什么需要多通道</h3><p data-i18n="feat.channels.what0d">海外聚合平台会把部分厂商的闭源模型按「账单地区」封锁——同一平台上有的模型能用、有的直接 403。国内官方平台与合规聚合平台不存在这个问题，但一家只覆盖自家模型。两边互补，才是最稳的方案。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what1t">14 个国内直连预设</h3><p data-i18n="feat.channels.what1d">硅基流动、阿里云百炼、DeepSeek 官方、火山方舟、智谱 BigModel、月之暗面 Kimi、MiniMax、腾讯混元、魔搭 ModelScope、302.AI、DMXAPI、AIHubMix、NVIDIA NIM、阶跃星辰。全部 OpenAI 协议兼容，选平台即自动填 Base URL。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what2t">主力 + 兜底，双活互备</h3><p data-i18n="feat.channels.what2d">OpenRouter 作主通道时自动带上国内 Key 作兜底，反之亦然。一条通道抽风，另一条同类模型顶上，对话不中断。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what3t">地区体检（自动，免费）</h3><p data-i18n="feat.channels.what3d">启动时对目录里的模型逐个发一条最小请求（max_tokens=1，花费≈$0），实测哪些被地区封锁，结果落盘复用。换 Key 自动重测，同一把 Key 只测一次。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what4t">受限模型明确标注</h3><p data-i18n="feat.channels.what4d">被封的模型在下拉框标「🚫 地区受限」并沉底；自动选模直接跳过它们。你永远不会「选了才发现跑不通」。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what5t">缺 Key 的模型也会说话</h3><p data-i18n="feat.channels.what5d">没配某个平台 Key 时，属于该平台的模型标「🔒 需 X Key」——它告诉你去哪补哪把钥匙，而不是含糊地报一句鉴权失败。</p></div><div class="fcard"><h3 data-i18n="feat.channels.what6t">换平台不用改代码</h3><p data-i18n="feat.channels.what6d">所有通道共用一套调用协议与同一套模型索引，切换平台只改一个下拉框选项，工作流、专家、技能全部照常工作。</p></div></div>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.how">怎么用</h2>
+    <ol class="fsteps"><li><span class="n">1</span><div data-i18n="feat.channels.step0">设置 → 云端模型，provider 下拉里挑一个平台（例如「硅基流动」）。</div></li><li><span class="n">2</span><div data-i18n="feat.channels.step1">弹窗会自动带出该平台的 Base URL，粘上你的 Key；模型名可填该平台的任意模型 id。</div></li><li><span class="n">3</span><div data-i18n="feat.channels.step2">验证并保存，重启后该平台的模型即可在顶部下拉里选择。</div></li><li><span class="n">4</span><div data-i18n="feat.channels.step3">想双通道互备，就把两个平台的 Key 都填上，系统会自动组主力 + 兜底。</div></li></ol>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.tech">技术亮点</h2>
+    <ul class="fpoints"><li data-i18n="feat.channels.tech0">通道能力表统一维护：每个平台一条记录（label / base_url / 注册地址 / 常见模型示例），新增平台不超过 10 行代码。</li><li data-i18n="feat.channels.tech1">地区体检结果与 Key 指纹绑定存储，避免每次启动都花 3 分钟重测；换 Key 立即失效重测。</li><li data-i18n="feat.channels.tech2">逐模型粒度判定（不是按厂商一刀切）：同一厂商里开源权重模型往往不受限，实测能过就放行。</li><li data-i18n="feat.channels.tech3">请求头按通道自适应：部分平台用 api-key 头而非 Bearer，客户端自动切换，用户无感。</li><li data-i18n="feat.channels.tech4">所有通道共用 429 / 5xx / 403 的统一错误分类与降级策略，行为一致可预期。</li></ul>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.shot">看一眼</h2>
+    <figure class="fshot">
+      <img src="assets/shots/home.png" alt="模型通道与地区自适应 界面截图" loading="lazy">
+      <figcaption data-i18n="feat.channels.shot">通道状态一眼可见</figcaption>
+    </figure>
+  </section>
+
+  <section class="fsec reveal">
+    <h2 data-i18n="feat.tpl.related">相关功能</h2>
+    <div class="frels"><a class="frel" href="feature-models.html"><span class="fico sm ico-blue">◧</span><span><b data-i18n="feat.models.title">多模型混合调度</b><em data-i18n="feat.models.tag">Multi-Model Router</em></span><i>→</i></a><a class="frel" href="feature-routing.html"><span class="fico sm ico-amber">⇄</span><span><b data-i18n="feat.routing.title">智能路由与成本控制</b><em data-i18n="feat.routing.tag">Smart Routing & Cost Control</em></span><i>→</i></a></div>
+  </section>
+
+  <section class="fsec fend reveal">
+    <div class="fend-in">
+      <h2 data-i18n="feat.tpl.end">现在就试试</h2>
+      <p data-i18n="feat.tpl.endP">免费版永久可用，本地能力开箱即用，不需要信用卡。</p>
+      <a href="index.html#pricing" class="btn btn-amber" data-i18n="feat.tpl.endBtn">免费下载 Working Mate</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div data-i18n="feat.foot.copy">© 2026 Working Mate · 本地优先的 AI 工作间</div>
+    <div class="foot-links">
+      <a href="index.html#features" data-i18n="feat.foot.features">功能</a>
+      <a href="privacy.html" data-i18n="feat.foot.privacy">隐私</a><a href="terms.html" data-i18n="feat.foot.terms">条款</a><a href="refunds.html" data-i18n="feat.foot.refunds">退款</a>
+    </div>
+  </div>
+</footer>
+<div id="langmount"></div>
+<script>
+const n=document.getElementById('topnav');
+addEventListener('scroll',()=>n.classList.toggle('scrolled',scrollY>40),{passive:true});
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="lang.en.js"></script>
+<script src="lang.ja.js"></script>
+<script src="lang.ko.js"></script>
+<script src="lang.fr.js"></script>
+<script src="lang.de.js"></script>
+<script src="lang.ru.js"></script>
+<script src="lang.ar.js"></script>
+<script src="lang.es.js"></script>
+<script src="lang.pt.js"></script>
+<script src="i18n.js"></script>
+</body>
+</html>

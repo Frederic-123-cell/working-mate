@@ -204,6 +204,13 @@
     for (var j = 0; j < labeled.length; j++) labeled[j].setAttribute("aria-label", "切换主题");
   }
 
+  // ── 海外残留中文自愈表：静态 HTML 里的英文短语被误翻成中文后，能换回来 ──
+  var LEFTOVER_ZH = {
+    "/ 月": "/ month", "/月": "/ month",
+    "+ 按量": "+ usage", "按量": "usage",
+    "永久": "forever"
+  };
+
   // ── 还原英文（海外访客 / VPN 切换后）──
   function restoreTextEn() {
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
@@ -212,6 +219,8 @@
     for (var i = 0; i < nodes.length; i++) {
       var t = nodes[i];
       if (t.__origEn !== undefined) { t.nodeValue = t.__origEn; t.__origEn = undefined; }
+      var k = t.nodeValue.trim();
+      if (LEFTOVER_ZH[k]) t.nodeValue = LEFTOVER_ZH[k];   // 兜底：清掉误翻残留
     }
     var badges = document.querySelector(".pay-badges");
     if (badges && badges.getAttribute("data-cn")) {

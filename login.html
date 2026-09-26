@@ -238,6 +238,31 @@
            ══════════════════════════════════════════════════════════ */
         var CFG = window.WM_CONFIG || {};
 
+        /* ── App 模式：桌面端打开本页并带着 port/state，登录完成后回传本机 ── */
+        var QP = new URLSearchParams(location.search);
+        var APP_PORT = QP.get("port") || "";
+        var APP_STATE = QP.get("state") || "";
+        var APP_MODE = QP.get("app") === "1" && !!APP_PORT;
+
+        /* 登录成功 → 把 token 转发给桌面端的本机回调端口 */
+        function forwardToApp(sess) {
+            if (!sess) return false;
+            var q = new URLSearchParams();
+            q.set("state", APP_STATE);
+            q.set("access_token", sess.access_token || "");
+            q.set("refresh_token", sess.refresh_token || "");
+            q.set("expires_in", String(sess.expires_in || 3600));
+            var u = sess.user || {};
+            q.set("user_id", u.id || "");
+            var back = "http://127.0.0.1:" + APP_PORT + "/cb?" + q.toString();
+            setMsg(LANG === "zh" ? "登录成功 ✓ 正在返回 Working Mate 应用（本页可关闭）"
+                                 : "Signed in ✓ returning to the Working Mate app (you can close this page)", "ok");
+            var b = document.getElementById("mainBtn");
+            if (b) b.disabled = true;
+            location.replace(back);
+            return true;
+        }
+
         /* 文案（zh/en，按地区自动切换）*/
         var STR = {
             zh: {
@@ -305,6 +330,12 @@
 
         function applyLang() {
             pickLang();
+            if (APP_MODE) {
+                var el = document.getElementById("lgSub");
+                if (el) el.textContent = LANG === "zh"
+                    ? "正在为桌面应用登录：完成任意一种登录后，应用会自动解锁。"
+                    : "Signing in for the desktop app: the app unlocks automatically once you finish.";
+            }
             $("lgTitle").textContent = t("title");
             $("lgSub").textContent = t("sub");
             $("orText").textContent = t("or");
@@ -356,9 +387,14 @@
                 return;
             }
             setMsg("跳转 " + pr + " 授权…");
+            var red = location.origin + "/" + (CFG.redirectAfterLogin || "index.html");
+            if (APP_MODE) {
+                red = location.origin + "/login.html?app=1&port=" + encodeURIComponent(APP_PORT) +
+                      "&state=" + encodeURIComponent(APP_STATE);
+            }
             sb().auth.signInWithOAuth({
                 provider: pr,
-                options: { redirectTo: location.origin + "/" + (CFG.redirectAfterLogin || "index.html") }
+                options: { redirectTo: red }
             }).then(function (r) {
                 if (r && r.error) setMsg("授权失败：" + r.error.message, "err");
             }).catch(function (e) { setMsg("授权失败：" + e.message, "err"); });
@@ -385,8 +421,15 @@
             if (STEP === "send") {
                 if (!contact) { setMsg(CHANNEL === "email" ? "请输入邮箱" : t("needContact"), "err"); return; }
                 var btn = $("mainBtn"); btn.disabled = true; setMsg(t("sending"));
-                var payload = CHANNEL === "email" ? { email: contact } : { phone: contact };
-                sb().auth.signInWithOtp(payload, { shouldCreateUser: true })
+                var red = location.origin + "/" + (CFG.redirectAfterLogin || "index.html");
+                if (APP_MODE) {
+                    red = location.origin + "/login.html?app=1&port=" + encodeURIComponent(APP_PORT) +
+                          "&state=" + encodeURIComponent(APP_STATE);
+                }
+                var payload = CHANNEL === "email"
+                    ? { email: contact, options: { shouldCreateUser: true, redirectTo: red } }
+                    : { phone: contact, options: { redirectTo: red } };
+                sb().auth.signInWithOtp(payload)
                     .then(function (r) {
                         btn.disabled = false;
                         if (r && r.error) { setMsg("发送失败：" + r.error.message, "err"); return; }
@@ -409,6 +452,7 @@
                     b2.disabled = false;
                     if (r && r.error) { setMsg("验证失败：" + r.error.message, "err"); return; }
                     setMsg(t("okLogin"), "ok");
+                    if (APP_MODE && r.session) { forwardToApp(r.session); return; }
                     if (r && r.user) showAccount(r.user);
                 }).catch(function (e) { b2.disabled = false; setMsg("验证失败：" + e.message, "err"); });
             }
@@ -469,10 +513,16 @@
             // 地区判定是异步的，region.js 出结果后重渲染一次
             document.addEventListener("wm:region", function () { renderProviders(); });
             sb().auth.getSession().then(function (r) {
-                if (r && r.data && r.data.session && r.data.session.user) showAccount(r.data.session.user);
+                var sess = r && r.data && r.data.session;
+                if (sess) {
+                    if (APP_MODE) { forwardToApp(sess); return; }
+                    showAccount(sess.user);
+                }
             });
             sb().auth.onAuthStateChange(function (ev, sess) {
-                if (sess && sess.user) showAccount(sess.user);
+                if (!sess || !sess.user) return;
+                if (APP_MODE) { forwardToApp(sess); return; }
+                showAccount(sess.user);
             });
         })();
     </script>

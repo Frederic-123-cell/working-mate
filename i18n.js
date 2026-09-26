@@ -39,10 +39,22 @@
   };
   var STORE_KEY = "wm_lang";
 
+  var MANUAL_KEY = "wm_lang_manual";   // 只有用户手动切换过才置 1
+
   function detect() {
-    var saved = null;
-    try { saved = localStorage.getItem(STORE_KEY); } catch (e) {}
-    if (saved && SUPPORTED.indexOf(saved) >= 0) return saved;
+    // ① 用户手动选择过语言 → 最高优先，永不覆盖
+    var saved = null, manual = null;
+    try {
+      saved = localStorage.getItem(STORE_KEY);
+      manual = localStorage.getItem(MANUAL_KEY);
+    } catch (e) {}
+    if (manual && saved && SUPPORTED.indexOf(saved) >= 0) return saved;
+    // ② 地区（region.js 已同步写入 data-region）→ 大陆中文 / 海外英文
+    try {
+      var region = document.documentElement.getAttribute("data-region");
+      if (region === "CN") return "zh";
+      if (region === "OVERSEAS") return "en";
+    } catch (e) {}
     var navs = navigator.languages || [navigator.language || "en"];
     for (var i = 0; i < navs.length; i++) {
       var code = String(navs[i]).split("-")[0];
@@ -64,9 +76,15 @@
     return undefined;
   }
 
-  function applyLang(lang) {
+  function applyLang(lang, persist) {
     current = lang;
-    try { localStorage.setItem(STORE_KEY, lang); } catch (e) {}
+    // persist === false → 地区自动判定，不写手动标记（否则海外用户会被永久钉在中文）
+    if (persist !== false) {
+      try {
+        localStorage.setItem(STORE_KEY, lang);
+        localStorage.setItem(MANUAL_KEY, "1");
+      } catch (e) {}
+    }
 
     var html = document.documentElement;
     html.setAttribute("lang", LOCALE[lang] || lang);
@@ -161,8 +179,9 @@
   }
 
   function init() {
+    current = detect();      // 此时 region.js 已写入 data-region，按地区定语言（不闪）
     buildSwitcher();
-    applyLang(current);
+    applyLang(current, false);
   }
 
   if (document.readyState === "loading") {
@@ -171,5 +190,10 @@
     init();
   }
 
-  window.WM_I18N = { apply: applyLang, get: function () { return current; }, dict: DICT };
+  window.WM_I18N = {
+    apply: applyLang,
+    get: function () { return current; },
+    isManual: function () { try { return !!localStorage.getItem(MANUAL_KEY); } catch (e) { return false; } },
+    dict: DICT
+  };
 })();

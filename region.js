@@ -19,7 +19,7 @@
 
   var REGION_KEY = "wm_region";      // 缓存: "CN" | "OVERSEAS"
   var REGION_TS  = "wm_region_ts";   // 缓存时间戳
-  var TTL = 24 * 3600 * 1000;        // 24 小时重新探测一次
+  var TTL = 60 * 60 * 1000;          // 1 小时（仅用于首屏，实际每次访问都会后台复检）
 
   // ── 美元 → 人民币 业务定价表（改价格只改这里 + HTML data-usd）──
   var USD2CNY = { "0": 0, "2": 12, "3": 22, "4": 28, "7": 50, "14": 100, "42": 300 };
@@ -194,11 +194,34 @@
     for (var i = 0; i < nodes.length; i++) {
       var t = nodes[i];
       var v = ZH_TEXT[t.nodeValue.trim()];
-      if (v) t.nodeValue = v;
+      if (v) {
+        if (t.__origEn === undefined) t.__origEn = t.nodeValue;   // 首次替换前存原文
+        t.nodeValue = v;
+      }
     }
     // 属性里也有英文（aria-label 等）
     var labeled = document.querySelectorAll('[aria-label="Toggle theme"]');
     for (var j = 0; j < labeled.length; j++) labeled[j].setAttribute("aria-label", "切换主题");
+  }
+
+  // ── 还原英文（海外访客 / VPN 切换后）──
+  function restoreTextEn() {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (var i = 0; i < nodes.length; i++) {
+      var t = nodes[i];
+      if (t.__origEn !== undefined) { t.nodeValue = t.__origEn; t.__origEn = undefined; }
+    }
+    var badges = document.querySelector(".pay-badges");
+    if (badges && badges.getAttribute("data-cn")) {
+      badges.removeAttribute("data-cn");
+      var sp = badges.querySelectorAll("span");
+      for (var k = sp.length - 1; k >= 0; k--) {
+        var txt = sp[k].textContent;
+        if (txt === "支付宝" || txt === "微信支付") badges.removeChild(sp[k]);
+      }
+    }
   }
 
   // ── 币种替换 ──
@@ -261,14 +284,32 @@
 
   function applyRegion(region) {
     document.documentElement.setAttribute("data-region", region);
+    // 用户是否手动选过语言（i18n.js 的 isManual；手动选择永远优先）
+    var manual = false;
+    try {
+      manual = !!(window.WM_I18N && window.WM_I18N.isManual && window.WM_I18N.isManual());
+    } catch (e) { manual = false; }
     if (region === "CN") {
       applyCNY();
-      // 语言：手动选过 → 尊重选择；没选过 → 中国大陆强制中文
-      if (!savedLang()) {
-        try { localStorage.setItem("wm_lang", "zh"); } catch (e) {}
-        swapTextZh();
+      if (!manual) {
+        swapTextZh();                                   // pricing 页（无 i18n.js）中文
+        try {
+          if (window.WM_I18N && window.WM_I18N.get() !== "zh") {
+            window.WM_I18N.apply("zh", false);          // index 页走 i18n 引擎，不落盘
+          }
+        } catch (e) {}
       } else if (savedLang() === "zh") {
         swapTextZh();
+      }
+    } else {
+      // 海外：还原英文 + 美元（HTML 默认值本就是英文/美元）
+      if (!manual) {
+        restoreTextEn();
+        try {
+          if (window.WM_I18N && window.WM_I18N.get() !== "en") {
+            window.WM_I18N.apply("en", false);
+          }
+        } catch (e) {}
       }
     }
     document.dispatchEvent(new CustomEvent("wm:region", { detail: { region: region } }));
@@ -276,11 +317,9 @@
 
   function init() {
     var cached = getCache();
-    if (cached) { applyRegion(cached); return; }
-
-    // 启发式先行：浏览器语言 zh → 先按中国渲染，IP 结果出来后再纠正
     var nav = (navigator.language || "en").toLowerCase();
-    var guess = (nav.indexOf("zh") === 0) ? "CN" : "OVERSEAS";
+    // 首屏：有缓存用缓存，没缓存用浏览器语言启发式（都只是「先渲染」，随后必被 IP 结果纠正）
+    var guess = cached || ((nav.indexOf("zh") === 0) ? "CN" : "OVERSEAS");
     applyRegion(guess);
 
     // 异步 IP 探测纠正（ipwho.is 主 → ipapi.co 备，2.5s 超时）

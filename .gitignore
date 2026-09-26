@@ -20,3 +20,14 @@ __pycache__/
 .vscode/
 .DS_Store
 Thumbs.db
+
+# 截图/图标原始素材与本地备份（体积大，不进仓库；线上只用优化后的 png/webp）
+assets/shots/_raw/
+_shots_bak/
+_favicon_bak/
+_favicon_preview*.png
+_shots_contact_sheet.png
+_favicon_preview_v2.png
+_favicon_preview_final.png
+_index_before_shots.html
+_wire_shots.py

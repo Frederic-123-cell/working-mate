@@ -2,6 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>智能路由与成本控制 · Working Mate 功能</title>
 <meta name="description" content="大模型按 token 计费，而最烧钱的往往不是你问的那句话，是每一轮都在重复发送的长上下文。三道防线——粘性选模、前缀缓存、滚动压缩——把账单压到最低。">
@@ -59,7 +65,10 @@
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
-      <img src="assets/shots/home.png" alt="智能路由与成本控制 界面截图" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="assets/shots/app-chat.webp">
+        <img src="assets/shots/app-chat.png" alt="智能路由与成本控制 界面截图" loading="lazy">
+      </picture>
       <figcaption data-i18n="feat.routing.shot">同样的活，账单更低</figcaption>
     </figure>
   </section>

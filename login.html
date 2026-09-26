@@ -13,12 +13,17 @@
     })();
     </script>
     <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Cache-Control" content="max-age=300">
     <meta http-equiv="Pragma" content="cache">
     <title>登录 / 注册 — Working Mate</title>
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="theme.js"></script>
     <style>
@@ -155,6 +160,15 @@
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><span class="tt-icon"></span></button>
     <div class="card">
         <div class="logo"><img src="images/favicon.png" alt=""> Working Mate</div>
+
+        <div id="notConfigured" class="hidden">
+            <span class="label">Account</span>
+            <h1>登录即将开放</h1>
+            <div class="sub">账号系统正在最后联调，暂时无需注册即可使用全部本地功能。<br>
+                桌面版现在就能下载，登录开通后积分与会员会自动同步到你的账号。</div>
+            <a class="btn" href="index.html#download">免费下载桌面版</a>
+            <div class="back" style="margin-top:18px"><a href="index.html">&larr; 返回官网</a></div>
+        </div>
 
         <div id="loginView">
             <span class="label">Account</span>
@@ -311,7 +325,12 @@
             });
         })();
         (async function restore() {
-            if (!configured()) return;
+            if (!configured()) {
+                // Supabase 还没配 → 显示「即将开放」而不是报错表单
+                document.getElementById('loginView').classList.add('hidden');
+                document.getElementById('notConfigured').classList.remove('hidden');
+                return;
+            }
             const sb = ready();
             const { data } = await sb.auth.getSession();
             if (data && data.session && data.session.user) showAccount(data.session.user);

@@ -3,7 +3,7 @@
 <head>
 <script>
 (function(){
-  var V = '20260919a';
+  var V = '20260927c';
   var p = new URLSearchParams(location.search);
   if (p.get('v') !== V) {
     p.set('v', V);
@@ -13,6 +13,12 @@
 })();
 </script>
 <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="lang.css">
 <title>Working Mate · 本地 AI Agent</title>
@@ -170,6 +176,19 @@ h1.big .glow{color:var(--brand)}
 
 /* 展示区（图文交替） */
 .showcase{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-bottom:90px}
+/* ══ 真实界面实拍（shots） ══ */
+.shot-hero{margin:0 0 16px}
+.shot-hero img,.shot img{display:block;width:100%;height:auto;border-radius:var(--r-lg);
+  border:1px solid var(--stroke2);background:#0B1120;
+  box-shadow:0 28px 70px -28px rgba(0,0,0,.8)}
+.shot-hero figcaption{margin-top:12px;font-size:13px;color:var(--text2);line-height:1.6}
+.shot-hero figcaption b,.shot figcaption b{display:block;color:var(--text);
+  font-size:14px;font-weight:600;margin-bottom:3px}
+.shot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.shot{margin:0}
+.shot figcaption{margin-top:11px;font-size:12.5px;color:var(--text2);line-height:1.55}
+@media(max-width:980px){.shot-grid{grid-template-columns:1fr}}
+
 .sc-list{display:grid;gap:14px;margin-top:24px}
 .sc-item{display:flex;gap:12px;align-items:flex-start}
 .sc-dot{width:22px;height:22px;border-radius:50%;flex:none;margin-top:2px;
@@ -290,12 +309,13 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <a href="#capability" data-i18n="home.nav.capability">能力</a>
       <a href="#features" class="hot" data-i18n="home.nav.features">全部功能</a>
       <a href="#workflow" data-i18n="home.nav.workflow">工作流</a>
+      <a href="#shots" data-i18n="home.nav.shots">界面实拍</a>
       <a href="#models" data-i18n="home.nav.models">模型</a>
       <a href="#pricing" data-i18n="home.nav.pricing">价格</a>
     </div>
     <div class="nav-right">
       <a href="#" class="btn btn-ghost" data-i18n="home.nav.console">控制台</a>
-      <a href="#" class="btn btn-text" data-i18n="home.nav.login">登录</a>
+      <a href="login.html" class="btn btn-text" data-i18n="home.nav.login">登录</a>
     </div>
   </div>
 </nav>
@@ -321,7 +341,7 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
             <div class="stat"><b>4</b><span data-i18n="home.hero1.stat3">自进化记忆</span></div>
           </div>
           <div class="cta-row">
-            <a href="#pricing" class="btn btn-amber" data-i18n="home.hero1.cta1">免费下载 · 免费版</a>
+            <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-amber" data-download data-i18n="home.hero1.cta1">免费下载 · 免费版</a>
             <a href="#workflow" class="btn btn-text" data-i18n="home.hero1.cta2">看工作流演示</a>
           </div>
         </div>
@@ -353,11 +373,11 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
             付费档解锁更长记忆、旗舰模型与云端生成额度。</p>
           <div class="stats">
             <div class="stat"><b>¥0</b><span data-i18n="home.hero3.stat1">起 / 免费版</span></div>
-            <div class="stat"><b>$9<small>/月</small></b><span data-i18n="home.hero3.stat2">标准版</span></div>
+            <div class="stat"><b>$4<small>/月</small></b><span data-i18n="home.hero3.stat2">标准版</span></div>
             <div class="stat"><b data-i18n="home.hero3.stat3">团队版 · 规划中</b></div>
           </div>
           <div class="cta-row">
-            <a href="#pricing" class="btn btn-amber" data-i18n="home.hero3.cta1">立即下载</a>
+            <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-amber" data-download data-i18n="home.hero3.cta1">立即下载</a>
             <a href="#" class="btn btn-text" data-i18n="home.hero3.cta2">看更新日志</a>
           </div>
         </div>
@@ -379,6 +399,68 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
   <div class="fw" title="客服" data-i18n-attr="title:home.float.service">☏<span class="label" data-i18n="home.float.service">人工客服</span></div>
   <div class="fw" title="电话" data-i18n-attr="title:home.float.sales">✆<span class="label" data-i18n="home.float.sales">销售电话</span></div>
 </div>
+
+<!-- ══ 真实界面实拍 ══ -->
+<section class="zone" id="shots" style="border-top:none;padding-top:0">
+  <div class="wrap">
+    <div class="zone-head reveal" style="margin:0 auto 40px;text-align:center">
+      <div class="zone-tag" data-i18n="home.shots.tag">Real Interface</div>
+      <h2 data-i18n="home.shots.h2">不是渲染图，是真实界面</h2>
+      <p data-i18n="home.shots.p" style="color:var(--text2);margin-top:12px">下面每一张都是应用内直接截取的实拍，没有美化、没有占位图。功能是真的，界面也是真的。</p>
+    </div>
+    <figure class="shot-hero reveal">
+      <picture>
+        <source type="image/webp" srcset="assets/shots/app-chat.webp">
+        <img src="assets/shots/app-chat.png" alt="Working Mate 主界面：多模型路由对话" loading="lazy">
+      </picture>
+      <figcaption><b data-i18n="home.shots.s1t">主界面 · 多模型路由对话</b><span data-i18n="home.shots.s1d">一句话丢进去，自动挑最合适的专家与模型。左侧是历史会话与能力导航，右下角积分余额随每次调用实时变动。</span></figcaption>
+    </figure>
+    <div class="shot-grid">
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/workflow-canvas.webp">
+          <img src="assets/shots/workflow-canvas.png" alt="节点式工作流画布实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s2t">工作流画布 · 拖拽成流水线</b><span data-i18n="home.shots.s2d">剧本 → 分镜 → 镜头 → 配乐，连好线一次跑完，每个节点都能单独预览。</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/project-spaces.webp">
+          <img src="assets/shots/project-spaces.png" alt="项目空间与 AI 项目经理派单实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s3t">项目空间 · AI 项目经理派单</b><span data-i18n="home.shots.s3d">设定目标后自动拆任务、派给专家，产物与进度都留在空间里。</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/engineering-mode.webp">
+          <img src="assets/shots/engineering-mode.png" alt="工程模式实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s4t">工程模式 · 绘图 / 建模 / 仿真</b><span data-i18n="home.shots.s4d">工程绘图、数学建模、物理仿真三档，出图后可导脚本或图片。</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/automation.webp">
+          <img src="assets/shots/automation.png" alt="定时任务与自动化模板实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s5t">定时任务 · 自动化模板</b><span data-i18n="home.shots.s5d">日报、周报、面试复习提醒等模板开箱可用，纯本地调度。</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/task-center.webp">
+          <img src="assets/shots/task-center.png" alt="任务中心看板实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s6t">任务中心 · 跨会话进度看板</b><span data-i18n="home.shots.s6d">双击卡片直接跳回对应会话，AI 跨会话知道每个任务做到哪了。</span></figcaption>
+      </figure>
+      <figure class="shot reveal">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/chat-finance.webp">
+          <img src="assets/shots/chat-finance.png" alt="出行预算分析对话实拍" loading="lazy">
+        </picture>
+        <figcaption><b data-i18n="home.shots.s7t">行业场景 · 出行预算分析</b><span data-i18n="home.shots.s7d">自驾油费、住宿、门票逐项算清，带价格表与来源说明。</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
 <!-- ══ 能力分区 ══ -->
 <section class="zone" id="capability">
@@ -464,17 +546,13 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
             <span data-i18n="home.wf.i3d">AI 短剧 / 音乐单曲 / 概念图，内置现成流程</span></div></div>
         </div>
       </div>
-      <div class="canvas-demo reveal">
-        <div class="cline" style="left:120px;top:66px;width:110px;transform:rotate(28deg)"></div>
-        <div class="cline" style="left:120px;top:66px;width:110px;transform:rotate(-28deg)"></div>
-        <div class="cline" style="left:120px;top:150px;width:150px;transform:rotate(-16deg)"></div>
-        <div class="cnode s1"><b>文本</b>剧本创作</div>
-        <div class="cnode s2"><b>拆解</b>分镜提取</div>
-        <div class="cnode s3"><b>音乐</b>背景配乐</div>
-        <div class="cnode s4"><b>视频</b>镜头 1-3</div>
-        <div class="cnode s5"><b>合成</b>成片输出</div>
-        <div class="pulse" style="left:106px;top:60px"></div>
-      </div>
+      <figure class="shot reveal" style="margin:0">
+        <picture>
+          <source type="image/webp" srcset="assets/shots/workflow-canvas.webp">
+          <img src="assets/shots/workflow-canvas.png" alt="节点式工作流画布实拍" loading="lazy">
+        </picture>
+        <figcaption data-i18n="home.wf.shotcap">真实画布：拖拽节点、右侧改参数、逐节点预览</figcaption>
+      </figure>
     </div>
 
     <div class="showcase">
@@ -532,7 +610,7 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <div class="price reveal">
         <h3 data-i18n="home.price.free.name">免费版</h3><div class="amt" data-usd="0">$0</div>
         <ul><li data-i18n="home.price.free.li0">新用户赠 3000 积分（全模型可试）</li><li data-i18n="home.price.free.li1">本地模型不限量</li><li data-i18n="home.price.free.li2">含 OpenRouter 免费模型</li><li data-i18n="home.price.free.li3">基础对话与文件操作</li><li data-i18n="home.price.free.li4">含广告位 · 社区支持</li></ul>
-        <a href="#" class="btn btn-ghost" data-i18n="home.price.free.cta">免费下载</a>
+        <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-ghost" data-download data-i18n="home.price.free.cta">免费下载</a>
       </div>
       <div class="price reveal">
         <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt" data-usd="4">$4<small>/月</small></div>
@@ -583,12 +661,13 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
 </section>
 
 <!-- ══ CTA ══ -->
-<section class="cta-z">
+<section class="cta-z" id="download">
   <div class="wrap">
     <div class="cta-in reveal">
       <h2 data-i18n="home.cta.h2">现在就让 AI 开始干活</h2>
       <p data-i18n="home.cta.p">免费版永久可用，一分钟装好，不需要信用卡。</p>
-      <a href="#" class="btn btn-amber" style="padding:14px 34px;font-size:15px" data-i18n="home.cta.btn">免费下载 Working Mate</a>
+      <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-amber" style="padding:14px 34px;font-size:15px" data-download data-i18n="home.cta.btn">免费下载 Working Mate</a>
+      <p style="margin-top:14px;font-size:12px;opacity:.75">Windows 10 / 11 (64-bit) · 当前版本 <span data-download-ver>v1.3.0</span></p>
     </div>
   </div>
 </section>
@@ -667,7 +746,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 <script src="lang.es.js"></script>
 <script src="lang.pt.js"></script>
 <!-- 地区自动识别：中国大陆→¥+中文，海外→$+英文（必须在 i18n.js 之前，便于提前写入语言偏好） -->
-<script src="region.js"></script>
-<script src="i18n.js"></script>
+<script src="region.js?v=20260927c"></script>
+<script src="i18n.js?v=20260927c"></script>
+<script src="download.js?v=20260927c"></script>
 </body>
 </html>

@@ -2,6 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>多模型混合调度 · Working Mate 功能</title>
 <meta name="description" content="78 个内置模型 + 14 个国内直连平台，统一在一个对话框里。主通道与兜底通道双活互备，一条通道抽风自动换另一条接着跑；断网还有本地 Ollama 顶上。">
@@ -59,7 +65,10 @@
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
-      <img src="assets/shots/home.png" alt="多模型混合调度 界面截图" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="assets/shots/app-chat.webp">
+        <img src="assets/shots/app-chat.png" alt="多模型混合调度 界面截图" loading="lazy">
+      </picture>
       <figcaption data-i18n="feat.models.shot">同一个输入框，连通本地与云端</figcaption>
     </figure>
   </section>

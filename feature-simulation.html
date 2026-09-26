@@ -2,6 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>物理仿真 · Working Mate 功能</title>
 <meta name="description" content="描述物理过程，AI 建立数值模型并仿真：单摆、振动、传热、波动、电路……结果曲线当场看，还能导出 COMSOL 建模脚本继续细化。">
@@ -59,7 +65,10 @@
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
-      <img src="assets/shots/home.png" alt="物理仿真 界面截图" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="assets/shots/engineering-mode.webp">
+        <img src="assets/shots/engineering-mode.png" alt="物理仿真 界面截图" loading="lazy">
+      </picture>
       <figcaption data-i18n="feat.simulation.shot">数值仿真，当场看曲线</figcaption>
     </figure>
   </section>

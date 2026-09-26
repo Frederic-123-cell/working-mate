@@ -2,6 +2,12 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="image/png" sizes="48x48" href="images/favicon-48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96.png">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>节点式工作流画布 · Working Mate 功能</title>
 <meta name="description" content="像搭积木一样把 AI 串成流水线：拖节点、连线、跑起来。每一步都能单独预览、单独重跑、单独改提示词——提示词既能自己手写，也能让 AI 代写。">
@@ -59,7 +65,10 @@
   <section class="fsec reveal">
     <h2 data-i18n="feat.tpl.shot">看一眼</h2>
     <figure class="fshot">
-      <img src="assets/shots/agent-split.png" alt="节点式工作流画布 界面截图" loading="lazy">
+      <picture>
+        <source type="image/webp" srcset="assets/shots/workflow-canvas.webp">
+        <img src="assets/shots/workflow-canvas.png" alt="节点式工作流画布 界面截图" loading="lazy">
+      </picture>
       <figcaption data-i18n="feat.workflow.shot">节点画布：拖拽、连线、逐节点预览</figcaption>
     </figure>
   </section>

@@ -169,6 +169,24 @@
   .faq details[open] summary::after { content: "−"; }
   .faq p { color: var(--ink-soft); font-size: 0.9rem; margin-top: 0.8rem; line-height: 1.65; }
 
+  /* ── Credit top-up packs ── */
+  .credits { max-width: 980px; margin: 0 auto; padding: 3rem 1.6rem 0.5rem; text-align: center; }
+  .credits .label { margin-bottom: 1rem; }
+  .credits h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; margin-bottom: 0.6rem; color: var(--ink); letter-spacing: -0.01em; }
+  .credits .sub { color: var(--ink-soft); font-size: 0.95rem; max-width: 640px; margin: 0 auto 2rem; line-height: 1.65; }
+  .packs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.8rem; }
+  .pack { position: relative; border: 1.5px solid var(--line); background: var(--bg); padding: 1.5rem 1rem; text-align: center; }
+  .pack-hot { border-color: var(--accent); }
+  .pack h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
+  .pack-amt { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--ink); }
+  .pack-amt .pk-unit { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+  .pack-price { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--accent); margin: 0.35rem 0 0.25rem; }
+  .pack-per { font-size: 0.76rem; color: var(--muted); }
+  .credit-notes { list-style: none; max-width: 760px; margin: 0 auto; text-align: left; }
+  .credit-notes li { color: var(--ink-soft); font-size: 0.9rem; line-height: 1.75; padding-left: 1.15rem; position: relative; }
+  .credit-notes li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+  @media (max-width: 860px) { .packs { grid-template-columns: 1fr; } }
+
   footer { text-align: center; color: var(--muted); font-size: 0.84rem; padding: 2rem 1.6rem; border-top: 1.5px solid var(--line); }
   footer a { color: var(--ink); text-decoration: none; margin: 0 0.3rem; }
   footer a:hover { background: var(--accent); }
@@ -202,10 +220,10 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html?v=20260919a" class="logo"><img src="images/favicon.png" alt=""> Working Mate</a>
+    <a href="index.html?v=20260927a" class="logo"><img src="images/favicon.png" alt=""> Working Mate</a>
     <ul class="nav-links">
       <li><a href="index.html#features">Features</a></li>
-      <li><a href="pricing.html?v=20260919a">Pricing</a></li>
+      <li><a href="pricing.html?v=20260927a">Pricing</a></li>
       <li><a href="index.html#providers">Models</a></li>
     </ul>
     <div style="display:flex;align-items:center;gap:0.6rem;">
@@ -220,7 +238,7 @@
   <div class="hero-inner">
     <span class="label">Pricing</span>
     <h1>Simple, <span class="accent-word">honest</span> pricing.</h1>
-    <p>Start free forever. Upgrade when you need the world's most powerful AI models.</p>
+    <p>Start free forever. Every new user gets 3,000 credits — enough to try every flagship model before you pay a cent.</p>
     <div class="pay-badges">
       <span>Visa</span><span>Mastercard</span><span>PayPal</span>
     </div>
@@ -231,9 +249,11 @@
   <div class="plan">
     <h2>Free</h2>
     <div class="desc">Local AI on your own GPU, plus free OpenRouter models. Zero cost, nothing leaves your PC.</div>
-    <div class="price"><span class="currency">$</span><span class="num">0</span><span class="per">forever</span></div>
+    <div class="price" data-usd="0"><span class="currency">$</span><span class="num">0</span><span class="per">forever</span></div>
     <ul>
       <li>Unlimited local chat via Ollama</li>
+      <li>3,000 welcome credits — try every model free</li>
+      <li>Daily check-in: 100 credits × 15</li>
       <li>78 built-in models, 14 China-direct platforms</li>
       <li>Free OpenRouter models included</li>
       <li>87 built-in agent tools</li>
@@ -247,8 +267,9 @@
   <div class="plan">
     <h2>Standard</h2>
     <div class="desc">The value lineup — DeepSeek V4 Flash, Qwen3.8 Flash, GLM 4.6, Doubao Seed Lite. Fast, cheap, vision included.</div>
-    <div class="price"><span class="currency">$</span><span class="num">4</span><span class="per">/ month</span></div>
+    <div class="price" data-usd="4"><span class="currency">$</span><span class="num">4</span><span class="per">/ month</span></div>
     <ul>
+      <li>800 credits every month included</li>
       <li>DeepSeek V4 Flash · Qwen3.8 Flash · GLM 4.6</li>
       <li>Smart routing with sticky model choice</li>
       <li>Rolling context compression (saves tokens)</li>
@@ -263,8 +284,9 @@
     <span class="tag">Popular</span>
     <h2>Pro</h2>
     <div class="desc">Flagship Chinese lineup — DeepSeek V4 Pro, GLM 5.3, Kimi K3, Qwen3.8 Max — plus AI video and music generation.</div>
-    <div class="price"><span class="currency">$</span><span class="num">14</span><span class="per">/ month</span></div>
+    <div class="price" data-usd="14"><span class="currency">$</span><span class="num">14</span><span class="per">/ month</span></div>
     <ul>
+      <li>3,000 credits every month included</li>
       <li>DeepSeek V4 Pro · GLM 5.3 · Kimi K3 · Qwen3.8 Max</li>
       <li>Dual-channel failover (primary + fallback)</li>
       <li>AI video generation (Kling) — animate any photo</li>
@@ -278,8 +300,9 @@
   <div class="plan">
     <h2>Ultra</h2>
     <div class="desc">Engineering-grade capability: true CAD modeling with B-rep solids, STEP / DXF export, larger context and higher limits.</div>
-    <div class="price"><span class="currency">$</span><span class="num">42</span><span class="per">/ month</span></div>
+    <div class="price" data-usd="42"><span class="currency">$</span><span class="num">42</span><span class="per">/ month</span></div>
     <ul>
+      <li>10,000 credits every month included</li>
       <li>Engineering-level CAD (CadQuery / OpenCASCADE)</li>
       <li>True B-rep solids — fillet, chamfer, boolean, holes</li>
       <li>Export STEP / DXF / STL / OBJ</li>
@@ -293,11 +316,12 @@
   <div class="plan">
     <span class="tag">No ceiling</span>
     <h2>Max</h2>
-    <div class="desc">Pay as you go with no monthly ceiling — top up any time or let your card auto-charge. $5 starting credit included.</div>
-    <div class="price"><span class="currency">$</span><span class="num">0</span><span class="per">+ usage</span></div>
+    <div class="desc">Pay as you go with no monthly ceiling — top up credits any time or let your card auto-charge.</div>
+    <div class="price" data-usd="0"><span class="currency">$</span><span class="num">0</span><span class="per">+ usage</span></div>
     <ul>
-      <li>No monthly message ceiling — billed by usage</li>
-      <li>$5 starting credit, auto-charge or top up</li>
+      <li>No monthly ceiling — billed by credits consumed</li>
+      <li>Top-up packs from $2 — never expire</li>
+      <li>Every model unlocked while you have credits</li>
       <li>Specialist agents: deep research, autonomous coding</li>
       <li>Self-researching CAD modeling agent</li>
       <li>Short-drama storyboarding &amp; music agents</li>
@@ -308,12 +332,57 @@
   </div>
 </section>
 
+<section class="credits">
+  <span class="label">Credits</span>
+  <h3>Top-up packs</h3>
+  <p class="sub">One currency for every model. 1 credit ≈ $0.01. Buy in bigger packs, pay less per credit — and credits never expire.</p>
+  <div class="packs">
+    <div class="pack">
+      <h4>Starter</h4>
+      <div class="pack-amt"><span class="pk-num">1,000</span> <span class="pk-unit">credits</span></div>
+      <div class="pack-price" data-usd="2">$2</div>
+      <div class="pack-per">$0.0020 / credit</div>
+    </div>
+    <div class="pack pack-hot">
+      <span class="tag">Best value</span>
+      <h4>Plus</h4>
+      <div class="pack-amt"><span class="pk-num">2,000</span> <span class="pk-unit">credits</span></div>
+      <div class="pack-price" data-usd="3">$3</div>
+      <div class="pack-per">$0.0015 / credit</div>
+    </div>
+    <div class="pack">
+      <h4>Mega</h4>
+      <div class="pack-amt"><span class="pk-num">5,000</span> <span class="pk-unit">credits</span></div>
+      <div class="pack-price" data-usd="7">$7</div>
+      <div class="pack-per">$0.0014 / credit</div>
+    </div>
+  </div>
+  <ul class="credit-notes">
+    <li>New users: 3,000 credits on the house — every flagship model unlocked until they run out.</li>
+    <li>Daily check-in: +100 credits, 15 times for new accounts.</li>
+    <li>Metered honestly: each model has its own published credit rate — you see the balance tick down live in the status bar.</li>
+    <li>Never wasted: when your balance bottoms out the app drops back to Free mode instead of silently charging you.</li>
+  </ul>
+</section>
+
 <section class="faq">
   <span class="label">FAQ</span>
   <h3>Common Questions</h3>
   <details>
+    <summary>What exactly are credits, and how fast do they burn?</summary>
+    <p>Credits are the single currency behind every model, so a cheap model and a flagship model can live in the same wallet. Each model has its own published rate per 1,000 tokens (input and output priced separately), shown in the app next to each model. A quick chat with a small model costs a fraction of a credit; hammering the most expensive frontier model costs more. Your balance sits in the status bar and ticks down live as the AI replies, so there is never a surprise invoice. New accounts start with 3,000 credits, and daily check-in adds another 100 for the first 15 days.</p>
+  </details>
+  <details>
+    <summary>Do credits expire, and what happens when I run out?</summary>
+    <p>They never expire, and unused monthly credits stay in your balance. When your balance hits the floor the app automatically drops back to Free mode — local models and free OpenRouter models keep working, paid models pause, and a prompt offers a top-up. You are never silently charged and nothing is auto-renewed without you turning it on.</p>
+  </details>
+  <details>
+    <summary>I have my own API key — do I still need a membership?</summary>
+    <p>Your own key runs in Free mode, on your own quota, forever, at no charge from us. What a membership adds is different: bundled credits at a lower per-credit price, and access to the tiers of models the app otherwise gates — flagship reasoning, media generation and the engineering toolchain. In short, your key pays your provider; a membership unlocks the app.</p>
+  </details>
+  <details>
     <summary>How do I activate after payment?</summary>
-    <p>Once payment completes you'll receive a license key by email. Open the app, switch the mode dropdown to your plan, and paste the key. Activation is bound to one device; reinstalling on the same PC keeps working.</p>
+    <p>Once payment completes you'll receive a license key by email. Open the app, switch the mode dropdown to your plan, and paste the key. Activation is bound to one device; reinstalling on the same PC keeps working. Locked tiers show a 🔒 in the dropdown until your subscription or license is active.</p>
   </details>
   <details>
     <summary>What payment methods do you accept?</summary>
@@ -333,7 +402,7 @@
   </details>
   <details>
     <summary>Which models can I use — and does my region matter?</summary>
-    <p>You get 78 built-in models across five plans, spanning DeepSeek, Qwen, GLM, Kimi, MiniMax, Doubao, Hunyuan, Ernie and Grok, plus the OpenRouter catalogue. Some closed models from OpenAI, Anthropic and Google are unavailable in certain billing regions. The app probes this automatically at startup (once per key, at no meaningful cost), badges the affected models as region-locked, and routes around them — so you are never left guessing why a model will not run. Fourteen China-direct platforms are also preconfigured, covering exactly the models that international aggregators restrict.</p>
+    <p>You get 78 built-in models across five plans, spanning DeepSeek, Qwen, GLM, Kimi, MiniMax, Doubao, Hunyuan, Ernie and Grok, plus the OpenRouter catalogue. Some closed models from OpenAI, Anthropic and Google are unavailable in certain billing regions. The app probes this automatically at startup (once per key, at no meaningful cost), badges the affected models as region-locked, and routes around them — so you are never left guessing why a model will not run. In mainland China it goes one step further: Auto mode prefers the domestic model group (DeepSeek / Qwen / GLM / Kimi and friends) so you keep full speed without a VPN. Fourteen China-direct platforms are also preconfigured, covering exactly the models that international aggregators restrict.</p>
   </details>
   <details>
     <summary>Can I bring my own API key?</summary>
@@ -341,11 +410,13 @@
   </details>
   <details>
     <summary>What counts as "usage" on the Max plan?</summary>
-    <p>Token consumption on the cloud models you actually call, billed at the provider's rate plus routing. There is no monthly message ceiling and no per-seat charge. You start with $5 of credit; after that you top up manually or let a linked card auto-charge. Every call logs model, input/output tokens and estimated cost, so you can reconcile against your provider bill.</p>
+    <p>Credits burned by the calls you actually make. Each model is metered at its published credit rate, which is derived from the provider's live price with a small routing margin — there is no monthly message ceiling and no per-seat charge. You start with your 3,000 welcome credits; after that you top up manually or let a linked card auto-charge. Every call logs model, input/output tokens and credits spent, so you can reconcile the balance against your provider bill line by line.</p>
   </details>
 </section>
 
-<footer>© 2026 Working Mate. <a href="terms.html?v=20260919a">Terms</a> · <a href="refunds.html?v=20260919a">Refunds</a> · <a href="privacy.html?v=20260919a">Privacy</a> · <a href="acceptable-use.html?v=20260919a">Acceptable Use</a> · <a href="index.html?v=20260919a">Home</a> · <a href="mailto:working_mate@outlook.com">working_mate@outlook.com</a></footer>
+<footer>© 2026 Working Mate. <a href="terms.html?v=20260927a">Terms</a> · <a href="refunds.html?v=20260927a">Refunds</a> · <a href="privacy.html?v=20260927a">Privacy</a> · <a href="acceptable-use.html?v=20260927a">Acceptable Use</a> · <a href="index.html?v=20260927a">Home</a> · <a href="mailto:working_mate@outlook.com">working_mate@outlook.com</a></footer>
 
+<!-- 地区自动识别：中国大陆→¥+中文，海外→$+英文（须在 i18n 类脚本之前） -->
+<script src="region.js"></script>
 </body>
 </html>

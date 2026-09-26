@@ -12,6 +12,20 @@
   var RELEASE_PAGE = "https://github.com/Frederic-123-cell/working-mate/releases/latest";
 
   function apply(url, ver) {
+    // 若 version.json 指向的是安装包直链，先探测它是否真的存在；
+    // 还没上传 Release 资产时（404）或跨域探测失败时，回退到 Releases 页面，
+    // 保证点击永远有落地，绝不出现 GitHub 404。
+    var isAsset = /\/releases\/download\//.test(url);
+    if (isAsset && window.fetch) {
+      fetch(url, { method: "HEAD", mode: "cors", cache: "no-store" })
+        .then(function (r) { finalize(r.ok ? url : RELEASE_PAGE, ver); })
+        .catch(function () { finalize(RELEASE_PAGE, ver); });
+    } else {
+      finalize(url, ver);
+    }
+  }
+
+  function finalize(url, ver) {
     var a = document.querySelectorAll("[data-download]");
     for (var i = 0; i < a.length; i++) {
       a[i].setAttribute("href", url);

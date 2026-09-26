@@ -631,4 +631,7 @@ window.I18N.fr = {
   "home.shots.s7d": "Carburant, hébergement et billets détaillés en tableaux de prix, sources à l'appui.",
   "home.wf.shotcap": "Le vrai canevas : glissez les nœuds, réglez les paramètres à droite, prévisualisez nœud par nœud",
   "home.nav.shots": "Captures",
+  "pricing.per.forever": "à vie",
+  "pricing.per.month": "/ mois",
+  "pricing.per.usage": "+ à l'usage",
 };

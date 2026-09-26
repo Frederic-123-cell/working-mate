@@ -16,6 +16,21 @@ DATA = {
         "fr": "Captures", "de": "Screenshots", "ru": "Скриншоты",
         "ar": "لقطات الشاشة", "es": "Capturas", "pt": "Capturas",
     },
+    "pricing.per.forever": {
+        "en": "forever", "ja": "ずっと無料", "ko": "평생 무료",
+        "fr": "à vie", "de": "für immer", "ru": "навсегда",
+        "ar": "مدى الحياة", "es": "para siempre", "pt": "para sempre",
+    },
+    "pricing.per.month": {
+        "en": "/ month", "ja": "/ 月", "ko": "/ 월",
+        "fr": "/ mois", "de": "/ Monat", "ru": "/ месяц",
+        "ar": "/ شهريًا", "es": "/ mes", "pt": "/ mês",
+    },
+    "pricing.per.usage": {
+        "en": "+ usage", "ja": "+ 従量", "ko": "+ 사용량",
+        "fr": "+ à l'usage", "de": "+ nach Verbrauch", "ru": "+ по факту",
+        "ar": "+ حسب الاستخدام", "es": "+ por uso", "pt": "+ por uso",
+    },
     "home.shots.tag": {
         "en": "Real Interface", "ja": "実際の画面", "ko": "실제 화면",
         "fr": "Interface réelle", "de": "Echte Oberfläche", "ru": "Реальный интерфейс",

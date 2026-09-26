@@ -631,4 +631,7 @@ window.I18N.pt = {
   "home.shots.s7d": "Combustível, hospedagem e ingressos detalhados em tabelas de preços com as fontes.",
   "home.wf.shotcap": "A tela real: arraste os nós, ajuste parâmetros à direita e veja nó por nó",
   "home.nav.shots": "Capturas",
+  "pricing.per.forever": "para sempre",
+  "pricing.per.month": "/ mês",
+  "pricing.per.usage": "+ por uso",
 };

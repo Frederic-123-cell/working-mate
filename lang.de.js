@@ -631,4 +631,7 @@ window.I18N.de = {
   "home.shots.s7d": "Kraftstoff, Unterkunft und Tickets als Preistabellen aufgeschlüsselt, mit Quellenangaben.",
   "home.wf.shotcap": "Der echte Canvas: Knoten ziehen, Parameter rechts anpassen, Knoten für Knoten ansehen",
   "home.nav.shots": "Screenshots",
+  "pricing.per.forever": "für immer",
+  "pricing.per.month": "/ Monat",
+  "pricing.per.usage": "+ nach Verbrauch",
 };

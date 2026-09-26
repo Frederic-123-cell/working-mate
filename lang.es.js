@@ -631,4 +631,7 @@ window.I18N.es = {
   "home.shots.s7d": "Combustible, alojamiento y entradas desglosados en tablas de precios con las fuentes.",
   "home.wf.shotcap": "El lienzo real: arrastra nodos, ajusta parámetros a la derecha y previsualiza nodo a nodo",
   "home.nav.shots": "Capturas",
+  "pricing.per.forever": "para siempre",
+  "pricing.per.month": "/ mes",
+  "pricing.per.usage": "+ por uso",
 };

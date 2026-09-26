@@ -291,6 +291,27 @@
     }
   }
 
+
+  // ── 标题 / 简介 / lang 按地区切换 ──
+  // Google 抓的是静态 HTML（现在默认英文，便于国际收录）；
+  // 大陆访客在浏览器里动态换回中文，两头都不吃亏。
+  var META_BY_REGION = {
+    CN: {
+      title: "Working Mate · 本地优先的 AI Agent",
+      desc: "Working Mate 是本地优先的 AI Agent：本地 Ollama 与云端大模型统一调度，"
+            + "节点式工作流串起剧本、分镜、视频、配乐，四层记忆越用越懂你。"
+            + "数据留在本机、断网也能跑。新用户赠 3000 积分，全部模型可试。",
+      lang: "zh-CN"
+    },
+    OVERSEAS: {
+      title: "Working Mate — Local-first AI Agent for Windows",
+      desc: "Working Mate is a local-first AI agent: local Ollama and cloud LLMs on one scheduler, "
+            + "node-based workflows chaining scripts, storyboards, video and music, and four-layer "
+            + "memory that learns you over time. Your data stays on your machine and it runs offline. "
+            + "3,000 welcome credits — try every model.",
+      lang: "en"
+    }
+  };
   function applyRegion(region) {
     document.documentElement.setAttribute("data-region", region);
     // 用户是否手动选过语言（i18n.js 的 isManual；手动选择永远优先）
@@ -321,6 +342,17 @@
         } catch (e) {}
       }
     }
+    var meta = META_BY_REGION[region] || META_BY_REGION.OVERSEAS;
+    try {
+      document.documentElement.setAttribute("lang", meta.lang);
+      var md = document.querySelector('meta[name="description"]');
+      if (md) md.setAttribute("content", meta.desc);
+      var og = document.querySelector('meta[property="og:title"]');
+      if (og) og.setAttribute("content", meta.title);
+      var ogd = document.querySelector('meta[property="og:description"]');
+      if (ogd) ogd.setAttribute("content", meta.desc);
+      document.title = meta.title;
+    } catch (e) {}
     document.dispatchEvent(new CustomEvent("wm:region", { detail: { region: region } }));
   }
 

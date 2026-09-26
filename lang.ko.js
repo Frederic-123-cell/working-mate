@@ -628,4 +628,7 @@ window.I18N.ko = {
   "home.shots.s7d": "기름값, 숙박, 입장료를 항목별로 계산하고 가격표와 근거를 함께 제시합니다.",
   "home.wf.shotcap": "실제 캔버스: 노드를 끌고, 오른쪽에서 파라미터를 고치고, 노드별로 미리보기",
   "home.nav.shots": "실제 화면",
+  "pricing.per.forever": "평생 무료",
+  "pricing.per.month": "/ 월",
+  "pricing.per.usage": "+ 사용량",
 };

@@ -868,4 +868,7 @@ window.I18N.en = {
   "home.shots.s7d": "Fuel, lodging and tickets itemized into price tables with sourcing notes.",
   "home.wf.shotcap": "The real canvas: drag nodes, tune parameters on the right, preview node by node",
   "home.nav.shots": "Screenshots",
+  "pricing.per.forever": "forever",
+  "pricing.per.month": "/ month",
+  "pricing.per.usage": "+ usage",
 };

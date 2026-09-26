@@ -628,4 +628,7 @@ window.I18N.ja = {
   "home.shots.s7d": "ガソリン代・宿泊・入場料を項目別に算出し、価格表と根拠を提示。",
   "home.wf.shotcap": "実際のキャンバス：ノードをドラッグ、右側でパラメータ調整、ノードごとにプレビュー",
   "home.nav.shots": "画面紹介",
+  "pricing.per.forever": "ずっと無料",
+  "pricing.per.month": "/ 月",
+  "pricing.per.usage": "+ 従量",
 };

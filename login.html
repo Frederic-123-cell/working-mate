@@ -143,7 +143,21 @@
         .back { text-align: center; margin-top: 1rem; }
         .back a { color: var(--ink); font-size: 0.84rem; text-decoration: none; border-bottom: 1.5px solid var(--line); padding-bottom: 1px; }
         .back a:hover { background: var(--accent); }
-    </style>
+    
+        /* ── 第三方登录按钮 ── */
+        .providers{display:flex;flex-direction:column;gap:10px;margin:18px 0 0}
+        .pbtn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+            padding:12px 14px;border:1px solid var(--line-soft);border-radius:10px;
+            background:transparent;color:var(--ink);font-size:14px;font-weight:600;
+            cursor:pointer;transition:.18s;font-family:inherit}
+        .pbtn:hover{border-color:var(--accent);background:rgba(232,163,23,.10);transform:translateY(-1px)}
+        .pbtn svg{width:18px;height:18px;flex:none}
+        .or{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--muted);font-size:12px}
+        .or::before,.or::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+        .pnote{margin-top:14px;font-size:11.5px;color:var(--muted);line-height:1.6;text-align:center}
+        .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11px;
+            background:var(--accent);color:#16161a;font-weight:700;margin-left:6px}
+</style>
     <link rel="stylesheet" href="minimal.css">
     <script src="minimal.js"></script>
 </head>
@@ -172,168 +186,294 @@
 
         <div id="loginView">
             <span class="label">Account</span>
-            <h1>登录 / 注册</h1>
-            <div class="sub">无需密码，输入邮箱或手机号获取验证码即可。新账号会自动注册。</div>
-            <div class="tabs">
-                <button class="tab active" id="tabEmail" onclick="switchChannel('email')">邮箱</button>
-                <button class="tab" id="tabPhone" onclick="switchChannel('sms')">手机号</button>
-            </div>
+            <h1 id="lgTitle">登录 / 注册</h1>
+            <div class="sub" id="lgSub">无需密码。验证码或第三方账号即可，新账号会自动创建。</div>
+
+            <div class="providers" id="oauthBox"></div>
+
+            <div class="or" id="orLine"><span id="orText">或</span></div>
 
             <div class="field" id="emailField">
-                <label>邮箱地址</label>
+                <label id="lbEmail">邮箱地址</label>
                 <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field hidden" id="phoneField">
-                <label>手机号</label>
+                <label id="lbPhone">手机号</label>
                 <div class="phone-row">
                     <select id="countryCode"></select>
                     <input type="tel" id="phoneInput" placeholder="138 0000 0000" autocomplete="tel">
                 </div>
             </div>
-
             <div class="field hidden" id="codeField">
-                <label>验证码</label>
+                <label id="lbCode">验证码</label>
                 <input type="text" id="codeInput" placeholder="6 位数字验证码" inputmode="numeric" maxlength="6">
             </div>
 
             <div class="msg" id="msg"></div>
             <button class="btn" id="mainBtn" onclick="handleMain()">发送验证码</button>
             <button class="btn ghost hidden" id="backBtn" onclick="resetFlow()">返回修改账号</button>
+            <div class="pnote" id="lgNote"></div>
         </div>
 
         <div id="accountView" class="account hidden">
             <div class="avatar" id="avatar">?</div>
             <h1 id="accTitle">账户信息</h1>
             <div class="info" id="accInfo"></div>
+            <div class="pnote" id="accNote"></div>
             <button class="btn" onclick="doLogout()">退出登录</button>
         </div>
 
-        <div class="back"><a href="index.html?v=20260919a">&larr; 返回官网</a></div>
+        <div class="back"><a href="index.html">&larr; 返回官网</a></div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="region.js?v=20260927d"></script>
+    <script src="site-config.js?v=20260927d"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        const SUPABASE_URL = "https://YOUR-PROJECT.supabase.co";
-        const SUPABASE_ANON_KEY = "YOUR-ANON-KEY";
+        /* ══════════════════════════════════════════════════════════
+           Working Mate 登录 / 注册（Supabase）
+           海外：Google / Apple / 邮箱 / GitHub
+           大陆：手机号 + 验证码 / 微信
+           配置全部在 site-config.js，本文件不含任何密钥。
+           ══════════════════════════════════════════════════════════ */
+        var CFG = window.WM_CONFIG || {};
 
-        let supabase = null;
-        let channel = 'email';
-        let step = 'send';
-
-        function ready() {
-            if (!supabase) supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            return supabase;
-        }
-        function configured() {
-            return !SUPABASE_URL.includes('YOUR-PROJECT') && !SUPABASE_ANON_KEY.includes('YOUR-ANON');
-        }
-        function setMsg(t, cls) {
-            const m = document.getElementById('msg');
-            m.textContent = t; m.className = 'msg ' + (cls || '');
-        }
-        function switchChannel(c) {
-            channel = c;
-            resetFlow(true);
-            document.getElementById('tabEmail').classList.toggle('active', c === 'email');
-            document.getElementById('tabPhone').classList.toggle('active', c === 'sms');
-            document.getElementById('emailField').classList.toggle('hidden', c !== 'email');
-            document.getElementById('phoneField').classList.toggle('hidden', c !== 'sms');
-        }
-        function resetFlow(keepChannel) {
-            step = 'send';
-            document.getElementById('codeField').classList.add('hidden');
-            document.getElementById('backBtn').classList.add('hidden');
-            document.getElementById('mainBtn').textContent = '发送验证码';
-            setMsg('');
-        }
-        function currentContact() {
-            if (channel === 'email') return document.getElementById('emailInput').value.trim();
-            const cc = document.getElementById('countryCode').value;
-            const p = document.getElementById('phoneInput').value.trim();
-            return p ? (cc + p) : '';
-        }
-        async function handleMain() {
-            if (!configured()) { setMsg('登录服务未配置，请联系管理员', 'err'); return; }
-            const contact = currentContact();
-            if (!contact) { setMsg('请输入' + (channel === 'email' ? '邮箱' : '手机号'), 'err'); return; }
-            if (step === 'send') {
-                const sb = ready();
-                const btn = document.getElementById('mainBtn');
-                btn.disabled = true; setMsg('正在发送验证码...');
-                const { data, error } = await sb.auth.signInWithOtp(
-                    channel === 'email' ? { email: contact } : { phone: contact },
-                    { shouldCreateUser: true }
-                );
-                btn.disabled = false;
-                if (error) { setMsg('发送失败：' + error.message, 'err'); return; }
-                setMsg('验证码已发送，请查收', 'ok');
-                step = 'verify';
-                document.getElementById('codeField').classList.remove('hidden');
-                document.getElementById('backBtn').classList.remove('hidden');
-                document.getElementById('mainBtn').textContent = '验证并登录';
-                document.getElementById('codeInput').focus();
-            } else {
-                const code = document.getElementById('codeInput').value.trim();
-                if (!code) { setMsg('请输入验证码', 'err'); return; }
-                const sb = ready();
-                const btn = document.getElementById('mainBtn');
-                btn.disabled = true; setMsg('正在验证...');
-                const { data, error } = await sb.auth.verifyOtp(
-                    channel === 'email'
-                        ? { email: currentContact(), token: code, type: 'email' }
-                        : { phone: currentContact(), token: code, type: 'sms' }
-                );
-                btn.disabled = false;
-                if (error) { setMsg('验证失败：' + error.message, 'err'); return; }
-                setMsg('登录成功', 'ok');
-                showAccount(data.user);
+        /* 文案（zh/en，按地区自动切换）*/
+        var STR = {
+            zh: {
+                title: "登录 / 注册",
+                sub: "无需密码。验证码或第三方账号即可，新账号会自动创建。",
+                or: "或", email: "邮箱地址", phone: "手机号", code: "验证码",
+                phEmail: "you@example.com", phPhone: "138 0000 0000", phCode: "6 位数字验证码",
+                send: "发送验证码", verify: "验证并登录", back: "返回修改账号",
+                google: "使用 Google 登录", apple: "使用 Apple 登录",
+                github: "使用 GitHub 登录", wechat: "使用微信登录",
+                note: "注册即代表同意《服务条款》与《隐私政策》。新账号自动赠送 3000 积分。",
+                needContact: "请输入手机号", sending: "正在发送验证码…", verifyIng: "正在验证…",
+                sent: "验证码已发送，请查收", okLogin: "登录成功",
+                wechatOff: "微信登录尚未配置，请先在 site-config.js 填写 wechat.authFunctionUrl",
+                logged: "已登录", logout: "退出登录", uid: "用户 ID",
+                provider: "登录方式", credits: "积分", syncNote: "积分与会员档位将在服务端同步后显示。",
+                serviceOff: "登录服务尚未配置，请先填写 site-config.js"
+            },
+            en: {
+                title: "Sign in / Sign up",
+                sub: "No password needed. Use a code or a third-party account — new accounts are created automatically.",
+                or: "or", email: "Email address", phone: "Phone number", code: "Verification code",
+                phEmail: "you@example.com", phPhone: "138 0000 0000", phCode: "6-digit code",
+                send: "Send code", verify: "Verify & sign in", back: "Change account",
+                google: "Continue with Google", apple: "Continue with Apple",
+                github: "Continue with GitHub", wechat: "Continue with WeChat",
+                note: "By signing up you agree to the Terms and Privacy Policy. New accounts get 3,000 credits.",
+                needContact: "Please enter your phone number", sending: "Sending code…", verifyIng: "Verifying…",
+                sent: "Code sent — check your inbox", okLogin: "Signed in",
+                wechatOff: "WeChat login is not configured yet (set wechat.authFunctionUrl in site-config.js)",
+                logged: "Signed in", logout: "Sign out", uid: "User ID",
+                provider: "Sign-in method", credits: "Credits", syncNote: "Credits and plan will appear once server sync is live.",
+                serviceOff: "Auth service not configured — fill in site-config.js first"
             }
+        };
+
+        var ICON = {
+            google: '<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>',
+            apple: '<svg viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-36.8-2.8-77 21.3-91.7 21.3-15.5 0-51.1-20.3-79.1-20.3C61.2 141.2 8 184.8 8 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 62 126.9 113.4 125.3 26.8-.8 45.7-19.3 80.7-19.3 33.9 0 51.2 19.3 81.6 19.3 51.4-.8 96.8-79.2 108.9-115.9-69.9-33-88.3-67.4-88.3-95.4zm-88.9-176.9c15.5-18.9 25.9-44.4 23-71.8-24.3 1.4-51.6 16.6-67.9 35.1-13.9 16.1-26.4 42.4-23.1 69.1 26.6 2 50.4-13.4 68-32.4z"/></svg>',
+            github: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>',
+            wechat: '<svg viewBox="0 0 24 24"><ellipse cx="9.5" cy="9" rx="6.5" ry="5.5" fill="none" stroke="currentColor" stroke-width="1.6"/><ellipse cx="15.5" cy="15.2" rx="5.5" ry="4.5" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="7" cy="8" r="1" fill="currentColor"/><circle cx="12" cy="8" r="1" fill="currentColor"/><circle cx="13.8" cy="14" r=".9" fill="currentColor"/><circle cx="17.3" cy="14" r=".9" fill="currentColor"/></svg>'
+        };
+
+        var LANG = "zh";
+        var STEP = "send";      // send → verify
+        var CHANNEL = "email";  // email | phone
+        var sbClient = null;
+
+        function ready() { return !!(window.WM_AUTH_READY && window.supabase); }
+        function sb() {
+            if (!sbClient) sbClient = window.supabase.createClient(CFG.supabase.url, CFG.supabase.anonKey);
+            return sbClient;
         }
-        function showAccount(user) {
-            document.getElementById('loginView').classList.add('hidden');
-            document.getElementById('accountView').classList.remove('hidden');
-            const email = user.email || '';
-            const phone = user.phone || '';
-            document.getElementById('avatar').textContent = (email || phone || '?').charAt(0).toUpperCase();
-            document.getElementById('accTitle').textContent = '已登录';
-            document.getElementById('accInfo').innerHTML =
-                (email ? '邮箱：<b>' + email + '</b><br>' : '') +
-                (phone ? '手机：<b>' + phone + '</b><br>' : '') +
-                '用户 ID：<b>' + user.id + '</b>';
+        function t(k) { return (STR[LANG] && STR[LANG][k]) || (STR.en[k]) || k; }
+        function setMsg(x, cls) {
+            var m = document.getElementById("msg");
+            m.textContent = x || ""; m.className = "msg " + (cls || "");
         }
-        async function doLogout() {
-            if (!supabase) return;
-            await supabase.auth.signOut();
-            document.getElementById('accountView').classList.add('hidden');
-            document.getElementById('loginView').classList.remove('hidden');
-            resetFlow();
-            setMsg('已退出登录', 'ok');
+        function $(id) { return document.getElementById(id); }
+
+        function pickLang() {
+            var r = document.documentElement.getAttribute("data-region");
+            LANG = (r === "CN") ? "zh" : "en";
         }
-        const COUNTRIES = [
-            ['+86', '🇨🇳 中国大陆 +86'], ['+852', '🇭🇰 香港 +852'], ['+853', '🇲🇴 澳门 +853'],
-            ['+886', '🇹🇼 台湾 +886'], ['+1', '🇺🇸 美国/加拿大 +1'], ['+44', '🇬🇧 英国 +44'],
-            ['+81', '🇯🇵 日本 +81'], ['+82', '🇰🇷 韩国 +82'], ['+65', '🇸🇬 新加坡 +65'],
-            ['+60', '🇲🇾 马来西亚 +60'], ['+66', '🇹🇭 泰国 +66'], ['+61', '🇦🇺 澳大利亚 +61'],
-            ['+49', '🇩🇪 德国 +49'], ['+33', '🇫🇷 法国 +33'], ['+7', '🇷🇺 俄罗斯 +7'],
-        ];
-        (function initCountries() {
-            const sel = document.getElementById('countryCode');
-            COUNTRIES.forEach(([code, label]) => {
-                const o = document.createElement('option');
-                o.value = code; o.textContent = label;
-                sel.appendChild(o);
+
+        function applyLang() {
+            pickLang();
+            $("lgTitle").textContent = t("title");
+            $("lgSub").textContent = t("sub");
+            $("orText").textContent = t("or");
+            $("lbEmail").textContent = t("email");
+            $("lbPhone").textContent = t("phone");
+            $("lbCode").textContent = t("code");
+            $("emailInput").placeholder = t("phEmail");
+            $("phoneInput").placeholder = t("phPhone");
+            $("codeInput").placeholder = t("phCode");
+            $("mainBtn").textContent = (STEP === "send") ? t("send") : t("verify");
+            $("backBtn").textContent = t("back");
+            $("lgNote").textContent = t("note");
+        }
+
+        /* ── 按地区渲染第三方登录按钮 ── */
+        function renderProviders() {
+            pickLang();
+            var region = document.documentElement.getAttribute("data-region") || "";
+            var list = (CFG.providers && CFG.providers[region]) || CFG.defaultProviders || ["email"];
+            var formHas = { email: false, phone: false };
+            var box = $("oauthBox");
+            box.innerHTML = "";
+
+            list.forEach(function (pr) {
+                if (pr === "email" || pr === "phone") { formHas[pr] = true; return; }
+                var b = document.createElement("button");
+                b.className = "pbtn p-" + pr;
+                b.innerHTML = (ICON[pr] || "") + "<span>" + t(pr) + "</span>";
+                b.onclick = function () { startProvider(pr); };
+                box.appendChild(b);
             });
-        })();
-        (async function restore() {
-            if (!configured()) {
-                // Supabase 还没配 → 显示「即将开放」而不是报错表单
-                document.getElementById('loginView').classList.add('hidden');
-                document.getElementById('notConfigured').classList.remove('hidden');
+
+            // 表单通道（邮箱 / 手机）
+            CHANNEL = formHas.phone ? "phone" : "email";
+            $("emailField").classList.toggle("hidden", CHANNEL !== "email");
+            $("phoneField").classList.toggle("hidden", CHANNEL !== "phone");
+            $("orLine").classList.toggle("hidden", box.children.length === 0);
+            applyLang();
+        }
+
+        function startProvider(pr) {
+            if (!ready()) { setMsg(t("serviceOff"), "err"); return; }
+            if (pr === "wechat") {
+                var wu = CFG.wechat && CFG.wechat.authFunctionUrl;
+                if (!wu) { setMsg(t("wechatOff"), "err"); return; }
+                setMsg("正在跳转微信授权…");
+                location.href = wu + "?redirect=" + encodeURIComponent(
+                    location.origin + "/" + (CFG.redirectAfterLogin || "index.html"));
                 return;
             }
-            const sb = ready();
-            const { data } = await sb.auth.getSession();
-            if (data && data.session && data.session.user) showAccount(data.session.user);
+            setMsg("跳转 " + pr + " 授权…");
+            sb().auth.signInWithOAuth({
+                provider: pr,
+                options: { redirectTo: location.origin + "/" + (CFG.redirectAfterLogin || "index.html") }
+            }).then(function (r) {
+                if (r && r.error) setMsg("授权失败：" + r.error.message, "err");
+            }).catch(function (e) { setMsg("授权失败：" + e.message, "err"); });
+        }
+
+        function currentContact() {
+            if (CHANNEL === "email") return $("emailInput").value.trim();
+            var cc = $("countryCode").value;
+            var pn = $("phoneInput").value.trim();
+            return pn ? (cc + pn) : "";
+        }
+
+        function resetFlow(keepMsg) {
+            STEP = "send";
+            $("codeField").classList.add("hidden");
+            $("backBtn").classList.add("hidden");
+            $("mainBtn").textContent = t("send");
+            if (!keepMsg) setMsg("");
+        }
+
+        function handleMain() {
+            if (!ready()) { setMsg(t("serviceOff"), "err"); return; }
+            var contact = currentContact();
+            if (STEP === "send") {
+                if (!contact) { setMsg(CHANNEL === "email" ? "请输入邮箱" : t("needContact"), "err"); return; }
+                var btn = $("mainBtn"); btn.disabled = true; setMsg(t("sending"));
+                var payload = CHANNEL === "email" ? { email: contact } : { phone: contact };
+                sb().auth.signInWithOtp(payload, { shouldCreateUser: true })
+                    .then(function (r) {
+                        btn.disabled = false;
+                        if (r && r.error) { setMsg("发送失败：" + r.error.message, "err"); return; }
+                        setMsg(t("sent"), "ok");
+                        STEP = "verify";
+                        $("codeField").classList.remove("hidden");
+                        $("backBtn").classList.remove("hidden");
+                        $("mainBtn").textContent = t("verify");
+                        $("codeInput").focus();
+                    })
+                    .catch(function (e) { btn.disabled = false; setMsg("发送失败：" + e.message, "err"); });
+            } else {
+                var code = $("codeInput").value.trim();
+                if (!code) { setMsg(t("phCode"), "err"); return; }
+                var b2 = $("mainBtn"); b2.disabled = true; setMsg(t("verifyIng"));
+                var arg = CHANNEL === "email"
+                    ? { email: currentContact(), token: code, type: "email" }
+                    : { phone: currentContact(), token: code, type: "sms" };
+                sb().auth.verifyOtp(arg).then(function (r) {
+                    b2.disabled = false;
+                    if (r && r.error) { setMsg("验证失败：" + r.error.message, "err"); return; }
+                    setMsg(t("okLogin"), "ok");
+                    if (r && r.user) showAccount(r.user);
+                }).catch(function (e) { b2.disabled = false; setMsg("验证失败：" + e.message, "err"); });
+            }
+        }
+
+        function providerOf(user) {
+            var a = (user && user.app_metadata && user.app_metadata.provider) || "";
+            if (a) return a;
+            var id = (user && user.identities) || [];
+            return id.length ? id[0].provider : "email";
+        }
+
+        function showAccount(user) {
+            $("loginView").classList.add("hidden");
+            $("accountView").classList.remove("hidden");
+            var em = user.email || "", ph = user.phone || "";
+            $("avatar").textContent = (em || ph || "?").charAt(0).toUpperCase();
+            $("accTitle").textContent = t("logged");
+            $("accInfo").innerHTML =
+                (em ? "邮箱：<b>" + em + "</b><br>" : "") +
+                (ph ? "手机：<b>" + ph + "</b><br>" : "") +
+                t("provider") + "：<b>" + providerOf(user) + "</b><br>" +
+                t("uid") + "：<b>" + user.id + "</b>";
+            $("accNote").textContent = t("syncNote");
+        }
+
+        async function doLogout() {
+            if (sbClient) await sbClient.auth.signOut();
+            $("accountView").classList.add("hidden");
+            $("loginView").classList.remove("hidden");
+            resetFlow();
+            setMsg(LANG === "zh" ? "已退出登录" : "Signed out", "ok");
+        }
+
+        var COUNTRIES = [
+            ["+86", "🇨🇳 中国大陆 +86"], ["+852", "🇨🇳 中国香港 +852"], ["+853", "🇨🇳 中国澳门 +853"],
+            ["+886", "🇨🇳 中国台湾 +886"], ["+1", "🇺🇸 美国/加拿大 +1"], ["+44", "🇬🇧 英国 +44"],
+            ["+81", "🇯🇵 日本 +81"], ["+82", "🇰🇷 韩国 +82"], ["+65", "🇸🇬 新加坡 +65"],
+            ["+60", "🇲🇾 马来西亚 +60"], ["+66", "🇹🇭 泰国 +66"], ["+61", "🇦🇺 澳大利亚 +61"],
+            ["+49", "🇩🇪 德国 +49"], ["+33", "🇫🇷 法国 +33"], ["+7", "🇷🇺 俄罗斯 +7"]
+        ];
+        (function initCountries() {
+            var sel = $("countryCode");
+            COUNTRIES.forEach(function (c) {
+                var o = document.createElement("option");
+                o.value = c[0]; o.textContent = c[1]; sel.appendChild(o);
+            });
+        })();
+
+        /* ── 启动 ── */
+        (function boot() {
+            if (!ready()) {
+                $("loginView").classList.add("hidden");
+                $("notConfigured").classList.remove("hidden");
+                return;
+            }
+            renderProviders();
+            // 地区判定是异步的，region.js 出结果后重渲染一次
+            document.addEventListener("wm:region", function () { renderProviders(); });
+            sb().auth.getSession().then(function (r) {
+                if (r && r.data && r.data.session && r.data.session.user) showAccount(r.data.session.user);
+            });
+            sb().auth.onAuthStateChange(function (ev, sess) {
+                if (sess && sess.user) showAccount(sess.user);
+            });
         })();
     </script>
 </body>

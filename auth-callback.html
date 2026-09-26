@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>登录中… — Working Mate</title>
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="192x192" href="images/favicon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+<style>
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+       background:#1A1E2A;color:#EEF0FF;font-family:system-ui,-apple-system,"Segoe UI","PingFang SC",sans-serif}
+  .box{text-align:center}
+  .spin{width:34px;height:34px;margin:0 auto 16px;border:3px solid rgba(245,182,66,.25);
+        border-top-color:#F5B642;border-radius:50%;animation:s .8s linear infinite}
+  @keyframes s{to{transform:rotate(360deg)}}
+  p{margin:0;font-size:14px;opacity:.75}
+  a{color:#F5B642}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="spin"></div>
+  <p id="txt">正在完成登录…</p>
+</div>
+
+<script src="site-config.js?v=20260927d"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  var CFG = window.WM_CONFIG || {};
+  var next = new URLSearchParams(location.search).get("next") || "index.html";
+  var txt = document.getElementById("txt");
+
+  function fail(msg) {
+    txt.innerHTML = msg + ' — <a href="login.html">返回登录页重试</a>';
+    document.querySelector(".spin").style.display = "none";
+  }
+
+  if (!window.WM_AUTH_READY || !window.supabase) { fail("登录服务未配置"); return; }
+
+  var sb = window.supabase.createClient(CFG.supabase.url, CFG.supabase.anonKey);
+
+  // supabase-js 会自动识别 URL 里的 token（hash 或 ?code=）并完成会话
+  sb.auth.getSession().then(function (r) {
+    if (r && r.data && r.data.session) { location.replace(next); return; }
+    setTimeout(function () {
+      sb.auth.getSession().then(function (r2) {
+        if (r2 && r2.data && r2.data.session) location.replace(next);
+        else fail("登录未完成");
+      });
+    }, 1200);
+  }).catch(function () { fail("登录失败"); });
+})();
+</script>
+</body>
+</html>

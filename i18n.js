@@ -129,6 +129,25 @@
       }
     }
 
+    // ── <title> 归属 ──
+    // 静态 HTML 一律英文（搜索引擎抓的是静态 HTML，国际抓取不能是中文），
+    // 中文与其他语言在这里按 data-zhtitle / data-enkey 还原。
+    // 只有带 data-zhtitle 的 <title> 归本函数管；index.html 那种按地区切换的
+    // 标题由 region.js 的 META_BY_REGION 负责，两边不重叠（同一元素不能两个主人）。
+    var tEl = document.querySelector("title[data-zhtitle]");
+    if (tEl) {
+      var enT = tEl.getAttribute("data-entitle") || tEl.textContent;
+      if (lang === "zh") {
+        tEl.textContent = tEl.getAttribute("data-zhtitle");
+      } else if (lang === "en") {
+        tEl.textContent = enT;
+      } else {
+        var tKey = tEl.getAttribute("data-enkey");
+        var tVal = tKey ? look(tKey, lang) : undefined;
+        tEl.textContent = tVal ? (tVal + " · Working Mate") : enT;
+      }
+    }
+
     syncSwitcher();
     document.dispatchEvent(new CustomEvent("wm:lang", { detail: { lang: lang } }));
   }

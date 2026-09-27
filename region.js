@@ -374,7 +374,7 @@
       lang: "zh-CN"
     },
     OVERSEAS: {
-      title: "Working Mate — Local-first AI Agent for Windows",
+      title: "Working Mate · Local AI Agent",
       desc: "Working Mate is a local-first AI agent: local Ollama and cloud LLMs on one scheduler, "
             + "node-based workflows chaining scripts, storyboards, video and music, and four-layer "
             + "memory that learns you over time. Your data stays on your machine and it runs offline. "

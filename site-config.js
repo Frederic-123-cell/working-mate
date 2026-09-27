@@ -11,8 +11,8 @@
 window.WM_CONFIG = {
   /* ── Supabase（身份 + 数据库）── */
   supabase: {
-    url: "",                                   // 例: "https://abcdefgh.supabase.co"
-    anonKey: ""                                // 例: "eyJhbGciOi..."
+    url: "https://vfmdkcrfnowwxomwsgmk.supabase.co",   // 项目 Project URL（新加坡 ap-southeast-1）
+    anonKey: "sb_publishable_B95a2c01RU2Z-lFRZ1swLA_Qz2Qmvzs"  // 新式 publishable key（公开，安全靠 RLS）
   },
 
   /* ── 按地区展示的登录方式（region.js 会写入 data-region）──

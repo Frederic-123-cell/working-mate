@@ -19,11 +19,11 @@ window.WM_CONFIG = {
      海外: Google / Apple / 邮箱 / GitHub
      大陆: 手机号+验证码 / 微信（邮箱作为备选小字入口）           */
   providers: {
-    // 暂时只留邮箱：phone 需短信服务商（收费）、wechat 需 Edge Function、
-    // google/apple 需各自的 OAuth 凭据 —— 没配好就显示出来只会点了报错。
-    // 配好哪个就把哪个加回来，例如 ["google", "apple", "email", "github"]。
+    // 只列 Supabase 里**已经配好凭据**的方式，没配好的不显示（否则点了报错）。
+    // 2026-09-27 实测外部登录可用：github、facebook（google/apple 仍未配）。
+    // 大陆侧保持只用邮箱：github/facebook 在大陆访问不了。
     CN:       ["email"],
-    OVERSEAS: ["email"]
+    OVERSEAS: ["github", "facebook", "email"]
   },
   defaultProviders: ["email"],   // 地区判定失败时的兜底
 

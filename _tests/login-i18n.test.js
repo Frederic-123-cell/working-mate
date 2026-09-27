@@ -65,7 +65,7 @@ const el = (tag, attrs, text) => { const e = new El(tag, attrs || {}); if (text 
 
 const title = el("title", { "data-i18n": "login.docTitle" }, "登录 / 注册 — Working Mate");
 head.appendChild(title);
-body.appendChild(el("button", { "data-i18n": "login.minimal" }, "简约"));
+// 注：登录页已固定为原版包豪斯风，不再有「简约」切换按钮（见下方静态断言）
 
 const notCfg = el("div", { id: "notConfigured" });
 const soonH1 = el("h1", { "data-i18n": "login.soonTitle" }, "登录即将开放");
@@ -131,7 +131,19 @@ function check(name, got, want) {
   console.log(`  ${ok ? "✓" : "✗"} ${name}\n      得到: ${JSON.stringify(got)}  期望: ${JSON.stringify(want)}`);
 }
 
-console.log("【场景 1】海外访客（未配置 Supabase，页面显示「即将开放」屏）");
+console.log("【场景 0】静态守卫：单一风格 + 下载链路无第三方托管站");
+{
+  const loginSrc = fs.readFileSync("login.html", "utf8");
+  check("登录页不再加载 minimal.js（只保留原版包豪斯风）", /minimal\.js/.test(loginSrc), false);
+  check("登录页没有「简约」切换按钮", /modeToggle/.test(loginSrc), false);
+  check("登录页已加 Facebook 图标", /facebook: '<svg/.test(loginSrc), true);
+  const dlSrc = fs.readFileSync("download.js", "utf8");
+  const idxSrc = fs.readFileSync("index.html", "utf8");
+  check("download.js 兜底不再指向 GitHub", /github\.com/.test(dlSrc), false);
+  check("index.html 下载按钮不再指向 GitHub", /github\.com\/Frederic/.test(idxSrc), false);
+}
+
+console.log("\n【场景 1】海外访客（未配置 Supabase，页面显示「即将开放」屏）");
 global.WM_REGION.apply("OVERSEAS");
 check("浏览器标题", title.textContent, "Sign in / Sign up — Working Mate");
 check("大标题(截图那行)", soonH1.textContent, "Sign-in is opening soon");
@@ -141,7 +153,6 @@ check("页脚返回", backLink.textContent, "← Back to site");
 check("登录表单大标题", lgH1.textContent, "Sign in / Sign up");
 check("输入框占位符(属性)", codeInput.getAttribute("placeholder"), "6-digit code");
 check("退出按钮", logoutBtn.textContent, "Sign out");
-check("主题按钮", body.children[0].textContent, "Minimal");
 
 console.log("\n【场景 2】大陆访客 → 全中文");
 global.WM_I18N.apply("zh", false);

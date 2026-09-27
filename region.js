@@ -207,9 +207,50 @@
   // ── 海外残留中文自愈表：静态 HTML 里的英文短语被误翻成中文后，能换回来 ──
   var LEFTOVER_ZH = {
     "/ 月": "/ month", "/月": "/ month",
-    "+ 按量": "+ usage", "按量": "usage",
+    "+ 按量": "+ usage", "+按量": "+ usage", "按量": "usage",
     "永久": "forever"
   };
+
+  // ══════════════════════════════════════════════════════════
+  //  价格后缀的唯一归属：data-per
+  //  货币由「地区」决定，后缀由「当前语言」决定 —— 两者不再互相打架。
+  //  （此前是拿节点文字做 .replace("/ month","/ 月") 猜谜，任一条路径
+  //    没走到就会漏翻，这就是 "/月"、"+按量" 反复顽固的真因。）
+  // ══════════════════════════════════════════════════════════
+  var PER_TEXT = {
+    zh: { month: "/ 月",  usage: "+ 按量",  forever: "永久" },
+    en: { month: "/ month", usage: "+ usage", forever: "forever" },
+    ja: { month: "/ 月",  usage: "+ 従量",  forever: "ずっと無料" },
+    ko: { month: "/ 월",  usage: "+ 사용량", forever: "평생 무료" },
+    fr: { month: "/ mois", usage: "+ à l'usage", forever: "à vie" },
+    de: { month: "/ Monat", usage: "+ nach Verbrauch", forever: "für immer" },
+    ru: { month: "/ месяц", usage: "+ по факту", forever: "навсегда" },
+    ar: { month: "/ شهريًا", usage: "+ حسب الاستخدام", forever: "مدى الحياة" },
+    es: { month: "/ mes", usage: "+ por uso", forever: "para siempre" },
+    pt: { month: "/ mês", usage: "+ por uso", forever: "para sempre" }
+  };
+
+  function currentLang() {
+    try {
+      if (window.WM_I18N && window.WM_I18N.get) {
+        var l = window.WM_I18N.get();
+        if (l) return l;
+      }
+    } catch (e) {}
+    var s = savedLang();
+    if (s) return s;
+    return document.documentElement.getAttribute("data-region") === "CN" ? "zh" : "en";
+  }
+
+  // 幂等：无论被调用多少次、什么顺序，结果都一样
+  function applyPerSuffixes() {
+    var tbl = PER_TEXT[currentLang()] || PER_TEXT.en;
+    var els = document.querySelectorAll("[data-per]");
+    for (var i = 0; i < els.length; i++) {
+      var kind = els[i].getAttribute("data-per");
+      if (tbl[kind]) els[i].textContent = tbl[kind];
+    }
+  }
 
   // ── 还原英文（海外访客 / VPN 切换后）──
   function restoreTextEn() {
@@ -248,15 +289,9 @@
       var usd = parseFloat(b.getAttribute("data-usd") || "0");
       var cur = b.querySelector(".currency");
       var num = b.querySelector(".num");
-      var per = b.querySelector(".per");
       if (cur) cur.textContent = "¥";
       if (num) num.textContent = String(cnyOf(usd));
-      if (per) {
-        per.textContent = per.textContent
-          .replace("/ month", "/ 月")
-          .replace("forever", "永久")
-          .replace("+ usage", "+ 按量");
-      }
+      // 后缀不在这里处理 —— 交给 applyPerSuffixes()（按语言，不按地区）
     }
     // 形态二：通用 data-usd 元素（如 index.html 的 .amt "$4<small>/月</small>"）——
     // 直接遍历其文本节点，把 "$" 换 "¥"、美元数字换人民币数字
@@ -292,6 +327,41 @@
   }
 
 
+  // ── 还原美元（IP 探测由 CN 纠正为海外时，货币必须跟着退回 USD）──
+  function applyUSD() {
+    var blocks = document.querySelectorAll(".price[data-usd]");
+    for (var i = 0; i < blocks.length; i++) {
+      var b = blocks[i];
+      var usd = parseFloat(b.getAttribute("data-usd") || "0");
+      var cur = b.querySelector(".currency");
+      var num = b.querySelector(".num");
+      if (cur) cur.textContent = "$";
+      if (num) num.textContent = String(usd);
+    }
+    var generic = document.querySelectorAll("[data-usd]:not(.price)");
+    for (var g = 0; g < generic.length; g++) {
+      var el = generic[g];
+      var target = parseFloat(el.getAttribute("data-usd") || "-1");
+      if (target < 0) continue;
+      var cny = cnyOf(target);
+      var tn = [];
+      var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false);
+      while (w.nextNode()) tn.push(w.currentNode);
+      var done = false;
+      for (var t = 0; t < tn.length; t++) {
+        var txt = tn[t].nodeValue;
+        if (txt.indexOf("¥") >= 0) tn[t].nodeValue = txt.replace(/¥/g, "$");
+        if (!done && cny !== target) {
+          var re = new RegExp("\\b" + cny + "(?!\\d)");
+          if (re.test(tn[t].nodeValue)) {
+            tn[t].nodeValue = tn[t].nodeValue.replace(re, String(target));
+            done = true;
+          }
+        }
+      }
+    }
+  }
+
   // ── 标题 / 简介 / lang 按地区切换 ──
   // Google 抓的是静态 HTML（现在默认英文，便于国际收录）；
   // 大陆访客在浏览器里动态换回中文，两头都不吃亏。
@@ -320,7 +390,7 @@
       manual = !!(window.WM_I18N && window.WM_I18N.isManual && window.WM_I18N.isManual());
     } catch (e) { manual = false; }
     if (region === "CN") {
-      applyCNY();
+      applyCNY();                                       // 地区决定货币：¥
       if (!manual) {
         swapTextZh();                                   // pricing 页（无 i18n.js）中文
         try {
@@ -332,7 +402,7 @@
         swapTextZh();
       }
     } else {
-      // 海外：还原英文 + 美元（HTML 默认值本就是英文/美元）
+      applyUSD();                                       // 地区决定货币：$（无条件，必须能反向还原）
       if (!manual) {
         restoreTextEn();
         try {
@@ -342,6 +412,7 @@
         } catch (e) {}
       }
     }
+    applyPerSuffixes();   // 语言决定后缀（无条件执行，与 manual 无关）
     var meta = META_BY_REGION[region] || META_BY_REGION.OVERSEAS;
     try {
       document.documentElement.setAttribute("lang", meta.lang);
@@ -394,8 +465,21 @@
     init();
   }
 
+  // i18n 引擎切换语言后（i18n.js 会派发 wm:lang），后缀立即跟随
+  document.addEventListener("wm:lang", function () { applyPerSuffixes(); });
+  // 旧版无 i18n.js 的页面：用户点语言按钮时手动同步（点击后微延迟，等 i18n 落盘）
+  document.addEventListener("click", function (ev) {
+    try {
+      if (ev.target && ev.target.closest && ev.target.closest("[data-lang], .lang-sw")) {
+        setTimeout(applyPerSuffixes, 0);
+      }
+    } catch (e) {}
+  });
+
   window.WM_REGION = {
     get: function () { return document.documentElement.getAttribute("data-region") || "OVERSEAS"; },
-    apply: applyRegion
+    apply: applyRegion,
+    per: applyPerSuffixes,
+    lang: currentLang
   };
 })();

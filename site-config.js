@@ -19,10 +19,13 @@ window.WM_CONFIG = {
      海外: Google / Apple / 邮箱 / GitHub
      大陆: 手机号+验证码 / 微信（邮箱作为备选小字入口）           */
   providers: {
-    CN:       ["phone", "wechat", "email"],
-    OVERSEAS: ["google", "apple", "email", "github"]
+    // 暂时只留邮箱：phone 需短信服务商（收费）、wechat 需 Edge Function、
+    // google/apple 需各自的 OAuth 凭据 —— 没配好就显示出来只会点了报错。
+    // 配好哪个就把哪个加回来，例如 ["google", "apple", "email", "github"]。
+    CN:       ["email"],
+    OVERSEAS: ["email"]
   },
-  defaultProviders: ["email", "google", "github"],   // 地区判定失败时的兜底
+  defaultProviders: ["email"],   // 地区判定失败时的兜底
 
   /* ── 微信登录 ──
      Supabase 没有内置微信 provider，走 Edge Function：

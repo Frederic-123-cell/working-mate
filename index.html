@@ -3,7 +3,7 @@
 <head>
 <script>
 (function(){
-  var V = '20260927e';
+  var V = '20260927f';
   var p = new URLSearchParams(location.search);
   if (p.get('v') !== V) {
     p.set('v', V);
@@ -425,7 +425,7 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
             付费档解锁更长记忆、旗舰模型与云端生成额度。</p>
           <div class="stats">
             <div class="stat"><b>¥0</b><span data-i18n="home.hero3.stat1">起 / 免费版</span></div>
-            <div class="stat"><b>$4<small>/月</small></b><span data-i18n="home.hero3.stat2">标准版</span></div>
+            <div class="stat"><b data-usd="4">$4<small data-per="month">/ month</small></b><span data-i18n="home.hero3.stat2">标准版</span></div>
             <div class="stat"><b data-i18n="home.hero3.stat3">团队版 · 规划中</b></div>
           </div>
           <div class="cta-row">
@@ -665,23 +665,23 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
         <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-ghost" data-download data-i18n="home.price.free.cta">免费下载</a>
       </div>
       <div class="price reveal">
-        <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt" data-usd="4">$4<small>/月</small></div>
+        <h3 data-i18n="home.price.std.name">标准版</h3><div class="amt" data-usd="4">$4<small data-per="month">/ month</small></div>
         <ul><li data-i18n="home.price.std.li0">每月含 800 积分</li><li data-i18n="home.price.std.li1">性价比阵容：DeepSeek V4 Flash 等</li><li data-i18n="home.price.std.li2">智能路由 + 上下文压缩省 token</li><li data-i18n="home.price.std.li3">识图与多模态输入</li><li data-i18n="home.price.std.li4">无广告</li></ul>
         <a href="#" class="btn btn-ghost" data-i18n="home.price.std.cta">升级标准版</a>
       </div>
       <div class="price hot reveal">
         <span class="flag" data-i18n="home.price.std.flag">最受欢迎</span>
-        <h3 data-i18n="home.price.pro.name">专业版</h3><div class="amt" data-usd="14">$14<small>/月</small></div>
+        <h3 data-i18n="home.price.pro.name">专业版</h3><div class="amt" data-usd="14">$14<small data-per="month">/ month</small></div>
         <ul><li data-i18n="home.price.pro.li0">每月含 3000 积分</li><li data-i18n="home.price.pro.li1">旗舰国产阵容全解锁</li><li data-i18n="home.price.pro.li2">双通道互备（主 + 兜底）</li><li data-i18n="home.price.pro.li3">AI 视频 / 音乐生成</li><li data-i18n="home.price.pro.li4">可填自己的 API Key</li></ul>
         <a href="#" class="btn btn-amber" data-i18n="home.price.pro.cta">升级专业版</a>
       </div>
       <div class="price reveal">
-        <h3 data-i18n="home.price.ult.name">旗舰版</h3><div class="amt" data-usd="42">$42<small>/月</small></div>
+        <h3 data-i18n="home.price.ult.name">旗舰版</h3><div class="amt" data-usd="42">$42<small data-per="month">/ month</small></div>
         <ul><li data-i18n="home.price.ult.li0">每月含 10000 积分</li><li data-i18n="home.price.ult.li1">工程级 CAD（真 B-rep 实体）</li><li data-i18n="home.price.ult.li2">STEP / DXF / STL 导出</li><li data-i18n="home.price.ult.li3">自搜自造 + 多源交叉验证</li><li data-i18n="home.price.ult.li4">更大上下文与更高额度</li></ul>
         <a href="#" class="btn btn-ghost" data-i18n="home.price.ult.cta">升级旗舰版</a>
       </div>
       <div class="price reveal">
-        <h3 data-i18n="home.price.max.name">极限版</h3><div class="amt" data-usd="0">$0<small>+ 按量</small></div>
+        <h3 data-i18n="home.price.max.name">极限版</h3><div class="amt" data-usd="0">$0<small data-per="usage">+ usage</small></div>
         <ul><li data-i18n="home.price.max.li1">新人赠 3000 积分 · 不设月上限，按量实扣</li><li data-i18n="home.price.max.li2">每日签到领 100 积分</li><li data-i18n="home.price.max.li3">专攻 Agent：研究 / 编程 / 建模</li><li data-i18n="home.price.max.li4">短剧分镜 · 音乐创作 Agent</li></ul>
         <a href="#" class="btn btn-amber" data-i18n="home.price.max.cta">开通极限版</a>
       </div>
@@ -719,7 +719,7 @@ footer{border-top:1px solid var(--stroke);padding:42px 0;font-size:13px;color:va
       <h2 data-i18n="home.cta.h2">现在就让 AI 开始干活</h2>
       <p data-i18n="home.cta.p">免费版永久可用，一分钟装好，不需要信用卡。</p>
       <a href="https://github.com/Frederic-123-cell/working-mate/releases/latest" class="btn btn-amber" style="padding:14px 34px;font-size:15px" data-download data-i18n="home.cta.btn">免费下载 Working Mate</a>
-      <p style="margin-top:14px;font-size:12px;opacity:.75">Windows 10 / 11 (64-bit) · 当前版本 <span data-download-ver>v1.3.0</span></p>
+      <p style="margin-top:14px;font-size:12px;opacity:.75">Windows 10 / 11 (64-bit) · 当前版本 <span data-download-ver>v1.4.0</span></p>
     </div>
   </div>
 </section>
@@ -798,8 +798,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 <script src="lang.es.js"></script>
 <script src="lang.pt.js"></script>
 <!-- 地区自动识别：中国大陆→¥+中文，海外→$+英文（必须在 i18n.js 之前，便于提前写入语言偏好） -->
-<script src="region.js?v=20260927e"></script>
-<script src="i18n.js?v=20260927e"></script>
-<script src="download.js?v=20260927e"></script>
+<script src="region.js?v=20260927f"></script>
+<script src="i18n.js?v=20260927f"></script>
+<script src="download.js?v=20260927f"></script>
 </body>
 </html>

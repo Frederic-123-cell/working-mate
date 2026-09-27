@@ -1,29 +1,19 @@
 /* ════════════════════════════════════════════════════════════
-   Working Mate — 下载按钮接管（2026-09-27）
-   问题：首页/定价页的下载按钮原来是 href="#" 占位，点了没反应。
-   做法：静态 href 兜底指向 GitHub Releases 最新版页面（永不 404），
-        再读 version.json 把 href 换成**精确的安装包直链**（与 App
-        内置的自动更新走同一个 url 字段，发新版只需改 version.json）。
-   用法：给下载按钮加 data-download；给版本号占位加 data-download-ver。
+   Working Mate — 下载按钮接管
+   策略（2026-09-27 改版）：
+     · 下载链路**绝不出现第三方代码托管站**（Creem 合规要求）。
+       历史版本曾把兜底地址写成 GitHub Releases 页面，已废弃。
+     · 静态 href 兜底写在 HTML 里，指向本站 #download 锚点
+       （无 JS / JS 出错时也停在自己域名内）。
+     · 运行时读 version.json 的 url 字段，换成安装包直链
+       （与 App 内置自动更新共用同一个 url，发新版只改 version.json）。
+   用法：下载按钮加 data-download；版本号占位加 data-download-ver。
    ════════════════════════════════════════════════════════════ */
 (function () {
   "use strict";
 
-  var RELEASE_PAGE = "https://github.com/Frederic-123-cell/working-mate/releases/latest";
-
-  function apply(url, ver) {
-    // 若 version.json 指向的是安装包直链，先探测它是否真的存在；
-    // 还没上传 Release 资产时（404）或跨域探测失败时，回退到 Releases 页面，
-    // 保证点击永远有落地，绝不出现 GitHub 404。
-    var isAsset = /\/releases\/download\//.test(url);
-    if (isAsset && window.fetch) {
-      fetch(url, { method: "HEAD", mode: "cors", cache: "no-store" })
-        .then(function (r) { finalize(r.ok ? url : RELEASE_PAGE, ver); })
-        .catch(function () { finalize(RELEASE_PAGE, ver); });
-    } else {
-      finalize(url, ver);
-    }
-  }
+  // 兜底：留在本站（不再指外部托管页）
+  var FALLBACK = "#download";
 
   function finalize(url, ver) {
     var a = document.querySelectorAll("[data-download]");
@@ -37,6 +27,20 @@
     }
   }
 
+  function apply(url, ver) {
+    if (!url) { finalize(FALLBACK, ver); return; }
+    var crossOrigin = /^https?:\/\//i.test(url) && url.indexOf(location.origin) !== 0;
+    if (!crossOrigin || !window.fetch) {
+      // 本站域名（或相对路径）：直接信任，不做探测（避免多一次往返）
+      finalize(url, ver);
+      return;
+    }
+    // 外部托管：探一下是否真的存在，明确 404 时才回退
+    fetch(url, { method: "HEAD", cache: "no-store" })
+      .then(function (r) { finalize(r.ok ? url : FALLBACK, ver); })
+      .catch(function () { finalize(url, ver); });   // 探测被 CORS/网络挡住时按原样用
+  }
+
   function run() {
     var done = false;
     try {
@@ -45,16 +49,15 @@
         .then(function (j) {
           if (done) return;
           done = true;
-          var url = (j && j.url) ? String(j.url) : "";
-          apply(url || RELEASE_PAGE, (j && j.version) ? String(j.version) : "");
+          apply((j && j.url) ? String(j.url) : "", (j && j.version) ? String(j.version) : "");
         })
         .catch(function () {
           if (done) return;
           done = true;
-          apply(RELEASE_PAGE, "");
+          apply("", "");
         });
     } catch (e) {
-      apply(RELEASE_PAGE, "");
+      apply("", "");
     }
   }
 
@@ -64,5 +67,5 @@
     run();
   }
 
-  window.WM_DOWNLOAD = { refresh: run, releasePage: RELEASE_PAGE };
+  window.WM_DOWNLOAD = { refresh: run, fallback: FALLBACK };
 })();

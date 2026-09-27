@@ -6,7 +6,9 @@
    实现：
      1) 先用 localStorage 缓存（24h）——避免每次访问都打 IP 接口；
      2) 无缓存时先用浏览器语言启发式（zh* 视为中国）立刻渲染，
-        再异步请求 IP 归属纠正（ipwho.is → ipapi.co 两级兜底，2.5s 超时）；
+        语言/货币一次性定下、之后不再因 IP 反查翻面；
+        IP 探测结果只写入缓存（ipwho.is → ipapi.co 两级兜底，2.5s 超时），
+        供【下次访问】更准确，不参与当前页渲染；
      3) 币种只认 IP 结果；语言：仅当「用户没手动选过语言」时，
         中国大陆才强制中文（尊重手动选择 wm_lang，绝不覆盖）；
      4) 价格兑换用业务定价表（非实时汇率）：$4→¥28  $14→¥100  $42→¥300。
@@ -446,10 +448,10 @@
           clearTimeout(timer);
           var cc = String(j.country_code || j.countryCode || "").toUpperCase();
           var region = (cc === "CN") ? "CN" : "OVERSEAS";
+          // 仅把 IP 结果写进缓存，供【下次访问】更准确；
+          // 当前页面【不再】因 IP 反查而重新渲染语言/货币，
+          // 否则页面加载后会发生整页 zh↔en、¥↔$ 翻转（即"不稳定"的根因）。
           putCache(region);
-          if (region !== document.documentElement.getAttribute("data-region")) {
-            applyRegion(region);
-          }
         })
         .catch(function () {
           clearTimeout(timer);
@@ -465,8 +467,22 @@
     init();
   }
 
-  // i18n 引擎切换语言后（i18n.js 会派发 wm:lang），后缀立即跟随
-  document.addEventListener("wm:lang", function () { applyPerSuffixes(); });
+  // i18n 引擎切换语言后（i18n.js 会派发 wm:lang，detail.lang = 新语言），
+  // ① 价格后缀按语言立即跟随；② 关键：把地区文案也同步回去。
+  // 否则中国大陆访客手动把语言切到英文时，region.js 之前用 swapTextZh()
+  // 换上的中文节点（如定价页"本地 GPU AI…"）永远不会被还原，
+  // 于是出现"其他都英文了、就『本地』留着"的现象。
+  document.addEventListener("wm:lang", function (e) {
+    var lang = (e && e.detail && e.detail.lang) || currentLang();
+    var region = document.documentElement.getAttribute("data-region") || "OVERSEAS";
+    if (region === "CN") {
+      if (lang === "zh" || lang === "zh-CN") swapTextZh();
+      else restoreTextEn();                 // 切到英文 → 还原被换上的中文
+    } else {
+      restoreTextEn();                       // 海外始终英文（含被误翻残留自愈）
+    }
+    applyPerSuffixes();
+  });
   // 旧版无 i18n.js 的页面：用户点语言按钮时手动同步（点击后微延迟，等 i18n 落盘）
   document.addEventListener("click", function (ev) {
     try {

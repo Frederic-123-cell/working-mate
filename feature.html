@@ -531,10 +531,16 @@
 
     var ORDER = ['project-space', 'local-first', 'agent-mode', 'ai-video', 'ai-music', 'vision', 'models', 'prompts', 'safe'];
 
-    var LANG_KEY = 'agent_site_lang';
+    // 与官网其余页面共用 wm_lang（i18n.js 写入），不再用孤立的 agent_site_lang，
+    // 否则从英文首页点进功能页会被打回中文。
+    var LANG_KEY = 'wm_lang';
+    var LANG_KEY_LEGACY = 'agent_site_lang';
     function getLang() {
         var l = null;
-        try { l = localStorage.getItem(LANG_KEY); } catch (e) {}
+        try {
+            l = localStorage.getItem(LANG_KEY);
+            if (l !== 'zh' && l !== 'en') l = localStorage.getItem(LANG_KEY_LEGACY);
+        } catch (e) {}
         return (l === 'zh') ? 'zh' : 'en';
     }
     function t(obj) { return obj ? (obj[getLang()] || obj.en) : ''; }
@@ -627,10 +633,13 @@
         document.title = t(f.title) + ' — Working Mate';
     }
 
-    // 语言切换（与官网共用 localStorage）
+    // 语言切换（与官网共用 wm_lang；同时写 legacy 键兼容旧缓存）
     document.getElementById('langToggle').addEventListener('click', function () {
         var next = getLang() === 'zh' ? 'en' : 'zh';
-        try { localStorage.setItem(LANG_KEY, next); } catch (e) {}
+        try {
+            localStorage.setItem(LANG_KEY, next);
+            localStorage.setItem(LANG_KEY_LEGACY, next);
+        } catch (e) {}
         document.getElementById('langToggle').textContent = (next === 'zh') ? 'EN' : '中文';
         render();
     });
@@ -638,6 +647,9 @@
         var l = getLang();
         document.getElementById('langToggle').textContent = (l === 'zh') ? 'EN' : '中文';
     })();
+
+    // 全站语言切换（i18n.js 派发 wm:lang）时同步重渲染
+    document.addEventListener('wm:lang', function () { render(); });
 
     render();
     </script>

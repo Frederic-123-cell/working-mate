@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /auth-callback.html
+Disallow: /login.html
+Disallow: /index-v3.html
+
+Sitemap: https://workingmateapp.com/sitemap.xml

@@ -80,9 +80,9 @@
       "计价透明：每个模型都有公开的积分费率 — 余额在状态栏实时跳动。",
     "Never wasted: when your balance bottoms out the app drops back to Free mode instead of silently charging you.":
       "不浪费：余额触底后 App 自动回到免费版，不会偷偷扣费。",
-    "Free": "免费版",
+    "Free": "本地模式",
     "Local AI on your own GPU, plus free OpenRouter models. Zero cost, nothing leaves your PC.":
-      "本地 GPU AI + OpenRouter 免费模型。零成本，数据不出你的电脑。",
+      "本地 Ollama 模型，断网可用，数据不出你的电脑 —— 适合处理保密内容。",
     "forever": "永久",
     "Unlimited local chat via Ollama": "Ollama 本地对话不限量",
     "3,000 welcome credits — try every model free": "新人赠 3000 积分 — 全模型免费试",
@@ -448,10 +448,13 @@
           clearTimeout(timer);
           var cc = String(j.country_code || j.countryCode || "").toUpperCase();
           var region = (cc === "CN") ? "CN" : "OVERSEAS";
-          // 仅把 IP 结果写进缓存，供【下次访问】更准确；
-          // 当前页面【不再】因 IP 反查而重新渲染语言/货币，
-          // 否则页面加载后会发生整页 zh↔en、¥↔$ 翻转（即"不稳定"的根因）。
           putCache(region);
+          // v1.4.4（用户明确要求：测试时用不用 VPN 必须看得到差别）：
+          // IP 结果与当前渲染不一致 → 立即重渲染当前页（一次性纠正，通常发生在
+          // 加载后 1~2.5 秒）。首屏仍按缓存/浏览器语言先渲染（不阻塞），这里只追加纠正。
+          // 用户手动选过语言时，applyRegion 内部仍只切货币、不覆盖语言（尊重 wm_lang）。
+          var cur = document.documentElement.getAttribute("data-region");
+          if (region !== cur) applyRegion(region);
         })
         .catch(function () {
           clearTimeout(timer);
